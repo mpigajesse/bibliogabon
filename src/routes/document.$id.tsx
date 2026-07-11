@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 import { DocumentCard } from "@/components/site/DocumentCard";
+import { DocumentCover } from "@/components/site/DocumentCover";
 import { DomainBadge } from "@/components/site/DomainBadge";
 import { EmptyState } from "@/components/site/EmptyState";
 import { Button } from "@/components/ui/button";
@@ -102,43 +103,9 @@ function DocumentDetail() {
         <div className="absolute inset-x-0 top-0 gabon-stripe h-1" aria-hidden />
         <div className="container-editorial py-12 md:py-16 grid lg:grid-cols-[minmax(0,320px)_1fr] gap-10 lg:gap-14">
           <div className="mx-auto w-full max-w-[320px] lg:mx-0">
-            <div
-              className={`relative aspect-[3/4] overflow-hidden rounded-2xl pixel-grid-bg shadow-editorial-lg ${
-                dom?.couleur === "green"
-                  ? "bg-gradient-to-br from-[oklch(0.5_0.13_152)] via-[oklch(0.4_0.11_155)] to-navy-deep"
-                  : dom?.couleur === "gold"
-                    ? "bg-gradient-to-br from-[oklch(0.6_0.14_74)] via-[oklch(0.45_0.13_78)] to-navy-deep"
-                    : "bg-gradient-to-br from-[oklch(0.32_0.09_258)] via-navy to-navy-deep"
-              }`}
-            >
-              {doc.cover ? (
-                <img
-                  src={doc.cover}
-                  alt={`Couverture — ${doc.titre}`}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  loading="eager"
-                  decoding="async"
-                />
-              ) : (
-                <>
-                  <TypeIcon
-                    className="absolute -right-6 -bottom-6 size-44 text-white/10"
-                    strokeWidth={1}
-                    aria-hidden
-                  />
-                  <div className="absolute inset-0 flex flex-col justify-end p-6">
-                    <TypeIcon
-                      className="mb-3 size-10 text-white/80"
-                      strokeWidth={1.4}
-                      aria-hidden
-                    />
-                    <p className="font-display text-xl font-semibold leading-snug text-white line-clamp-4">
-                      {doc.titre}
-                    </p>
-                  </div>
-                </>
-              )}
-              <span className="absolute top-0 inset-x-0 h-1 gabon-stripe" aria-hidden />
+            <div className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-editorial-lg">
+              <DocumentCover doc={doc} showTitle={false} />
+              <span className="absolute top-0 inset-x-0 z-10 h-1 gabon-stripe" aria-hidden />
               <span className="absolute top-4 left-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-navy">
                 <TypeIcon className="size-3.5" aria-hidden /> {meta.label}
               </span>
