@@ -40,10 +40,12 @@ function Connexion() {
     }
   };
 
-  const remplirDemo = (demoEmail: string, demoPwd: string) => {
+  const connexionRapide = (demoEmail: string, demoPwd: string) => {
     setEmail(demoEmail);
     setMotDePasse(demoPwd);
     setErreur(null);
+    const compte = connecter(demoEmail, demoPwd);
+    if (compte) navigate({ to: "/tableau-de-bord" });
   };
 
   return (
@@ -146,14 +148,14 @@ function Connexion() {
               Comptes de démonstration
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Cliquez pour remplir automatiquement (mot de passe&nbsp;: <code>demo1234</code>).
+              Cliquez sur un compte pour vous connecter instantanément.
             </p>
             <div className="mt-3 space-y-2">
               {COMPTES.map((c) => (
                 <button
                   key={c.id}
                   type="button"
-                  onClick={() => remplirDemo(c.email, c.motDePasse)}
+                  onClick={() => connexionRapide(c.email, c.motDePasse)}
                   className="flex w-full items-center gap-3 rounded-lg border border-border bg-card px-3 py-2 text-left transition hover:border-gold hover:shadow-editorial"
                 >
                   <span

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BookOpen, Layers3, GraduationCap, Globe2 } from "lucide-react";
+import { BookOpen, Layers3, GraduationCap, Globe2, Library } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
@@ -35,6 +35,8 @@ function LivresPage() {
   return (
     <SiteLayout>
       <PageHeader
+        Icon={Library}
+        accent="navy"
         eyebrow="Catalogue"
         title="Livres & manuels."
         description="Manuels universitaires, précis, ouvrages de référence produits ou sélectionnés par les enseignants gabonais."

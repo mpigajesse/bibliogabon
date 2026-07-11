@@ -52,6 +52,8 @@ function Contact() {
     <SiteLayout>
       <div className="h-1 gabon-stripe" aria-hidden="true" />
       <PageHeader
+        Icon={Mail}
+        accent="gold"
         eyebrow="Contact"
         title="Parlons-en."
         description="Écrivez-nous pour toute question, partenariat ou proposition de contribution."

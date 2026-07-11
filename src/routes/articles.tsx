@@ -33,6 +33,8 @@ function ArticlesPage() {
   return (
     <SiteLayout>
       <PageHeader
+        Icon={FlaskConical}
+        accent="green"
         eyebrow="Catalogue"
         title="Articles scientifiques."
         description="Publications à comité de lecture, revues indexées et communications de nos enseignants-chercheurs."

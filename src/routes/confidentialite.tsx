@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ShieldCheck } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 
@@ -32,6 +33,8 @@ function Confidentialite() {
   return (
     <SiteLayout>
       <PageHeader
+        Icon={ShieldCheck}
+        accent="green"
         eyebrow="Légal"
         title="Politique de confidentialité."
         description="Dernière mise à jour : janvier 2026."

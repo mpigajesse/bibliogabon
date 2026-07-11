@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/site/PageHeader";
 import { ContributorCard } from "@/components/site/ContributorCard";
 import { EmptyState } from "@/components/site/EmptyState";
 import { CONTRIBUTEURS } from "@/data/contributeurs";
-import { Search, X } from "lucide-react";
+import { Search, X, Users } from "lucide-react";
 
 export const Route = createFileRoute("/enseignants")({
   head: () => ({
@@ -43,6 +43,8 @@ function EnseignantsAnnuaire() {
   return (
     <SiteLayout>
       <PageHeader
+        Icon={Users}
+        accent="gold"
         eyebrow="Communauté"
         title="Nos enseignants contributeurs."
         description="Professeurs, ingénieurs, docteurs et maîtres-assistants des universités gabonaises qui partagent librement leurs ressources pédagogiques avec toute la communauté académique nationale."

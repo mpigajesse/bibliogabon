@@ -37,20 +37,25 @@ export function Navbar() {
         <Logo size={36} withWordmark />
         <nav className="hidden lg:flex items-center gap-1 text-sm">
           <NavItem to="/">Accueil</NavItem>
-          <button
+          <div
+            className="relative"
             onMouseEnter={() => setOpenDom(true)}
             onMouseLeave={() => setOpenDom(false)}
-            onClick={() => setOpenDom((v) => !v)}
-            className="relative px-3 py-2 rounded-md font-medium text-foreground/80 hover:text-navy hover:bg-muted transition inline-flex items-center gap-1"
-            aria-expanded={openDom}
           >
-            Domaines <ChevronDown className="size-3.5" />
+            <button
+              type="button"
+              onClick={() => setOpenDom((v) => !v)}
+              className="px-3 py-2 rounded-md font-medium text-foreground/80 hover:text-navy hover:bg-muted transition inline-flex items-center gap-1"
+              aria-expanded={openDom}
+              aria-haspopup="true"
+            >
+              Domaines
+              <ChevronDown
+                className={`size-3.5 transition-transform ${openDom ? "rotate-180" : ""}`}
+              />
+            </button>
             {openDom && (
-              <div
-                onMouseEnter={() => setOpenDom(true)}
-                onMouseLeave={() => setOpenDom(false)}
-                className="absolute left-0 top-full mt-2 w-[720px] rounded-2xl border border-border bg-popover shadow-editorial-lg p-5 grid grid-cols-2 gap-x-6 gap-y-1 text-left"
-              >
+              <div className="absolute left-0 top-full mt-2 w-[720px] rounded-2xl border border-border bg-popover shadow-editorial-lg p-5 grid grid-cols-2 gap-x-6 gap-y-1 text-left">
                 <div className="col-span-2 flex items-center justify-between pb-3 mb-1 border-b border-border">
                   <span className="font-display text-sm font-semibold text-navy">
                     17 domaines académiques
@@ -58,6 +63,7 @@ export function Navbar() {
                   <Link
                     to="/domaines"
                     className="text-xs font-medium text-green hover:text-gold transition"
+                    onClick={() => setOpenDom(false)}
                   >
                     Tout parcourir →
                   </Link>
@@ -86,7 +92,7 @@ export function Navbar() {
                 ))}
               </div>
             )}
-          </button>
+          </div>
           {NAV_CATALOG.map((n) => (
             <NavItem key={n.to} to={n.to}>
               {n.label}

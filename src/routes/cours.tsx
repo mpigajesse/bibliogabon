@@ -33,6 +33,8 @@ function CoursPage() {
   return (
     <SiteLayout>
       <PageHeader
+        Icon={GraduationCap}
+        accent="navy"
         eyebrow="Catalogue"
         title="Cours & travaux dirigés."
         description="Supports de cours, TD et TP produits par les enseignants des universités gabonaises."

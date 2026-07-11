@@ -35,6 +35,8 @@ function ExamensPage() {
   return (
     <SiteLayout>
       <PageHeader
+        Icon={ClipboardList}
+        accent="gold"
         eyebrow="Catalogue"
         title="Examens & annales."
         description="Sujets d'examens, épreuves écrites et corrigés partagés par les enseignants."

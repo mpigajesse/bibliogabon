@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { FileText } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 
@@ -35,6 +36,8 @@ function Cgu() {
   return (
     <SiteLayout>
       <PageHeader
+        Icon={FileText}
+        accent="navy"
         eyebrow="Légal"
         title="Conditions générales d'utilisation."
         description="Dernière mise à jour : janvier 2026."

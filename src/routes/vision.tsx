@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 import { STATS_VISION } from "@/data/stats";
-import { Award, Users, Cpu, Landmark, Quote } from "lucide-react";
+import { Award, Users, Cpu, Landmark, Quote, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/vision")({
@@ -53,6 +53,8 @@ function Vision() {
     <SiteLayout>
       <div className="h-1 gabon-stripe" aria-hidden="true" />
       <PageHeader
+        Icon={Target}
+        accent="green"
         eyebrow="Vision & Impact"
         title="Une bibliothèque nationale à la hauteur des ambitions du Gabon."
         description="Faire de BiblioGabon la plateforme de référence documentaire de toutes les universités gabonaises."

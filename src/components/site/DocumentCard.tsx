@@ -32,10 +32,17 @@ const NIVEAU_STYLE: Record<Niveau, string> = {
 
 const LANGUE_LABEL: Record<"fr" | "en", string> = { fr: "FR", en: "EN" };
 
+const COVER_BG: Record<"navy" | "green" | "gold", string> = {
+  navy: "bg-gradient-to-br from-[oklch(0.32_0.09_258)] via-navy to-navy-deep",
+  green: "bg-gradient-to-br from-[oklch(0.5_0.13_152)] via-[oklch(0.4_0.11_155)] to-navy-deep",
+  gold: "bg-gradient-to-br from-[oklch(0.6_0.14_74)] via-[oklch(0.45_0.13_78)] to-navy-deep",
+};
+
 export function DocumentCard({ doc }: { doc: Document }) {
   const dom = domaineBySlug(doc.domaineSlug);
   const meta = TYPE_META[doc.type];
   const Icon = meta.Icon;
+  const coverBg = COVER_BG[dom?.couleur ?? "navy"];
 
   return (
     <Link
@@ -43,15 +50,43 @@ export function DocumentCard({ doc }: { doc: Document }) {
       params={{ id: doc.id }}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-editorial hover:shadow-editorial-lg hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-all duration-200"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-navy via-navy-deep to-navy pixel-grid-bg">
-        <span className="absolute top-0 inset-x-0 h-[3px] gabon-stripe opacity-90" aria-hidden />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <Icon className="size-14 text-white/25" strokeWidth={1.2} />
-        </div>
-        <div className="absolute top-4 left-3 flex flex-col items-start gap-1.5">
+      <div className={`relative aspect-[4/3] overflow-hidden pixel-grid-bg ${coverBg}`}>
+        <span className="absolute top-0 inset-x-0 z-20 h-[3px] gabon-stripe opacity-90" aria-hidden />
+
+        {doc.cover ? (
+          <>
+            <img
+              src={doc.cover}
+              alt={`Couverture — ${doc.titre}`}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+              loading="lazy"
+              decoding="async"
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10"
+              aria-hidden
+            />
+          </>
+        ) : (
+          <>
+            <Icon
+              className="absolute -right-5 -bottom-5 size-36 text-white/10"
+              strokeWidth={1}
+              aria-hidden
+            />
+            <div className="absolute inset-0 flex flex-col justify-center p-5">
+              <Icon className="mb-2.5 size-8 text-white/80" strokeWidth={1.5} aria-hidden />
+              <p className="font-display text-[15px] font-semibold leading-snug text-white line-clamp-3">
+                {doc.titre}
+              </p>
+            </div>
+          </>
+        )}
+
+        <div className="absolute top-4 left-3 z-10 flex flex-col items-start gap-1.5">
           {dom && <DomainBadge domaine={dom} />}
         </div>
-        <div className="absolute top-4 right-3 flex flex-col items-end gap-1.5">
+        <div className="absolute top-4 right-3 z-10 flex flex-col items-end gap-1.5">
           {doc.niveau && (
             <span
               className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold backdrop-blur ${NIVEAU_STYLE[doc.niveau]}`}
@@ -59,15 +94,19 @@ export function DocumentCard({ doc }: { doc: Document }) {
               {doc.niveau}
             </span>
           )}
-          <span className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur px-2 py-0.5 text-[10px] font-medium text-white">
-            <Lock className="size-3" /> Connexion requise
+          <span
+            className={`inline-flex items-center gap-1 rounded-full backdrop-blur px-2 py-0.5 text-[10px] font-medium text-white ${
+              doc.fichier ? "bg-green/80" : "bg-black/40"
+            }`}
+          >
+            <Lock className="size-3" /> {doc.fichier ? "Accès libre" : "Connexion requise"}
           </span>
         </div>
-        <div className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-0.5 text-[11px] font-semibold text-navy">
+        <div className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-0.5 text-[11px] font-semibold text-navy">
           <Icon className="size-3" /> {meta.label}
         </div>
         {doc.langue && (
-          <span className="absolute bottom-3 right-3 inline-flex items-center rounded-full bg-white/95 px-2 py-0.5 text-[10px] font-bold tracking-wider text-navy/70">
+          <span className="absolute bottom-3 right-3 z-10 inline-flex items-center rounded-full bg-white/95 px-2 py-0.5 text-[10px] font-bold tracking-wider text-navy/70">
             {LANGUE_LABEL[doc.langue]}
           </span>
         )}

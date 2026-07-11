@@ -29,6 +29,8 @@ export interface Document {
   source?: DocumentSource;
   /** Fichier réellement téléchargeable, hébergé dans /public/docs (domaine public). */
   fichier?: string;
+  /** Image de couverture réelle, hébergée dans /public/docs/covers. */
+  cover?: string;
 }
 
 export const DOCUMENTS: Document[] = [
@@ -693,6 +695,7 @@ export const DOCUMENTS: Document[] = [
     resume: "Récit autobiographique d'un Africain de l'actuel Nigéria, réduit en esclavage puis affranchi — texte fondateur de la littérature afro-descendante et du mouvement abolitionniste.",
     source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/15399", licence: "Domaine public" },
     fichier: "/docs/equiano-interesting-narrative.epub",
+    cover: "/docs/covers/equiano.jpg",
   },
   {
     id: "doc-102",
@@ -703,6 +706,7 @@ export const DOCUMENTS: Document[] = [
     resume: "Exploration ethnographique de l'Afrique de l'Ouest (Gabon, Congo, Cameroun) : peuples, fleuves et forêts équatoriales décrits à la fin du XIXᵉ siècle.",
     source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/5891", licence: "Domaine public" },
     fichier: "/docs/kingsley-travels-west-africa.epub",
+    cover: "/docs/covers/kingsley.jpg",
   },
   {
     id: "doc-103",
@@ -713,6 +717,7 @@ export const DOCUMENTS: Document[] = [
     resume: "Histoire des civilisations africaines — empires du Ghana, Mali et Songhaï — et de la diaspora, par l'un des grands intellectuels panafricanistes.",
     source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/15359", licence: "Domaine public" },
     fichier: "/docs/dubois-the-negro.epub",
+    cover: "/docs/covers/dubois-negro.jpg",
   },
   {
     id: "doc-104",
@@ -723,6 +728,7 @@ export const DOCUMENTS: Document[] = [
     resume: "Essai majeur sur la condition afro-américaine et le concept de « double conscience » — classique des sciences humaines et sociales.",
     source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/408", licence: "Domaine public" },
     fichier: "/docs/dubois-souls-of-black-folk.epub",
+    cover: "/docs/covers/dubois-souls.jpg",
   },
   {
     id: "doc-105",
@@ -733,6 +739,7 @@ export const DOCUMENTS: Document[] = [
     resume: "Autobiographie d'un éducateur né esclave, fondateur du Tuskegee Institute — réflexion sur l'émancipation par l'éducation.",
     source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/2376", licence: "Domaine public" },
     fichier: "/docs/washington-up-from-slavery.epub",
+    cover: "/docs/covers/washington.jpg",
   },
   {
     id: "doc-106",
@@ -743,6 +750,7 @@ export const DOCUMENTS: Document[] = [
     resume: "Roman sud-africain pionnier situé dans le Karoo — l'un des premiers grands romans du continent, entre réalisme colonial et quête existentielle.",
     source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/1441", licence: "Domaine public" },
     fichier: "/docs/schreiner-story-of-an-african-farm.epub",
+    cover: "/docs/covers/schreiner.jpg",
   },
   {
     id: "doc-107",
@@ -753,6 +761,7 @@ export const DOCUMENTS: Document[] = [
     resume: "Fables classiques attribuées à Ésope — patrimoine littéraire universel, ressource pédagogique pour l'apprentissage des langues et de la morale.",
     source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/11339", licence: "Domaine public" },
     fichier: "/docs/aesop-fables.epub",
+    cover: "/docs/covers/aesop.jpg",
   },
 
   // ── Ressources africaines en libre accès (références externes) ──────────────

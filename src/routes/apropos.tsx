@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 import { SOURCES_LIBRES } from "@/data/documents";
-import { BookOpen, ShieldCheck, HandHeart, Sparkles, ExternalLink } from "lucide-react";
+import { BookOpen, ShieldCheck, HandHeart, Sparkles, ExternalLink, Landmark } from "lucide-react";
 
 export const Route = createFileRoute("/apropos")({
   head: () => ({
@@ -60,6 +60,8 @@ function Apropos() {
     <SiteLayout>
       <div className="h-1 gabon-stripe" aria-hidden="true" />
       <PageHeader
+        Icon={Landmark}
+        accent="navy"
         eyebrow="Institution"
         title="À propos de BiblioGabon."
         description="Une initiative académique gabonaise pour rassembler, préserver et diffuser le savoir universitaire du pays."
