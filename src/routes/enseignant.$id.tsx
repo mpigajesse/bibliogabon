@@ -66,7 +66,6 @@ function EnseignantProfil() {
   return (
     <SiteLayout>
       <section className="relative overflow-hidden bg-navy text-white">
-        <div className="absolute inset-0 pixel-grid-bg opacity-20" aria-hidden />
         <div className="absolute inset-x-0 top-0 gabon-stripe h-1" aria-hidden />
         <div className="container-editorial py-16 relative grid md:grid-cols-[auto_1fr] gap-8 items-start">
           <div
@@ -102,7 +101,7 @@ function EnseignantProfil() {
         </div>
       </section>
 
-      <section className="section-halo">
+      <section className="">
         <div className="container-editorial py-12 md:py-14">
           <h2 className="font-display text-2xl font-semibold text-navy mb-6">
             Publications ({docs.length})

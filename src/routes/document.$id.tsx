@@ -222,7 +222,7 @@ function DocumentDetail() {
       )}
 
       {similaires.length > 0 && (
-        <section className="border-t border-border section-halo">
+        <section className="border-t border-border">
           <div className="container-editorial py-12 md:py-14">
             <h2 className="font-display text-2xl font-semibold text-navy mb-6">
               Documents similaires

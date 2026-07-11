@@ -126,9 +126,7 @@ function Home() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden hero-gradient border-b border-border">
-      <div className="absolute inset-0 pixel-grid-bg opacity-40 pointer-events-none" />
-      <div className="absolute inset-0 section-halo pointer-events-none" />
+    <section className="relative border-b border-border bg-surface-alt">
       <div className="container-editorial relative py-16 md:py-24 lg:py-28 grid lg:grid-cols-[1.1fr_1fr] gap-14 items-center">
         <div>
           <h1
@@ -171,8 +169,7 @@ function HeroArtwork() {
   const [imgOk, setImgOk] = useState(true);
   return (
     <div className="relative hidden lg:block">
-      <div className="absolute -inset-6 rounded-[2.2rem] bg-gradient-to-br from-navy/10 via-transparent to-gold/15 blur-2xl" />
-      <div className="relative aspect-[4/5] rounded-[2rem] border border-border bg-navy shadow-editorial-lg overflow-hidden">
+      <div className="relative aspect-[4/5] rounded-2xl border border-border bg-navy shadow-editorial-lg overflow-hidden">
         {imgOk ? (
           <img
             src="/heroes/hero-accueil.png"
@@ -181,42 +178,24 @@ function HeroArtwork() {
             className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy via-navy-deep to-navy pixel-grid-bg p-12">
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy via-navy-deep to-navy p-12">
             <img src={logoUrl} alt="BiblioGabon" className="w-full max-w-xs object-contain" />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/80 via-navy/10 to-navy/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/10 to-transparent" />
         <span className="absolute top-0 inset-x-0 h-1.5 gabon-stripe" aria-hidden />
-
-        <div className="absolute top-5 left-5 glass-surface rounded-xl px-3.5 py-2.5 shadow-editorial">
-          <p className="font-display text-lg font-bold text-navy leading-none">17</p>
-          <p className="text-[11px] text-muted-foreground">domaines académiques</p>
-        </div>
-        <div className="absolute bottom-24 right-5 glass-surface rounded-xl px-3.5 py-2.5 shadow-editorial-lg">
-          <p className="font-display text-sm font-semibold text-green leading-none">Accès libre</p>
-          <p className="text-[11px] text-muted-foreground">pour chaque étudiant</p>
-        </div>
-
-        <div className="absolute inset-x-5 bottom-5 rounded-2xl bg-white/95 backdrop-blur p-4 shadow-editorial-lg">
-          <div className="flex items-center gap-3">
-            <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-navy text-white">
-              <GraduationCap className="size-5" />
-            </span>
-            <div>
-              <p className="font-display text-sm font-semibold text-navy leading-tight">
-                +100 000 étudiants au Gabon
-              </p>
-              <p className="text-[11px] text-muted-foreground">
-                enfin réunis autour d'une bibliothèque nationale
-              </p>
-            </div>
-          </div>
+        <div className="absolute inset-x-0 bottom-0 p-6">
+          <p className="font-display text-lg font-semibold text-white leading-tight">
+            Les étudiants des universités du Gabon
+          </p>
+          <p className="mt-1 text-sm text-white/70">
+            Libreville, Franceville, Masuku — réunis autour d'une bibliothèque nationale.
+          </p>
         </div>
       </div>
     </div>
   );
 }
-
 
 function TrustStrip() {
   return (
@@ -302,9 +281,8 @@ function DomainesBento() {
     (d): d is (typeof DOMAINES)[number] => Boolean(d),
   );
   return (
-    <section className="relative border-b border-border bg-surface-alt">
-      <div className="absolute inset-0 section-halo pointer-events-none" aria-hidden />
-      <div className="container-editorial relative py-16 md:py-24">
+    <section className="border-b border-border bg-background">
+      <div className="container-editorial py-16 md:py-24">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
           <div className="max-w-2xl">
             <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-green">
@@ -496,7 +474,6 @@ function VisionTeaser() {
         />
       )}
       <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy/95 to-navy/70" />
-      <div className="absolute inset-0 pixel-grid-bg opacity-15 pointer-events-none" />
       <div className="container-editorial py-20 md:py-24 relative">
         <div className="grid lg:grid-cols-[1.2fr_1fr] gap-14">
           <div>

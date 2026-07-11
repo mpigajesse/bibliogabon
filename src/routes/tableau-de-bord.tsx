@@ -88,7 +88,7 @@ function Dashboard() {
         tone="muted"
       />
       <Section title="Mes téléchargements" viewAll="Tous mes téléchargements" docs={telecharges} />
-      <section className="border-t border-border section-halo">
+      <section className="border-t border-border">
         <div className="container-editorial py-14 text-center">
           <p className="text-muted-foreground">Envie de découvrir de nouveaux documents ?</p>
           <Button asChild size="lg" className="mt-4 bg-navy text-white hover:bg-navy-deep">

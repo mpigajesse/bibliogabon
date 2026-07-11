@@ -69,7 +69,7 @@ export function DocumentCard({ doc }: { doc: Document }) {
       params={{ id: doc.id }}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-editorial hover:shadow-editorial-lg hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-all duration-200"
     >
-      <div className={`relative aspect-[4/3] overflow-hidden pixel-grid-bg ${coverBg}`}>
+      <div className={`relative aspect-[4/3] overflow-hidden ${coverBg}`}>
         <span
           className="absolute top-0 inset-x-0 z-20 h-[3px] gabon-stripe opacity-90"
           aria-hidden

@@ -57,7 +57,7 @@ export function DocumentCover({
 
   return (
     <>
-      <div className={`absolute inset-0 pixel-grid-bg ${bg}`} aria-hidden />
+      <div className={`absolute inset-0 ${bg}`} aria-hidden />
       {imgOk ? (
         <>
           <img

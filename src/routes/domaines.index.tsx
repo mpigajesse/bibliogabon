@@ -56,7 +56,7 @@ function DomainesIndex() {
           </span>
         </div>
       </PageHeader>
-      <section className="section-halo">
+      <section className="">
         <div className="container-editorial py-14">
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {DOMAINES.map((d, i) => (

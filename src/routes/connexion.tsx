@@ -51,7 +51,7 @@ function Connexion() {
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2 bg-background">
-      <div className="hidden lg:flex relative overflow-hidden bg-navy text-white pixel-grid-bg">
+      <div className="hidden lg:flex relative overflow-hidden bg-navy text-white">
         <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy-deep to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-1 gabon-stripe" aria-hidden="true" />
         <div className="relative z-10 flex flex-col justify-between p-12 w-full">

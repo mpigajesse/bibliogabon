@@ -75,7 +75,7 @@ interface SourceRef {
 
 function CatalogueStatsStrip({ stats, sources }: { stats: StatItem[]; sources: SourceRef[] }) {
   return (
-    <section className="section-halo border-b border-border">
+    <section className="border-b border-border">
       <div className="container-editorial py-8">
         <dl className="grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-4">
           {stats.map((s) => (

@@ -108,7 +108,7 @@ function Apropos() {
       </section>
 
       {/* Mission — 3 universités */}
-      <section className="bg-muted/40 border-b border-border section-halo">
+      <section className="bg-muted/40 border-b border-border">
         <div className="container-editorial py-16">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold mb-4">
             Notre mission

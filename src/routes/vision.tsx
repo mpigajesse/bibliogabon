@@ -62,7 +62,7 @@ function Vision() {
         crumbs={[{ label: "Accueil", to: "/" }, { label: "Vision" }]}
       />
 
-      <section className="border-b border-border section-halo">
+      <section className="border-b border-border">
         <div className="container-editorial py-16">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green mb-4">
             Contexte MESRI 2023
@@ -127,7 +127,7 @@ function Vision() {
         </div>
       </section>
 
-      <section className="bg-navy text-white pixel-grid-bg relative overflow-hidden">
+      <section className="bg-navy text-white relative overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-1 gabon-stripe" aria-hidden="true" />
         <div className="container-editorial py-20 text-center relative max-w-3xl">
           <Quote className="mx-auto size-8 text-gold mb-6" />

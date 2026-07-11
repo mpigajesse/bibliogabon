@@ -61,7 +61,6 @@ export function PageHeader({
           : "bg-background border-b border-border"
       }`}
     >
-      <div className="absolute inset-0 section-halo pointer-events-none" aria-hidden />
       <div className="container-editorial relative py-12 md:py-16 grid lg:grid-cols-[1fr_auto] gap-10 items-center">
         <div className="min-w-0">
           {crumbs && crumbs.length > 0 && (
@@ -107,11 +106,7 @@ export function PageHeader({
         </div>
 
         <div className="hidden lg:block relative h-48 w-72 shrink-0">
-          <div
-            className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-navy/5 via-transparent to-gold/10 blur-2xl"
-            aria-hidden
-          />
-          <div className="relative h-full w-full overflow-hidden rounded-2xl border border-border bg-white/70 backdrop-blur shadow-editorial-lg hero-gradient">
+          <div className="relative h-full w-full overflow-hidden rounded-2xl border border-border bg-surface-alt shadow-editorial-lg">
             {imgOk ? (
               <>
                 <img
@@ -129,7 +124,6 @@ export function PageHeader({
               </>
             ) : (
               <div className="absolute inset-0 flex items-center justify-center" aria-hidden>
-                <div className="absolute inset-0 pixel-grid-bg opacity-60" />
                 <Icon className={`size-24 ${accentText} opacity-80`} strokeWidth={1.1} />
               </div>
             )}
