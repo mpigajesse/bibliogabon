@@ -21,7 +21,6 @@ import { CONTRIBUTEURS } from "@/data/contributeurs";
 import { DOCUMENTS, documentsByType, SOURCES_LIBRES } from "@/data/documents";
 import { STATS_ACCUEIL, STATS_VISION } from "@/data/stats";
 import { DOMAINES } from "@/data/domaines";
-import logoUrl from "@/assets/bibliogabon-logo.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -126,74 +125,21 @@ function Home() {
 
 function Hero() {
   return (
-    <section className="relative border-b border-border bg-surface-alt">
-      <div className="container-editorial relative py-16 md:py-24 lg:py-28 grid lg:grid-cols-[1.1fr_1fr] gap-14 items-center">
-        <div>
-          <h1
-            className="font-display font-bold text-navy leading-[1.02] tracking-tighter"
-            style={{ fontSize: "clamp(2.75rem, 5.4vw, 5.25rem)" }}
-          >
-            La Grande Source
-            <br />
-            <span className="italic text-green">documentaire</span> du Gabon.
-          </h1>
-          <div className="mt-5 h-1 w-24 gabon-rule" aria-hidden />
-          <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
-            Des milliers de livres, cours, thèses et articles scientifiques pour les étudiants et
-            enseignants des universités gabonaises.
-          </p>
-
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
-              <Link to="/domaines">
-                Explorer le catalogue <ArrowRight className="size-4 ml-1" />
-              </Link>
-            </Button>
-            <Link
-              to="/enseignants"
-              className="group inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-gold transition"
-            >
-              Découvrir nos enseignants
-              <ArrowRight className="size-4 group-hover:translate-x-0.5 transition" />
-            </Link>
-          </div>
-        </div>
-
-        <HeroArtwork />
-      </div>
+    <section className="relative bg-navy border-b border-border">
+      <span className="absolute top-0 inset-x-0 z-10 h-1.5 gabon-stripe" aria-hidden />
+      <video
+        className="block h-[56vh] md:h-[70vh] w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/heroes/hero-accueil.png"
+        aria-label="Les universités et étudiants du Gabon"
+      >
+        <source src="/vidoes/videohome.mp4" type="video/mp4" />
+      </video>
     </section>
-  );
-}
-
-function HeroArtwork() {
-  const [imgOk, setImgOk] = useState(true);
-  return (
-    <div className="relative hidden lg:block">
-      <div className="relative aspect-[4/5] rounded-2xl border border-border bg-navy shadow-editorial-lg overflow-hidden">
-        {imgOk ? (
-          <img
-            src="/heroes/hero-accueil.png"
-            alt="Étudiants des universités gabonaises"
-            onError={() => setImgOk(false)}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy via-navy-deep to-navy p-12">
-            <img src={logoUrl} alt="BiblioGabon" className="w-full max-w-xs object-contain" />
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/10 to-transparent" />
-        <span className="absolute top-0 inset-x-0 h-1.5 gabon-stripe" aria-hidden />
-        <div className="absolute inset-x-0 bottom-0 p-6">
-          <p className="font-display text-lg font-semibold text-white leading-tight">
-            Les étudiants des universités du Gabon
-          </p>
-          <p className="mt-1 text-sm text-white/70">
-            Libreville, Franceville, Masuku — réunis autour d'une bibliothèque nationale.
-          </p>
-        </div>
-      </div>
-    </div>
   );
 }
 
