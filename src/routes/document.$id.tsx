@@ -282,8 +282,7 @@ function AccesDocument({ doc }: { doc: Document }) {
           </Button>
         </div>
         <div className="mt-6 rounded-xl border border-gold/30 bg-[oklch(0.98_0.05_88)] p-4 text-sm text-[oklch(0.35_0.12_60)]">
-          La lecture et le téléchargement sont réservés aux étudiants et
-          enseignants inscrits.{" "}
+          La lecture et le téléchargement sont réservés aux étudiants et enseignants inscrits.{" "}
           <Link
             to="/inscription"
             className="font-semibold underline hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm"
@@ -309,8 +308,8 @@ function AccesDocument({ doc }: { doc: Document }) {
         </Button>
       </div>
       <div className="mt-6 rounded-xl border border-green/25 bg-green-soft/60 p-4 text-sm text-green">
-        Connecté en tant que{" "}
-        <span className="font-semibold">{compte.nom}</span> — lecture et téléchargement débloqués.
+        Connecté en tant que <span className="font-semibold">{compte.nom}</span> — lecture et
+        téléchargement débloqués.
       </div>
     </>
   );

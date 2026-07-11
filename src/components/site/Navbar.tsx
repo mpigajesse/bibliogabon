@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Menu,
   X,
@@ -35,6 +35,18 @@ export function Navbar() {
     navigate({ to: "/" });
   };
 
+  // Menu Domaines : ouverture immédiate, fermeture avec un léger délai
+  // pour laisser le temps d'atteindre le panneau sans qu'il disparaisse.
+  const closeTimer = useRef<number | null>(null);
+  const ouvrirDomaines = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    setOpenDom(true);
+  };
+  const fermerDomaines = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => setOpenDom(false), 160);
+  };
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -55,11 +67,7 @@ export function Navbar() {
         <Logo size={36} withWordmark animateWordmark />
         <nav className="hidden lg:flex items-center gap-1 text-sm">
           <NavItem to="/">Accueil</NavItem>
-          <div
-            className="relative"
-            onMouseEnter={() => setOpenDom(true)}
-            onMouseLeave={() => setOpenDom(false)}
-          >
+          <div className="relative" onMouseEnter={ouvrirDomaines} onMouseLeave={fermerDomaines}>
             <button
               type="button"
               onClick={() => setOpenDom((v) => !v)}
@@ -73,8 +81,9 @@ export function Navbar() {
               />
             </button>
             {openDom && (
-              <div className="absolute left-0 top-full mt-2 w-[720px] rounded-2xl border border-border bg-popover shadow-editorial-lg p-5 grid grid-cols-2 gap-x-6 gap-y-1 text-left">
-                <div className="col-span-2 flex items-center justify-between pb-3 mb-1 border-b border-border">
+              <div className="absolute left-0 top-full z-50 pt-2">
+                <div className="w-[720px] rounded-2xl border border-border bg-popover shadow-editorial-lg p-5 grid grid-cols-2 gap-x-6 gap-y-1 text-left">
+                  <div className="col-span-2 flex items-center justify-between pb-3 mb-1 border-b border-border">
                   <span className="font-display text-sm font-semibold text-navy">
                     17 domaines académiques
                   </span>
@@ -108,6 +117,7 @@ export function Navbar() {
                     <span className="text-foreground/90 group-hover:text-navy">{d.nom}</span>
                   </Link>
                 ))}
+                </div>
               </div>
             )}
           </div>
