@@ -9,38 +9,394 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VisionRouteImport } from './routes/vision'
+import { Route as ThesesRouteImport } from './routes/theses'
+import { Route as TableauDeBordRouteImport } from './routes/tableau-de-bord'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as LivresRouteImport } from './routes/livres'
+import { Route as InscriptionRouteImport } from './routes/inscription'
+import { Route as ExamensRouteImport } from './routes/examens'
+import { Route as EnseignantsRouteImport } from './routes/enseignants'
+import { Route as CoursRouteImport } from './routes/cours'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ConnexionRouteImport } from './routes/connexion'
+import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
+import { Route as CguRouteImport } from './routes/cgu'
+import { Route as ArticlesRouteImport } from './routes/articles'
+import { Route as AproposRouteImport } from './routes/apropos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DomainesIndexRouteImport } from './routes/domaines.index'
+import { Route as EnseignantIdRouteImport } from './routes/enseignant.$id'
+import { Route as DomainesSlugRouteImport } from './routes/domaines.$slug'
+import { Route as DocumentIdRouteImport } from './routes/document.$id'
 
+const VisionRoute = VisionRouteImport.update({
+  id: '/vision',
+  path: '/vision',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ThesesRoute = ThesesRouteImport.update({
+  id: '/theses',
+  path: '/theses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TableauDeBordRoute = TableauDeBordRouteImport.update({
+  id: '/tableau-de-bord',
+  path: '/tableau-de-bord',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LivresRoute = LivresRouteImport.update({
+  id: '/livres',
+  path: '/livres',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InscriptionRoute = InscriptionRouteImport.update({
+  id: '/inscription',
+  path: '/inscription',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExamensRoute = ExamensRouteImport.update({
+  id: '/examens',
+  path: '/examens',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnseignantsRoute = EnseignantsRouteImport.update({
+  id: '/enseignants',
+  path: '/enseignants',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursRoute = CoursRouteImport.update({
+  id: '/cours',
+  path: '/cours',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConnexionRoute = ConnexionRouteImport.update({
+  id: '/connexion',
+  path: '/connexion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
+  id: '/confidentialite',
+  path: '/confidentialite',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CguRoute = CguRouteImport.update({
+  id: '/cgu',
+  path: '/cgu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArticlesRoute = ArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AproposRoute = AproposRouteImport.update({
+  id: '/apropos',
+  path: '/apropos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DomainesIndexRoute = DomainesIndexRouteImport.update({
+  id: '/domaines/',
+  path: '/domaines/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnseignantIdRoute = EnseignantIdRouteImport.update({
+  id: '/enseignant/$id',
+  path: '/enseignant/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DomainesSlugRoute = DomainesSlugRouteImport.update({
+  id: '/domaines/$slug',
+  path: '/domaines/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocumentIdRoute = DocumentIdRouteImport.update({
+  id: '/document/$id',
+  path: '/document/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/apropos': typeof AproposRoute
+  '/articles': typeof ArticlesRoute
+  '/cgu': typeof CguRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/connexion': typeof ConnexionRoute
+  '/contact': typeof ContactRoute
+  '/cours': typeof CoursRoute
+  '/enseignants': typeof EnseignantsRoute
+  '/examens': typeof ExamensRoute
+  '/inscription': typeof InscriptionRoute
+  '/livres': typeof LivresRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/tableau-de-bord': typeof TableauDeBordRoute
+  '/theses': typeof ThesesRoute
+  '/vision': typeof VisionRoute
+  '/document/$id': typeof DocumentIdRoute
+  '/domaines/$slug': typeof DomainesSlugRoute
+  '/enseignant/$id': typeof EnseignantIdRoute
+  '/domaines/': typeof DomainesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/apropos': typeof AproposRoute
+  '/articles': typeof ArticlesRoute
+  '/cgu': typeof CguRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/connexion': typeof ConnexionRoute
+  '/contact': typeof ContactRoute
+  '/cours': typeof CoursRoute
+  '/enseignants': typeof EnseignantsRoute
+  '/examens': typeof ExamensRoute
+  '/inscription': typeof InscriptionRoute
+  '/livres': typeof LivresRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/tableau-de-bord': typeof TableauDeBordRoute
+  '/theses': typeof ThesesRoute
+  '/vision': typeof VisionRoute
+  '/document/$id': typeof DocumentIdRoute
+  '/domaines/$slug': typeof DomainesSlugRoute
+  '/enseignant/$id': typeof EnseignantIdRoute
+  '/domaines': typeof DomainesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/apropos': typeof AproposRoute
+  '/articles': typeof ArticlesRoute
+  '/cgu': typeof CguRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/connexion': typeof ConnexionRoute
+  '/contact': typeof ContactRoute
+  '/cours': typeof CoursRoute
+  '/enseignants': typeof EnseignantsRoute
+  '/examens': typeof ExamensRoute
+  '/inscription': typeof InscriptionRoute
+  '/livres': typeof LivresRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/tableau-de-bord': typeof TableauDeBordRoute
+  '/theses': typeof ThesesRoute
+  '/vision': typeof VisionRoute
+  '/document/$id': typeof DocumentIdRoute
+  '/domaines/$slug': typeof DomainesSlugRoute
+  '/enseignant/$id': typeof EnseignantIdRoute
+  '/domaines/': typeof DomainesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/apropos'
+    | '/articles'
+    | '/cgu'
+    | '/confidentialite'
+    | '/connexion'
+    | '/contact'
+    | '/cours'
+    | '/enseignants'
+    | '/examens'
+    | '/inscription'
+    | '/livres'
+    | '/sitemap.xml'
+    | '/tableau-de-bord'
+    | '/theses'
+    | '/vision'
+    | '/document/$id'
+    | '/domaines/$slug'
+    | '/enseignant/$id'
+    | '/domaines/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/apropos'
+    | '/articles'
+    | '/cgu'
+    | '/confidentialite'
+    | '/connexion'
+    | '/contact'
+    | '/cours'
+    | '/enseignants'
+    | '/examens'
+    | '/inscription'
+    | '/livres'
+    | '/sitemap.xml'
+    | '/tableau-de-bord'
+    | '/theses'
+    | '/vision'
+    | '/document/$id'
+    | '/domaines/$slug'
+    | '/enseignant/$id'
+    | '/domaines'
+  id:
+    | '__root__'
+    | '/'
+    | '/apropos'
+    | '/articles'
+    | '/cgu'
+    | '/confidentialite'
+    | '/connexion'
+    | '/contact'
+    | '/cours'
+    | '/enseignants'
+    | '/examens'
+    | '/inscription'
+    | '/livres'
+    | '/sitemap.xml'
+    | '/tableau-de-bord'
+    | '/theses'
+    | '/vision'
+    | '/document/$id'
+    | '/domaines/$slug'
+    | '/enseignant/$id'
+    | '/domaines/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AproposRoute: typeof AproposRoute
+  ArticlesRoute: typeof ArticlesRoute
+  CguRoute: typeof CguRoute
+  ConfidentialiteRoute: typeof ConfidentialiteRoute
+  ConnexionRoute: typeof ConnexionRoute
+  ContactRoute: typeof ContactRoute
+  CoursRoute: typeof CoursRoute
+  EnseignantsRoute: typeof EnseignantsRoute
+  ExamensRoute: typeof ExamensRoute
+  InscriptionRoute: typeof InscriptionRoute
+  LivresRoute: typeof LivresRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TableauDeBordRoute: typeof TableauDeBordRoute
+  ThesesRoute: typeof ThesesRoute
+  VisionRoute: typeof VisionRoute
+  DocumentIdRoute: typeof DocumentIdRoute
+  DomainesSlugRoute: typeof DomainesSlugRoute
+  EnseignantIdRoute: typeof EnseignantIdRoute
+  DomainesIndexRoute: typeof DomainesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/vision': {
+      id: '/vision'
+      path: '/vision'
+      fullPath: '/vision'
+      preLoaderRoute: typeof VisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/theses': {
+      id: '/theses'
+      path: '/theses'
+      fullPath: '/theses'
+      preLoaderRoute: typeof ThesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tableau-de-bord': {
+      id: '/tableau-de-bord'
+      path: '/tableau-de-bord'
+      fullPath: '/tableau-de-bord'
+      preLoaderRoute: typeof TableauDeBordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/livres': {
+      id: '/livres'
+      path: '/livres'
+      fullPath: '/livres'
+      preLoaderRoute: typeof LivresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inscription': {
+      id: '/inscription'
+      path: '/inscription'
+      fullPath: '/inscription'
+      preLoaderRoute: typeof InscriptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/examens': {
+      id: '/examens'
+      path: '/examens'
+      fullPath: '/examens'
+      preLoaderRoute: typeof ExamensRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enseignants': {
+      id: '/enseignants'
+      path: '/enseignants'
+      fullPath: '/enseignants'
+      preLoaderRoute: typeof EnseignantsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cours': {
+      id: '/cours'
+      path: '/cours'
+      fullPath: '/cours'
+      preLoaderRoute: typeof CoursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/connexion': {
+      id: '/connexion'
+      path: '/connexion'
+      fullPath: '/connexion'
+      preLoaderRoute: typeof ConnexionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confidentialite': {
+      id: '/confidentialite'
+      path: '/confidentialite'
+      fullPath: '/confidentialite'
+      preLoaderRoute: typeof ConfidentialiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cgu': {
+      id: '/cgu'
+      path: '/cgu'
+      fullPath: '/cgu'
+      preLoaderRoute: typeof CguRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/articles': {
+      id: '/articles'
+      path: '/articles'
+      fullPath: '/articles'
+      preLoaderRoute: typeof ArticlesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apropos': {
+      id: '/apropos'
+      path: '/apropos'
+      fullPath: '/apropos'
+      preLoaderRoute: typeof AproposRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +404,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/domaines/': {
+      id: '/domaines/'
+      path: '/domaines'
+      fullPath: '/domaines/'
+      preLoaderRoute: typeof DomainesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enseignant/$id': {
+      id: '/enseignant/$id'
+      path: '/enseignant/$id'
+      fullPath: '/enseignant/$id'
+      preLoaderRoute: typeof EnseignantIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/domaines/$slug': {
+      id: '/domaines/$slug'
+      path: '/domaines/$slug'
+      fullPath: '/domaines/$slug'
+      preLoaderRoute: typeof DomainesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/document/$id': {
+      id: '/document/$id'
+      path: '/document/$id'
+      fullPath: '/document/$id'
+      preLoaderRoute: typeof DocumentIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AproposRoute: AproposRoute,
+  ArticlesRoute: ArticlesRoute,
+  CguRoute: CguRoute,
+  ConfidentialiteRoute: ConfidentialiteRoute,
+  ConnexionRoute: ConnexionRoute,
+  ContactRoute: ContactRoute,
+  CoursRoute: CoursRoute,
+  EnseignantsRoute: EnseignantsRoute,
+  ExamensRoute: ExamensRoute,
+  InscriptionRoute: InscriptionRoute,
+  LivresRoute: LivresRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TableauDeBordRoute: TableauDeBordRoute,
+  ThesesRoute: ThesesRoute,
+  VisionRoute: VisionRoute,
+  DocumentIdRoute: DocumentIdRoute,
+  DomainesSlugRoute: DomainesSlugRoute,
+  EnseignantIdRoute: EnseignantIdRoute,
+  DomainesIndexRoute: DomainesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
