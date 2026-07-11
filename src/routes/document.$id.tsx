@@ -1,14 +1,40 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 import { DocumentCard } from "@/components/site/DocumentCard";
 import { DomainBadge } from "@/components/site/DomainBadge";
 import { EmptyState } from "@/components/site/EmptyState";
 import { Button } from "@/components/ui/button";
-import { documentById, documentsSimilaires, type DocumentType } from "@/data/documents";
+import {
+  documentById,
+  documentsSimilaires,
+  type Document,
+  type DocumentType,
+} from "@/data/documents";
 import { domaineBySlug } from "@/data/domaines";
 import { contributeurById } from "@/data/contributeurs";
-import { Lock, Download, Eye, Calendar, FileText, User, BookOpen, GraduationCap, ScrollText, FlaskConical, ClipboardList, ExternalLink, ShieldCheck, Languages, Layers, Info } from "lucide-react";
+import { getCompteCourant } from "@/lib/auth";
+import type { Compte } from "@/data/comptes";
+import { genererHtml, slugifier } from "@/lib/document-content";
+import {
+  Lock,
+  Download,
+  Eye,
+  Calendar,
+  FileText,
+  User,
+  BookOpen,
+  GraduationCap,
+  ScrollText,
+  FlaskConical,
+  ClipboardList,
+  ExternalLink,
+  ShieldCheck,
+  Languages,
+  Layers,
+  Info,
+} from "lucide-react";
 
 const TYPE_META: Record<DocumentType, { label: string; Icon: typeof BookOpen }> = {
   article: { label: "Article", Icon: FlaskConical },
@@ -103,7 +129,11 @@ function DocumentDetail() {
                     aria-hidden
                   />
                   <div className="absolute inset-0 flex flex-col justify-end p-6">
-                    <TypeIcon className="mb-3 size-10 text-white/80" strokeWidth={1.4} aria-hidden />
+                    <TypeIcon
+                      className="mb-3 size-10 text-white/80"
+                      strokeWidth={1.4}
+                      aria-hidden
+                    />
                     <p className="font-display text-xl font-semibold leading-snug text-white line-clamp-4">
                       {doc.titre}
                     </p>
@@ -165,30 +195,7 @@ function DocumentDetail() {
               {doc.resume}
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
-                <Link to="/connexion">
-                  <Lock className="size-4 mr-1.5" aria-hidden /> Lire — Connexion requise
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-navy/20">
-                <Link to="/connexion">
-                  <Download className="size-4 mr-1.5" aria-hidden /> Télécharger
-                </Link>
-              </Button>
-            </div>
-
-            <div className="mt-6 rounded-xl border border-gold/30 bg-[oklch(0.98_0.05_88)] p-4 text-sm text-[oklch(0.35_0.12_60)]">
-              <span aria-hidden>🔒</span> La lecture et le téléchargement du fichier complet sont
-              réservés aux étudiants et enseignants inscrits.{" "}
-              <Link
-                to="/inscription"
-                className="font-semibold underline hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm"
-              >
-                Créer un compte gratuit
-              </Link>
-              .
-            </div>
+            <AccesDocument doc={doc} />
 
             {doc.source && (
               <div className="mt-6 max-w-3xl rounded-2xl border border-border bg-surface-alt p-5">
@@ -264,5 +271,92 @@ function DocumentDetail() {
         </section>
       )}
     </SiteLayout>
+  );
+}
+
+function AccesDocument({ doc }: { doc: Document }) {
+  const [compte, setCompte] = useState<Compte | null>(null);
+  const [monte, setMonte] = useState(false);
+
+  useEffect(() => {
+    setCompte(getCompteCourant());
+    setMonte(true);
+  }, []);
+
+  const telecharger = () => {
+    if (doc.fichier) {
+      const a = document.createElement("a");
+      a.href = doc.fichier;
+      a.download = "";
+      a.click();
+      return;
+    }
+    const blob = new Blob([genererHtml(doc)], { type: "text/html;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${slugifier(doc.titre)}.html`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const estLivre = Boolean(doc.fichier);
+
+  if (!monte) {
+    return <div className="mt-8 h-12 w-64 animate-pulse rounded-lg bg-muted" aria-hidden />;
+  }
+
+  if (!compte) {
+    return (
+      <>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
+            <Link to="/connexion">
+              <Lock className="size-4 mr-1.5" aria-hidden /> Lire — Connexion requise
+            </Link>
+          </Button>
+          <Button asChild size="lg" variant="outline" className="border-navy/20">
+            <Link to="/connexion">
+              <Download className="size-4 mr-1.5" aria-hidden /> Télécharger
+            </Link>
+          </Button>
+        </div>
+        <div className="mt-6 rounded-xl border border-gold/30 bg-[oklch(0.98_0.05_88)] p-4 text-sm text-[oklch(0.35_0.12_60)]">
+          <span aria-hidden>🔒</span> La lecture et le téléchargement sont réservés aux étudiants et
+          enseignants inscrits.{" "}
+          <Link
+            to="/inscription"
+            className="font-semibold underline hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm"
+          >
+            Créer un compte gratuit
+          </Link>
+          .
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div className="mt-8 flex flex-wrap gap-3">
+        <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
+          <Link to="/document/$id/lecture" params={{ id: doc.id }}>
+            <Eye className="size-4 mr-1.5" aria-hidden /> Lire en ligne
+          </Link>
+        </Button>
+        <Button
+          size="lg"
+          variant="outline"
+          className="border-navy/20"
+          onClick={telecharger}
+        >
+          <Download className="size-4 mr-1.5" aria-hidden /> Télécharger{estLivre ? " (EPUB)" : ""}
+        </Button>
+      </div>
+      <div className="mt-6 rounded-xl border border-green/25 bg-green-soft/60 p-4 text-sm text-green">
+        <span aria-hidden>✅</span> Connecté en tant que{" "}
+        <span className="font-semibold">{compte.nom}</span> — lecture et téléchargement débloqués.
+      </div>
+    </>
   );
 }

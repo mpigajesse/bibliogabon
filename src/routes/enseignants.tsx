@@ -45,7 +45,7 @@ function EnseignantsAnnuaire() {
       <PageHeader
         Icon={Users}
         accent="gold"
-        image="/heroes/hero-enseignants.jpg"
+        image="/heroes/hero-enseignants.png"
         eyebrow="Communauté"
         title="Nos enseignants contributeurs."
         description="Professeurs, ingénieurs, docteurs et maîtres-assistants des universités gabonaises qui partagent librement leurs ressources pédagogiques avec toute la communauté académique nationale."

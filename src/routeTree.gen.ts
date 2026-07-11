@@ -29,6 +29,7 @@ import { Route as DomainesIndexRouteImport } from './routes/domaines.index'
 import { Route as EnseignantIdRouteImport } from './routes/enseignant.$id'
 import { Route as DomainesSlugRouteImport } from './routes/domaines.$slug'
 import { Route as DocumentIdRouteImport } from './routes/document.$id'
+import { Route as DocumentIdLectureRouteImport } from './routes/document.$id.lecture'
 
 const VisionRoute = VisionRouteImport.update({
   id: '/vision',
@@ -130,6 +131,11 @@ const DocumentIdRoute = DocumentIdRouteImport.update({
   path: '/document/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocumentIdLectureRoute = DocumentIdLectureRouteImport.update({
+  id: '/lecture',
+  path: '/lecture',
+  getParentRoute: () => DocumentIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -148,10 +154,11 @@ export interface FileRoutesByFullPath {
   '/tableau-de-bord': typeof TableauDeBordRoute
   '/theses': typeof ThesesRoute
   '/vision': typeof VisionRoute
-  '/document/$id': typeof DocumentIdRoute
+  '/document/$id': typeof DocumentIdRouteWithChildren
   '/domaines/$slug': typeof DomainesSlugRoute
   '/enseignant/$id': typeof EnseignantIdRoute
   '/domaines/': typeof DomainesIndexRoute
+  '/document/$id/lecture': typeof DocumentIdLectureRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -170,10 +177,11 @@ export interface FileRoutesByTo {
   '/tableau-de-bord': typeof TableauDeBordRoute
   '/theses': typeof ThesesRoute
   '/vision': typeof VisionRoute
-  '/document/$id': typeof DocumentIdRoute
+  '/document/$id': typeof DocumentIdRouteWithChildren
   '/domaines/$slug': typeof DomainesSlugRoute
   '/enseignant/$id': typeof EnseignantIdRoute
   '/domaines': typeof DomainesIndexRoute
+  '/document/$id/lecture': typeof DocumentIdLectureRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -193,10 +201,11 @@ export interface FileRoutesById {
   '/tableau-de-bord': typeof TableauDeBordRoute
   '/theses': typeof ThesesRoute
   '/vision': typeof VisionRoute
-  '/document/$id': typeof DocumentIdRoute
+  '/document/$id': typeof DocumentIdRouteWithChildren
   '/domaines/$slug': typeof DomainesSlugRoute
   '/enseignant/$id': typeof EnseignantIdRoute
   '/domaines/': typeof DomainesIndexRoute
+  '/document/$id/lecture': typeof DocumentIdLectureRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/domaines/$slug'
     | '/enseignant/$id'
     | '/domaines/'
+    | '/document/$id/lecture'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -243,6 +253,7 @@ export interface FileRouteTypes {
     | '/domaines/$slug'
     | '/enseignant/$id'
     | '/domaines'
+    | '/document/$id/lecture'
   id:
     | '__root__'
     | '/'
@@ -265,6 +276,7 @@ export interface FileRouteTypes {
     | '/domaines/$slug'
     | '/enseignant/$id'
     | '/domaines/'
+    | '/document/$id/lecture'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -284,7 +296,7 @@ export interface RootRouteChildren {
   TableauDeBordRoute: typeof TableauDeBordRoute
   ThesesRoute: typeof ThesesRoute
   VisionRoute: typeof VisionRoute
-  DocumentIdRoute: typeof DocumentIdRoute
+  DocumentIdRoute: typeof DocumentIdRouteWithChildren
   DomainesSlugRoute: typeof DomainesSlugRoute
   EnseignantIdRoute: typeof EnseignantIdRoute
   DomainesIndexRoute: typeof DomainesIndexRoute
@@ -432,8 +444,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocumentIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/document/$id/lecture': {
+      id: '/document/$id/lecture'
+      path: '/lecture'
+      fullPath: '/document/$id/lecture'
+      preLoaderRoute: typeof DocumentIdLectureRouteImport
+      parentRoute: typeof DocumentIdRoute
+    }
   }
 }
+
+interface DocumentIdRouteChildren {
+  DocumentIdLectureRoute: typeof DocumentIdLectureRoute
+}
+
+const DocumentIdRouteChildren: DocumentIdRouteChildren = {
+  DocumentIdLectureRoute: DocumentIdLectureRoute,
+}
+
+const DocumentIdRouteWithChildren = DocumentIdRoute._addFileChildren(
+  DocumentIdRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -452,7 +483,7 @@ const rootRouteChildren: RootRouteChildren = {
   TableauDeBordRoute: TableauDeBordRoute,
   ThesesRoute: ThesesRoute,
   VisionRoute: VisionRoute,
-  DocumentIdRoute: DocumentIdRoute,
+  DocumentIdRoute: DocumentIdRouteWithChildren,
   DomainesSlugRoute: DomainesSlugRoute,
   EnseignantIdRoute: EnseignantIdRoute,
   DomainesIndexRoute: DomainesIndexRoute,

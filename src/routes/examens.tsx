@@ -37,7 +37,7 @@ function ExamensPage() {
       <PageHeader
         Icon={ClipboardList}
         accent="gold"
-        image="/heroes/hero-examens.jpg"
+        image="/heroes/hero-examens.png"
         eyebrow="Catalogue"
         title="Examens & annales."
         description="Sujets d'examens, épreuves écrites et corrigés partagés par les enseignants."

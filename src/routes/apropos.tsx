@@ -62,7 +62,7 @@ function Apropos() {
       <PageHeader
         Icon={Landmark}
         accent="navy"
-        image="/heroes/hero-apropos.jpg"
+        image="/heroes/hero-apropos.png"
         eyebrow="Institution"
         title="À propos de BiblioGabon."
         description="Une initiative académique gabonaise pour rassembler, préserver et diffuser le savoir universitaire du pays."

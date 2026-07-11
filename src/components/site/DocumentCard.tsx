@@ -47,8 +47,23 @@ export function DocumentCard({ doc }: { doc: Document }) {
 
   // Couverture réelle (livre) ou image thématique du domaine ; repli généré si absente.
   const isBookCover = Boolean(doc.cover);
-  const coverSrc = doc.cover ?? `/covers/domaines/${doc.domaineSlug}.jpg`;
+  const [src, setSrc] = useState(doc.cover ?? `/covers/domaines/${doc.domaineSlug}.png`);
+  const [triedAlt, setTriedAlt] = useState(false);
   const [imgOk, setImgOk] = useState(true);
+
+  const onImgError = () => {
+    if (!triedAlt) {
+      const alt = src.endsWith(".png")
+        ? src.replace(/\.png$/, ".jpg")
+        : src.replace(/\.jpe?g$/, ".png");
+      if (alt !== src) {
+        setTriedAlt(true);
+        setSrc(alt);
+        return;
+      }
+    }
+    setImgOk(false);
+  };
 
   return (
     <Link
@@ -65,9 +80,9 @@ export function DocumentCard({ doc }: { doc: Document }) {
         {imgOk ? (
           <>
             <img
-              src={coverSrc}
+              src={src}
               alt={`Couverture — ${doc.titre}`}
-              onError={() => setImgOk(false)}
+              onError={onImgError}
               className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
               loading="lazy"
               decoding="async"

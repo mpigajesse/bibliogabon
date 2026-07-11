@@ -20,6 +20,12 @@ public/covers/domaines/   → couvertures par domaine académique (17)
 public/covers/site/       → images diverses (partage social, auth…)
 ```
 
+> ✅ **Formats acceptés : `.png` (sortie par défaut de GPT Image) ou `.jpg`** — le code essaie les deux.
+> ⚠️ **Attention à 3 erreurs fréquentes :**
+> 1. **Pas de double extension** : le fichier doit s'appeler `agriculture-environnement.png`, PAS `agriculture-environnement.jpg.png`.
+> 2. **Le bon dossier** : les `hero-*` vont dans `public/heroes/` ; les couvertures de domaine (nommées par slug) vont dans `public/covers/domaines/`.
+> 3. **Le nom exact** : respecte scrupuleusement le nom de fichier indiqué (le hero de la page Livres = `hero-livres`, la couverture Informatique = `informatique-numerique`, etc.).
+
 ---
 
 ## 🎯 STYLE DE BASE (à préfixer à CHAQUE prompt)

@@ -34,7 +34,24 @@ export function PageHeader({
 }) {
   const accentText =
     accent === "green" ? "text-green" : accent === "gold" ? "text-gold" : "text-navy";
-  const [imgOk, setImgOk] = useState(Boolean(image));
+  const [src, setSrc] = useState(image);
+  const [triedAlt, setTriedAlt] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  const onImgError = () => {
+    if (src && !triedAlt) {
+      const alt = src.endsWith(".png")
+        ? src.replace(/\.png$/, ".jpg")
+        : src.replace(/\.jpe?g$/, ".png");
+      if (alt !== src) {
+        setTriedAlt(true);
+        setSrc(alt);
+        return;
+      }
+    }
+    setFailed(true);
+  };
+  const imgOk = Boolean(image) && !failed;
 
   return (
     <section
@@ -95,12 +112,12 @@ export function PageHeader({
             aria-hidden
           />
           <div className="relative h-full w-full overflow-hidden rounded-2xl border border-border bg-white/70 backdrop-blur shadow-editorial-lg hero-gradient">
-            {image && imgOk ? (
+            {imgOk ? (
               <>
                 <img
-                  src={image}
+                  src={src}
                   alt=""
-                  onError={() => setImgOk(false)}
+                  onError={onImgError}
                   className="absolute inset-0 h-full w-full object-cover"
                   loading="eager"
                   decoding="async"

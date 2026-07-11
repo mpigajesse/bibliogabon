@@ -37,7 +37,7 @@ function LivresPage() {
       <PageHeader
         Icon={Library}
         accent="navy"
-        image="/heroes/hero-livres.jpg"
+        image="/heroes/hero-livres.png"
         eyebrow="Catalogue"
         title="Livres & manuels."
         description="Manuels universitaires, précis, ouvrages de référence produits ou sélectionnés par les enseignants gabonais."

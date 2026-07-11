@@ -55,7 +55,7 @@ function Vision() {
       <PageHeader
         Icon={Target}
         accent="green"
-        image="/heroes/hero-vision.jpg"
+        image="/heroes/hero-vision.png"
         eyebrow="Vision & Impact"
         title="Une bibliothèque nationale à la hauteur des ambitions du Gabon."
         description="Faire de BiblioGabon la plateforme de référence documentaire de toutes les universités gabonaises."

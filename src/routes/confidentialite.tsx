@@ -35,7 +35,7 @@ function Confidentialite() {
       <PageHeader
         Icon={ShieldCheck}
         accent="green"
-        image="/heroes/hero-legal.jpg"
+        image="/heroes/hero-legal.png"
         eyebrow="Légal"
         title="Politique de confidentialité."
         description="Dernière mise à jour : janvier 2026."
