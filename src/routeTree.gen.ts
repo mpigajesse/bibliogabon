@@ -26,10 +26,10 @@ import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as AproposRouteImport } from './routes/apropos'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DomainesIndexRouteImport } from './routes/domaines.index'
+import { Route as LectureIdRouteImport } from './routes/lecture.$id'
 import { Route as EnseignantIdRouteImport } from './routes/enseignant.$id'
 import { Route as DomainesSlugRouteImport } from './routes/domaines.$slug'
 import { Route as DocumentIdRouteImport } from './routes/document.$id'
-import { Route as DocumentIdLectureRouteImport } from './routes/document.$id.lecture'
 
 const VisionRoute = VisionRouteImport.update({
   id: '/vision',
@@ -116,6 +116,11 @@ const DomainesIndexRoute = DomainesIndexRouteImport.update({
   path: '/domaines/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LectureIdRoute = LectureIdRouteImport.update({
+  id: '/lecture/$id',
+  path: '/lecture/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EnseignantIdRoute = EnseignantIdRouteImport.update({
   id: '/enseignant/$id',
   path: '/enseignant/$id',
@@ -130,11 +135,6 @@ const DocumentIdRoute = DocumentIdRouteImport.update({
   id: '/document/$id',
   path: '/document/$id',
   getParentRoute: () => rootRouteImport,
-} as any)
-const DocumentIdLectureRoute = DocumentIdLectureRouteImport.update({
-  id: '/lecture',
-  path: '/lecture',
-  getParentRoute: () => DocumentIdRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -154,11 +154,11 @@ export interface FileRoutesByFullPath {
   '/tableau-de-bord': typeof TableauDeBordRoute
   '/theses': typeof ThesesRoute
   '/vision': typeof VisionRoute
-  '/document/$id': typeof DocumentIdRouteWithChildren
+  '/document/$id': typeof DocumentIdRoute
   '/domaines/$slug': typeof DomainesSlugRoute
   '/enseignant/$id': typeof EnseignantIdRoute
+  '/lecture/$id': typeof LectureIdRoute
   '/domaines/': typeof DomainesIndexRoute
-  '/document/$id/lecture': typeof DocumentIdLectureRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -177,11 +177,11 @@ export interface FileRoutesByTo {
   '/tableau-de-bord': typeof TableauDeBordRoute
   '/theses': typeof ThesesRoute
   '/vision': typeof VisionRoute
-  '/document/$id': typeof DocumentIdRouteWithChildren
+  '/document/$id': typeof DocumentIdRoute
   '/domaines/$slug': typeof DomainesSlugRoute
   '/enseignant/$id': typeof EnseignantIdRoute
+  '/lecture/$id': typeof LectureIdRoute
   '/domaines': typeof DomainesIndexRoute
-  '/document/$id/lecture': typeof DocumentIdLectureRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -201,11 +201,11 @@ export interface FileRoutesById {
   '/tableau-de-bord': typeof TableauDeBordRoute
   '/theses': typeof ThesesRoute
   '/vision': typeof VisionRoute
-  '/document/$id': typeof DocumentIdRouteWithChildren
+  '/document/$id': typeof DocumentIdRoute
   '/domaines/$slug': typeof DomainesSlugRoute
   '/enseignant/$id': typeof EnseignantIdRoute
+  '/lecture/$id': typeof LectureIdRoute
   '/domaines/': typeof DomainesIndexRoute
-  '/document/$id/lecture': typeof DocumentIdLectureRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -229,8 +229,8 @@ export interface FileRouteTypes {
     | '/document/$id'
     | '/domaines/$slug'
     | '/enseignant/$id'
+    | '/lecture/$id'
     | '/domaines/'
-    | '/document/$id/lecture'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -252,8 +252,8 @@ export interface FileRouteTypes {
     | '/document/$id'
     | '/domaines/$slug'
     | '/enseignant/$id'
+    | '/lecture/$id'
     | '/domaines'
-    | '/document/$id/lecture'
   id:
     | '__root__'
     | '/'
@@ -275,8 +275,8 @@ export interface FileRouteTypes {
     | '/document/$id'
     | '/domaines/$slug'
     | '/enseignant/$id'
+    | '/lecture/$id'
     | '/domaines/'
-    | '/document/$id/lecture'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -296,9 +296,10 @@ export interface RootRouteChildren {
   TableauDeBordRoute: typeof TableauDeBordRoute
   ThesesRoute: typeof ThesesRoute
   VisionRoute: typeof VisionRoute
-  DocumentIdRoute: typeof DocumentIdRouteWithChildren
+  DocumentIdRoute: typeof DocumentIdRoute
   DomainesSlugRoute: typeof DomainesSlugRoute
   EnseignantIdRoute: typeof EnseignantIdRoute
+  LectureIdRoute: typeof LectureIdRoute
   DomainesIndexRoute: typeof DomainesIndexRoute
 }
 
@@ -423,6 +424,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DomainesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lecture/$id': {
+      id: '/lecture/$id'
+      path: '/lecture/$id'
+      fullPath: '/lecture/$id'
+      preLoaderRoute: typeof LectureIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/enseignant/$id': {
       id: '/enseignant/$id'
       path: '/enseignant/$id'
@@ -444,27 +452,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocumentIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/document/$id/lecture': {
-      id: '/document/$id/lecture'
-      path: '/lecture'
-      fullPath: '/document/$id/lecture'
-      preLoaderRoute: typeof DocumentIdLectureRouteImport
-      parentRoute: typeof DocumentIdRoute
-    }
   }
 }
-
-interface DocumentIdRouteChildren {
-  DocumentIdLectureRoute: typeof DocumentIdLectureRoute
-}
-
-const DocumentIdRouteChildren: DocumentIdRouteChildren = {
-  DocumentIdLectureRoute: DocumentIdLectureRoute,
-}
-
-const DocumentIdRouteWithChildren = DocumentIdRoute._addFileChildren(
-  DocumentIdRouteChildren,
-)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -483,9 +472,10 @@ const rootRouteChildren: RootRouteChildren = {
   TableauDeBordRoute: TableauDeBordRoute,
   ThesesRoute: ThesesRoute,
   VisionRoute: VisionRoute,
-  DocumentIdRoute: DocumentIdRouteWithChildren,
+  DocumentIdRoute: DocumentIdRoute,
   DomainesSlugRoute: DomainesSlugRoute,
   EnseignantIdRoute: EnseignantIdRoute,
+  LectureIdRoute: LectureIdRoute,
   DomainesIndexRoute: DomainesIndexRoute,
 }
 export const routeTree = rootRouteImport

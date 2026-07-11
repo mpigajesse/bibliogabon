@@ -8,7 +8,7 @@ import { genererSections, genererHtml, slugifier } from "@/lib/document-content"
 import { useAuth } from "@/components/auth/AuthProvider";
 import { ArrowLeft, Download, Lock, BookOpenText } from "lucide-react";
 
-export const Route = createFileRoute("/document/$id/lecture")({
+export const Route = createFileRoute("/lecture/$id")({
   loader: ({ params }) => {
     const doc = documentById(params.id);
     if (!doc) throw notFound();
@@ -121,8 +121,8 @@ function Lecteur() {
 
         {estLivre && (
           <div className="mt-8 rounded-xl border border-green/25 bg-green-soft/60 p-4 text-sm text-green">
-            <span aria-hidden>📖</span> Ouvrage complet disponible au format EPUB. Utilisez le
-            bouton « Télécharger » pour l'obtenir. Ci-dessous, une présentation de l'ouvrage.
+            <span aria-hidden>📖</span> Ouvrage complet disponible au format EPUB. Utilisez le bouton
+            « Télécharger » pour l'obtenir. Ci-dessous, une présentation de l'ouvrage.
           </div>
         )}
 

@@ -332,7 +332,7 @@ function AccesDocument({ doc }: { doc: Document }) {
     <>
       <div className="mt-8 flex flex-wrap gap-3">
         <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
-          <Link to="/document/$id/lecture" params={{ id: doc.id }}>
+          <Link to="/lecture/$id" params={{ id: doc.id }}>
             <Eye className="size-4 mr-1.5" aria-hidden /> Lire en ligne
           </Link>
         </Button>
