@@ -14,6 +14,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { Reveal } from "@/components/site/Reveal";
 import { DocumentCard } from "@/components/site/DocumentCard";
 import { ContributorCard } from "@/components/site/ContributorCard";
 import { Button } from "@/components/ui/button";
@@ -91,34 +92,52 @@ function Home() {
     <SiteLayout>
       <Hero />
       <TrustStrip />
-      <StatsBand />
-      <DomainesBento />
-      <FeaturedSection
-        eyebrow="À la une"
-        title="Articles scientifiques"
-        description="Les publications récentes des chercheurs gabonais et africains."
-        viewAll="/articles"
-        docs={articles}
-      />
-      <FeaturedSection
-        eyebrow="Cours"
-        title="Sciences, technologies & santé"
-        description="Supports pédagogiques des enseignants des universités du Gabon."
-        viewAll="/cours"
-        docs={coursSciences}
-        tone="muted"
-      />
-      <FeaturedSection
-        eyebrow="Patrimoine"
-        title="Livres & grands classiques"
-        description="Ouvrages de référence et patrimoine littéraire africain."
-        viewAll="/livres"
-        docs={livres}
-      />
-      <SourcesLibres />
-      <Contributors />
-      <VisionTeaser />
-      <JoinCTA />
+      <Reveal>
+        <StatsBand />
+      </Reveal>
+      <Reveal>
+        <DomainesBento />
+      </Reveal>
+      <Reveal>
+        <FeaturedSection
+          eyebrow="À la une"
+          title="Articles scientifiques"
+          description="Les publications récentes des chercheurs gabonais et africains."
+          viewAll="/articles"
+          docs={articles}
+        />
+      </Reveal>
+      <Reveal>
+        <FeaturedSection
+          eyebrow="Cours"
+          title="Sciences, technologies & santé"
+          description="Supports pédagogiques des enseignants des universités du Gabon."
+          viewAll="/cours"
+          docs={coursSciences}
+          tone="muted"
+        />
+      </Reveal>
+      <Reveal>
+        <FeaturedSection
+          eyebrow="Patrimoine"
+          title="Livres & grands classiques"
+          description="Ouvrages de référence et patrimoine littéraire africain."
+          viewAll="/livres"
+          docs={livres}
+        />
+      </Reveal>
+      <Reveal>
+        <SourcesLibres />
+      </Reveal>
+      <Reveal>
+        <Contributors />
+      </Reveal>
+      <Reveal>
+        <VisionTeaser />
+      </Reveal>
+      <Reveal>
+        <JoinCTA />
+      </Reveal>
     </SiteLayout>
   );
 }
@@ -455,11 +474,11 @@ function VisionTeaser() {
           src="/heroes/hero-vision.png"
           alt=""
           onError={() => setImgOk(false)}
-          className="absolute inset-0 h-full w-full object-cover opacity-20"
+          className="absolute inset-0 h-full w-full object-cover"
           aria-hidden
         />
       )}
-      <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy/95 to-navy/70" />
+      <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/95 via-navy-deep/75 to-navy-deep/45" />
       <div className="container-editorial py-20 md:py-24 relative">
         <div className="grid lg:grid-cols-[1.2fr_1fr] gap-14">
           <div>
