@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
-  Search,
   ArrowRight,
   Sparkles,
   Quote,
@@ -43,8 +42,6 @@ export const Route = createFileRoute("/")({
   }),
   component: Home,
 });
-
-const HERO_FILTRES = ["Tout", "Livres", "Cours", "Articles", "Examens", "TD/TP", "Thèses"] as const;
 
 const UNIVERSITES = [
   "Université Omar Bongo",
@@ -129,7 +126,6 @@ function Home() {
 }
 
 function Hero() {
-  const [filter, setFilter] = useState<(typeof HERO_FILTRES)[number]>("Tout");
   return (
     <section className="relative overflow-hidden hero-gradient border-b border-border">
       <div className="absolute inset-0 pixel-grid-bg opacity-40 pointer-events-none" />
@@ -154,56 +150,19 @@ function Hero() {
             enseignants des universités gabonaises.
           </p>
 
-          <div className="mt-8 max-w-2xl">
-            <div className="flex flex-wrap gap-1.5 mb-3">
-              {HERO_FILTRES.map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setFilter(f)}
-                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-                    filter === f
-                      ? "bg-navy text-white"
-                      : "bg-white/70 border border-border text-foreground/70 hover:text-navy hover:border-gold"
-                  }`}
-                >
-                  {f}
-                </button>
-              ))}
-            </div>
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="flex items-center gap-2 h-14 rounded-full border border-border bg-background pl-5 pr-2 shadow-editorial focus-within:ring-2 focus-within:ring-gold"
-            >
-              <Search className="size-5 text-muted-foreground shrink-0" />
-              <input
-                type="search"
-                placeholder={`Chercher dans ${filter.toLowerCase()}…`}
-                className="flex-1 h-full bg-transparent outline-none text-[15px] placeholder:text-muted-foreground"
-              />
-              <Button
-                type="submit"
-                size="lg"
-                className="bg-navy text-white hover:bg-navy-deep rounded-full h-10 px-5"
-              >
-                Chercher
-              </Button>
-            </form>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-9 flex flex-wrap items-center gap-4">
             <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
               <Link to="/domaines">
                 Explorer le catalogue <ArrowRight className="size-4 ml-1" />
               </Link>
             </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-navy/20 hover:border-gold hover:text-navy hover:bg-gold/5"
+            <Link
+              to="/enseignants"
+              className="group inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-gold transition"
             >
-              <Link to="/inscription">Créer un compte gratuit</Link>
-            </Button>
+              Découvrir nos enseignants
+              <ArrowRight className="size-4 group-hover:translate-x-0.5 transition" />
+            </Link>
           </div>
         </div>
 
