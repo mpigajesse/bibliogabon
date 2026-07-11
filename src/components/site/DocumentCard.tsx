@@ -45,25 +45,23 @@ export function DocumentCard({ doc }: { doc: Document }) {
   const Icon = meta.Icon;
   const coverBg = COVER_BG[dom?.couleur ?? "navy"];
 
-  // Couverture réelle (livre) ou image thématique du domaine ; repli généré si absente.
-  const isBookCover = Boolean(doc.cover);
-  const [src, setSrc] = useState(doc.cover ?? `/covers/domaines/${doc.domaineSlug}.png`);
-  const [triedAlt, setTriedAlt] = useState(false);
-  const [imgOk, setImgOk] = useState(true);
+  // Chaîne de couvertures, de la plus spécifique à la plus générique :
+  // couverture explicite (livres) -> image propre au document -> image du domaine -> visuel généré.
+  const candidats = [
+    doc.cover,
+    `/covers/docs/${doc.id}.png`,
+    `/covers/docs/${doc.id}.jpg`,
+    `/covers/domaines/${doc.domaineSlug}.png`,
+    `/covers/domaines/${doc.domaineSlug}.jpg`,
+  ].filter((c): c is string => Boolean(c));
 
-  const onImgError = () => {
-    if (!triedAlt) {
-      const alt = src.endsWith(".png")
-        ? src.replace(/\.png$/, ".jpg")
-        : src.replace(/\.jpe?g$/, ".png");
-      if (alt !== src) {
-        setTriedAlt(true);
-        setSrc(alt);
-        return;
-      }
-    }
-    setImgOk(false);
-  };
+  const [idx, setIdx] = useState(0);
+  const imgOk = idx < candidats.length;
+  const src = candidats[idx];
+  // Ne pas superposer le titre sur une vraie jaquette de livre (couverture explicite).
+  const estJaquetteLivre = Boolean(doc.cover) && idx === 0;
+
+  const onImgError = () => setIdx((i) => i + 1);
 
   return (
     <Link
@@ -91,7 +89,7 @@ export function DocumentCard({ doc }: { doc: Document }) {
               className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/10"
               aria-hidden
             />
-            {!isBookCover && (
+            {!estJaquetteLivre && (
               <div className="absolute inset-x-0 bottom-0 p-4">
                 <Icon className="mb-1.5 size-6 text-white/90" strokeWidth={1.6} aria-hidden />
                 <p className="font-display text-[15px] font-semibold leading-snug text-white line-clamp-2 drop-shadow">
