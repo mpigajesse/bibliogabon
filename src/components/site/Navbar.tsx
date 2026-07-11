@@ -1,9 +1,19 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X, Search, ChevronDown, BookOpen, GraduationCap } from "lucide-react";
+import {
+  Menu,
+  X,
+  Search,
+  ChevronDown,
+  BookOpen,
+  GraduationCap,
+  LayoutDashboard,
+  LogOut,
+} from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { DOMAINES } from "@/data/domaines";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/components/auth/AuthProvider";
 
 const NAV_CATALOG = [
   { to: "/livres", label: "Livres" },
@@ -16,6 +26,14 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [openDom, setOpenDom] = useState(false);
   const [openMob, setOpenMob] = useState(false);
+  const { compte, initialise, deconnecter } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    deconnecter();
+    setOpenMob(false);
+    navigate({ to: "/" });
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -105,12 +123,36 @@ export function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center gap-2 ml-auto lg:ml-0">
-          <Button asChild variant="ghost" size="sm" className="text-navy hover:bg-muted">
-            <Link to="/connexion">Connexion</Link>
-          </Button>
-          <Button asChild size="sm" className="bg-navy text-white hover:bg-navy-deep">
-            <Link to="/inscription">S'inscrire</Link>
-          </Button>
+          {initialise && compte ? (
+            <>
+              <Button asChild variant="ghost" size="sm" className="text-navy hover:bg-muted">
+                <Link to="/tableau-de-bord" className="inline-flex items-center gap-1.5">
+                  <span className="grid size-6 place-items-center rounded-full bg-navy text-[10px] font-semibold text-white">
+                    {compte.initiales}
+                  </span>
+                  Mon espace
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleLogout}
+                className="border-border hover:border-gold"
+                aria-label="Se déconnecter"
+              >
+                <LogOut className="size-4" />
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button asChild variant="ghost" size="sm" className="text-navy hover:bg-muted">
+                <Link to="/connexion">Connexion</Link>
+              </Button>
+              <Button asChild size="sm" className="bg-navy text-white hover:bg-navy-deep">
+                <Link to="/inscription">S'inscrire</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         <button
@@ -148,20 +190,35 @@ export function Navbar() {
                 Vision
               </MobLink>
             </div>
-            <div className="grid grid-cols-2 gap-2 pt-3">
-              <Button asChild variant="outline" size="sm">
-                <Link to="/connexion" onClick={() => setOpenMob(false)}>
-                  <BookOpen className="size-4 mr-1" />
-                  Connexion
-                </Link>
-              </Button>
-              <Button asChild size="sm" className="bg-navy text-white">
-                <Link to="/inscription" onClick={() => setOpenMob(false)}>
-                  <GraduationCap className="size-4 mr-1" />
-                  S'inscrire
-                </Link>
-              </Button>
-            </div>
+            {initialise && compte ? (
+              <div className="grid grid-cols-2 gap-2 pt-3">
+                <Button asChild size="sm" className="bg-navy text-white">
+                  <Link to="/tableau-de-bord" onClick={() => setOpenMob(false)}>
+                    <LayoutDashboard className="size-4 mr-1" />
+                    Mon espace
+                  </Link>
+                </Button>
+                <Button variant="outline" size="sm" onClick={handleLogout}>
+                  <LogOut className="size-4 mr-1" />
+                  Déconnexion
+                </Button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-2 pt-3">
+                <Button asChild variant="outline" size="sm">
+                  <Link to="/connexion" onClick={() => setOpenMob(false)}>
+                    <BookOpen className="size-4 mr-1" />
+                    Connexion
+                  </Link>
+                </Button>
+                <Button asChild size="sm" className="bg-navy text-white">
+                  <Link to="/inscription" onClick={() => setOpenMob(false)}>
+                    <GraduationCap className="size-4 mr-1" />
+                    S'inscrire
+                  </Link>
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       )}

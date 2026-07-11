@@ -1,5 +1,4 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 import { DocumentCard } from "@/components/site/DocumentCard";
@@ -14,8 +13,7 @@ import {
 } from "@/data/documents";
 import { domaineBySlug } from "@/data/domaines";
 import { contributeurById } from "@/data/contributeurs";
-import { getCompteCourant } from "@/lib/auth";
-import type { Compte } from "@/data/comptes";
+import { useAuth } from "@/components/auth/AuthProvider";
 import { genererHtml, slugifier } from "@/lib/document-content";
 import {
   Lock,
@@ -275,13 +273,7 @@ function DocumentDetail() {
 }
 
 function AccesDocument({ doc }: { doc: Document }) {
-  const [compte, setCompte] = useState<Compte | null>(null);
-  const [monte, setMonte] = useState(false);
-
-  useEffect(() => {
-    setCompte(getCompteCourant());
-    setMonte(true);
-  }, []);
+  const { compte, initialise } = useAuth();
 
   const telecharger = () => {
     if (doc.fichier) {
@@ -302,7 +294,7 @@ function AccesDocument({ doc }: { doc: Document }) {
 
   const estLivre = Boolean(doc.fichier);
 
-  if (!monte) {
+  if (!initialise) {
     return <div className="mt-8 h-12 w-64 animate-pulse rounded-lg bg-muted" aria-hidden />;
   }
 
@@ -344,12 +336,7 @@ function AccesDocument({ doc }: { doc: Document }) {
             <Eye className="size-4 mr-1.5" aria-hidden /> Lire en ligne
           </Link>
         </Button>
-        <Button
-          size="lg"
-          variant="outline"
-          className="border-navy/20"
-          onClick={telecharger}
-        >
+        <Button size="lg" variant="outline" className="border-navy/20" onClick={telecharger}>
           <Download className="size-4 mr-1.5" aria-hidden /> Télécharger{estLivre ? " (EPUB)" : ""}
         </Button>
       </div>

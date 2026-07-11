@@ -1,13 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { EmptyState } from "@/components/site/EmptyState";
 import { Button } from "@/components/ui/button";
 import { documentById } from "@/data/documents";
 import { domaineBySlug } from "@/data/domaines";
 import { genererSections, genererHtml, slugifier } from "@/lib/document-content";
-import { getCompteCourant } from "@/lib/auth";
-import type { Compte } from "@/data/comptes";
+import { useAuth } from "@/components/auth/AuthProvider";
 import { ArrowLeft, Download, Lock, BookOpenText } from "lucide-react";
 
 export const Route = createFileRoute("/document/$id/lecture")({
@@ -25,13 +23,7 @@ export const Route = createFileRoute("/document/$id/lecture")({
 function Lecteur() {
   const { doc } = Route.useLoaderData();
   const dom = domaineBySlug(doc.domaineSlug);
-  const [compte, setCompte] = useState<Compte | null>(null);
-  const [monte, setMonte] = useState(false);
-
-  useEffect(() => {
-    setCompte(getCompteCourant());
-    setMonte(true);
-  }, []);
+  const { compte, initialise } = useAuth();
 
   const telecharger = () => {
     if (doc.fichier) {
@@ -50,7 +42,7 @@ function Lecteur() {
     URL.revokeObjectURL(url);
   };
 
-  if (!monte) {
+  if (!initialise) {
     return (
       <SiteLayout>
         <div className="container-editorial py-24 text-center text-muted-foreground">
@@ -129,8 +121,8 @@ function Lecteur() {
 
         {estLivre && (
           <div className="mt-8 rounded-xl border border-green/25 bg-green-soft/60 p-4 text-sm text-green">
-            <span aria-hidden>📖</span> Ouvrage complet disponible au format EPUB. Utilisez le bouton
-            « Télécharger » pour l'obtenir. Ci-dessous, une présentation de l'ouvrage.
+            <span aria-hidden>📖</span> Ouvrage complet disponible au format EPUB. Utilisez le
+            bouton « Télécharger » pour l'obtenir. Ci-dessous, une présentation de l'ouvrage.
           </div>
         )}
 

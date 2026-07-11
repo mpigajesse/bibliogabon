@@ -73,8 +73,7 @@ export function genererHtml(doc: Document): string {
   const corps = sections
     .map(
       (s) =>
-        `<h2>${escape(s.titre)}</h2>` +
-        s.paragraphes.map((p) => `<p>${escape(p)}</p>`).join(""),
+        `<h2>${escape(s.titre)}</h2>` + s.paragraphes.map((p) => `<p>${escape(p)}</p>`).join(""),
     )
     .join("");
 

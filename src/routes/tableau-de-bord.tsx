@@ -1,13 +1,12 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 import { DocumentCard } from "@/components/site/DocumentCard";
 import { DOCUMENTS, documentById, type Document } from "@/data/documents";
 import { Heart, Download, Clock, BookOpen, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getCompteCourant, deconnecter } from "@/lib/auth";
-import type { Compte } from "@/data/comptes";
+import { useAuth } from "@/components/auth/AuthProvider";
 
 export const Route = createFileRoute("/tableau-de-bord")({
   head: () => ({
@@ -29,20 +28,15 @@ const resoudre = (ids: string[]): Document[] =>
 
 function Dashboard() {
   const navigate = useNavigate();
-  const [compte, setCompte] = useState<Compte | null>(null);
-  const [pret, setPret] = useState(false);
+  const { compte, initialise, deconnecter } = useAuth();
 
   useEffect(() => {
-    const c = getCompteCourant();
-    if (!c) {
+    if (initialise && !compte) {
       navigate({ to: "/connexion" });
-      return;
     }
-    setCompte(c);
-    setPret(true);
-  }, [navigate]);
+  }, [initialise, compte, navigate]);
 
-  if (!pret || !compte) {
+  if (!initialise || !compte) {
     return (
       <SiteLayout>
         <div className="container-editorial py-24 text-center text-muted-foreground">

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Mail, Lock, AlertCircle, UserRound, GraduationCap } from "lucide-react";
-import { connecter } from "@/lib/auth";
+import { useAuth } from "@/components/auth/AuthProvider";
 import { COMPTES } from "@/data/comptes";
 
 export const Route = createFileRoute("/connexion")({
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/connexion")({
 
 function Connexion() {
   const navigate = useNavigate();
+  const { connecter } = useAuth();
   const [email, setEmail] = useState("");
   const [motDePasse, setMotDePasse] = useState("");
   const [erreur, setErreur] = useState<string | null>(null);
