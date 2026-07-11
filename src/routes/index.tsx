@@ -125,6 +125,7 @@ function Home() {
 
 function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [echec, setEchec] = useState(false);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -135,29 +136,49 @@ function Hero() {
     const lancer = () => v.play().catch(() => {});
     lancer();
     v.addEventListener("canplay", lancer);
-    return () => v.removeEventListener("canplay", lancer);
+    // Repli sur l'image si la vidéo ne démarre pas (autoplay bloqué, codec, réseau…)
+    const t = window.setTimeout(() => {
+      if (v.readyState < 2 || (v.paused && v.currentTime === 0)) setEchec(true);
+    }, 4000);
+    return () => {
+      v.removeEventListener("canplay", lancer);
+      window.clearTimeout(t);
+    };
   }, []);
+
+  const CADRE = "block h-[52vh] min-h-[320px] md:h-[70vh] w-full object-cover bg-navy";
 
   return (
     <section className="relative bg-navy border-b border-border">
       <span className="absolute top-0 inset-x-0 z-10 h-1.5 gabon-stripe" aria-hidden />
-      <video
-        ref={videoRef}
-        className="block h-[56vh] md:h-[70vh] w-full object-cover bg-navy"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        aria-label="Les universités et étudiants du Gabon"
-        onEnded={(e) => {
-          const v = e.currentTarget;
-          v.currentTime = 0;
-          v.play().catch(() => {});
-        }}
-      >
-        <source src="/vidoes/videohome.mp4" type="video/mp4" />
-      </video>
+      {echec ? (
+        <img
+          src="/vidoes/videohome.png"
+          alt="Les universités et étudiants du Gabon"
+          className={CADRE}
+          loading="eager"
+          decoding="async"
+        />
+      ) : (
+        <video
+          ref={videoRef}
+          className={CADRE}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-label="Les universités et étudiants du Gabon"
+          onError={() => setEchec(true)}
+          onEnded={(e) => {
+            const v = e.currentTarget;
+            v.currentTime = 0;
+            v.play().catch(() => {});
+          }}
+        >
+          <source src="/vidoes/videohome.mp4" type="video/mp4" onError={() => setEchec(true)} />
+        </video>
+      )}
     </section>
   );
 }
