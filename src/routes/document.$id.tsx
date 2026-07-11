@@ -8,23 +8,7 @@ import { Button } from "@/components/ui/button";
 import { documentById, documentsSimilaires, type DocumentType } from "@/data/documents";
 import { domaineBySlug } from "@/data/domaines";
 import { contributeurById } from "@/data/contributeurs";
-import {
-  Lock,
-  Download,
-  Eye,
-  Calendar,
-  FileText,
-  User,
-  BookOpen,
-  GraduationCap,
-  ScrollText,
-  FlaskConical,
-  ClipboardList,
-  ExternalLink,
-  ShieldCheck,
-  Languages,
-  Layers,
-} from "lucide-react";
+import { Lock, Download, Eye, Calendar, FileText, User, BookOpen, GraduationCap, ScrollText, FlaskConical, ClipboardList, ExternalLink, ShieldCheck, Languages, Layers, Info } from "lucide-react";
 
 const TYPE_META: Record<DocumentType, { label: string; Icon: typeof BookOpen }> = {
   article: { label: "Article", Icon: FlaskConical },
@@ -94,12 +78,43 @@ function DocumentDetail() {
         <div className="absolute inset-x-0 top-0 gabon-stripe h-1" aria-hidden />
         <div className="container-editorial py-12 md:py-16 grid lg:grid-cols-[minmax(0,320px)_1fr] gap-10 lg:gap-14">
           <div className="mx-auto w-full max-w-[320px] lg:mx-0">
-            <div className="relative aspect-[3/4] rounded-2xl bg-gradient-to-br from-navy via-navy-deep to-navy pixel-grid-bg shadow-editorial-lg flex items-center justify-center">
-              <TypeIcon className="size-20 text-white/25" strokeWidth={1} aria-hidden />
-              <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-navy">
+            <div
+              className={`relative aspect-[3/4] overflow-hidden rounded-2xl pixel-grid-bg shadow-editorial-lg ${
+                dom?.couleur === "green"
+                  ? "bg-gradient-to-br from-[oklch(0.5_0.13_152)] via-[oklch(0.4_0.11_155)] to-navy-deep"
+                  : dom?.couleur === "gold"
+                    ? "bg-gradient-to-br from-[oklch(0.6_0.14_74)] via-[oklch(0.45_0.13_78)] to-navy-deep"
+                    : "bg-gradient-to-br from-[oklch(0.32_0.09_258)] via-navy to-navy-deep"
+              }`}
+            >
+              {doc.cover ? (
+                <img
+                  src={doc.cover}
+                  alt={`Couverture — ${doc.titre}`}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                />
+              ) : (
+                <>
+                  <TypeIcon
+                    className="absolute -right-6 -bottom-6 size-44 text-white/10"
+                    strokeWidth={1}
+                    aria-hidden
+                  />
+                  <div className="absolute inset-0 flex flex-col justify-end p-6">
+                    <TypeIcon className="mb-3 size-10 text-white/80" strokeWidth={1.4} aria-hidden />
+                    <p className="font-display text-xl font-semibold leading-snug text-white line-clamp-4">
+                      {doc.titre}
+                    </p>
+                  </div>
+                </>
+              )}
+              <span className="absolute top-0 inset-x-0 h-1 gabon-stripe" aria-hidden />
+              <span className="absolute top-4 left-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-navy">
                 <TypeIcon className="size-3.5" aria-hidden /> {meta.label}
               </span>
-              <span className="absolute bottom-4 inset-x-4 flex items-center justify-center gap-1.5 rounded-full bg-black/40 backdrop-blur px-3 py-1.5 text-[11px] font-medium text-white">
+              <span className="absolute bottom-4 inset-x-4 z-10 flex items-center justify-center gap-1.5 rounded-full bg-black/45 backdrop-blur px-3 py-1.5 text-[11px] font-medium text-white">
                 <Lock className="size-3.5" aria-hidden /> Accès réservé
               </span>
             </div>
@@ -151,63 +166,39 @@ function DocumentDetail() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              {doc.fichier ? (
-                <>
-                  <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
-                    <a href={doc.fichier} target="_blank" rel="noopener noreferrer">
-                      <Eye className="size-4 mr-1.5" aria-hidden /> Lire en ligne
-                    </a>
-                  </Button>
-                  <Button asChild size="lg" variant="outline" className="border-navy/20">
-                    <a href={doc.fichier} download>
-                      <Download className="size-4 mr-1.5" aria-hidden /> Télécharger le fichier
-                    </a>
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
-                    <Link to="/connexion">
-                      <Lock className="size-4 mr-1.5" aria-hidden /> Lire — Connexion requise
-                    </Link>
-                  </Button>
-                  <Button asChild size="lg" variant="outline" className="border-navy/20">
-                    <Link to="/connexion">
-                      <Download className="size-4 mr-1.5" aria-hidden /> Télécharger
-                    </Link>
-                  </Button>
-                </>
-              )}
+              <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
+                <Link to="/connexion">
+                  <Lock className="size-4 mr-1.5" aria-hidden /> Lire — Connexion requise
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-navy/20">
+                <Link to="/connexion">
+                  <Download className="size-4 mr-1.5" aria-hidden /> Télécharger
+                </Link>
+              </Button>
             </div>
 
-            {doc.fichier ? (
-              <div className="mt-6 rounded-xl border border-green/30 bg-green-soft/60 p-4 text-sm text-green">
-                <span aria-hidden>📖</span> Œuvre du domaine public — lecture et téléchargement
-                libres, sans inscription. Fichier EPUB fourni par la source indiquée.
-              </div>
-            ) : (
-              <div className="mt-6 rounded-xl border border-gold/30 bg-[oklch(0.98_0.05_88)] p-4 text-sm text-[oklch(0.35_0.12_60)]">
-                <span aria-hidden>🔒</span> L'accès au fichier complet est réservé aux étudiants et
-                enseignants inscrits.{" "}
-                <Link
-                  to="/inscription"
-                  className="font-semibold underline hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm"
-                >
-                  Créer un compte gratuit
-                </Link>
-                .
-              </div>
-            )}
+            <div className="mt-6 rounded-xl border border-gold/30 bg-[oklch(0.98_0.05_88)] p-4 text-sm text-[oklch(0.35_0.12_60)]">
+              <span aria-hidden>🔒</span> La lecture et le téléchargement du fichier complet sont
+              réservés aux étudiants et enseignants inscrits.{" "}
+              <Link
+                to="/inscription"
+                className="font-semibold underline hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm"
+              >
+                Créer un compte gratuit
+              </Link>
+              .
+            </div>
 
             {doc.source && (
-              <div className="mt-6 max-w-3xl rounded-2xl border border-green/20 bg-green-soft/60 p-5">
+              <div className="mt-6 max-w-3xl rounded-2xl border border-border bg-surface-alt p-5">
                 <div className="flex items-start gap-3">
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-green text-white">
-                    <ShieldCheck className="size-4.5" aria-hidden />
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-navy-soft text-navy">
+                    <Info className="size-4.5" aria-hidden />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-green">
-                      Ressource libre
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                      Source documentaire — à titre informatif
                     </p>
                     <p className="mt-1 font-display font-semibold text-navy">{doc.source.nom}</p>
                     {doc.source.licence && (
@@ -215,14 +206,10 @@ function DocumentDetail() {
                         Licence : {doc.source.licence}
                       </p>
                     )}
-                    <a
-                      href={doc.source.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-green hover:text-navy transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green rounded-sm"
-                    >
-                      Consulter la source <ExternalLink className="size-3.5" aria-hidden />
-                    </a>
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      Cette référence est fournie à titre indicatif. La consultation se fait
+                      directement sur BiblioGabon après connexion.
+                    </p>
                   </div>
                 </div>
               </div>

@@ -35,6 +35,7 @@ function ArticlesPage() {
       <PageHeader
         Icon={FlaskConical}
         accent="green"
+        image="/heroes/hero-articles.jpg"
         eyebrow="Catalogue"
         title="Articles scientifiques."
         description="Publications à comité de lecture, revues indexées et communications de nos enseignants-chercheurs."

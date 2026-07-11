@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   Eye,
   Lock,
@@ -44,6 +45,11 @@ export function DocumentCard({ doc }: { doc: Document }) {
   const Icon = meta.Icon;
   const coverBg = COVER_BG[dom?.couleur ?? "navy"];
 
+  // Couverture réelle (livre) ou image thématique du domaine ; repli généré si absente.
+  const isBookCover = Boolean(doc.cover);
+  const coverSrc = doc.cover ?? `/covers/domaines/${doc.domaineSlug}.jpg`;
+  const [imgOk, setImgOk] = useState(true);
+
   return (
     <Link
       to="/document/$id"
@@ -51,21 +57,33 @@ export function DocumentCard({ doc }: { doc: Document }) {
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-editorial hover:shadow-editorial-lg hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-all duration-200"
     >
       <div className={`relative aspect-[4/3] overflow-hidden pixel-grid-bg ${coverBg}`}>
-        <span className="absolute top-0 inset-x-0 z-20 h-[3px] gabon-stripe opacity-90" aria-hidden />
+        <span
+          className="absolute top-0 inset-x-0 z-20 h-[3px] gabon-stripe opacity-90"
+          aria-hidden
+        />
 
-        {doc.cover ? (
+        {imgOk ? (
           <>
             <img
-              src={doc.cover}
+              src={coverSrc}
               alt={`Couverture — ${doc.titre}`}
+              onError={() => setImgOk(false)}
               className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
               loading="lazy"
               decoding="async"
             />
             <div
-              className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10"
+              className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/10"
               aria-hidden
             />
+            {!isBookCover && (
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                <Icon className="mb-1.5 size-6 text-white/90" strokeWidth={1.6} aria-hidden />
+                <p className="font-display text-[15px] font-semibold leading-snug text-white line-clamp-2 drop-shadow">
+                  {doc.titre}
+                </p>
+              </div>
+            )}
           </>
         ) : (
           <>
@@ -94,12 +112,8 @@ export function DocumentCard({ doc }: { doc: Document }) {
               {doc.niveau}
             </span>
           )}
-          <span
-            className={`inline-flex items-center gap-1 rounded-full backdrop-blur px-2 py-0.5 text-[10px] font-medium text-white ${
-              doc.fichier ? "bg-green/80" : "bg-black/40"
-            }`}
-          >
-            <Lock className="size-3" /> {doc.fichier ? "Accès libre" : "Connexion requise"}
+          <span className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur px-2 py-0.5 text-[10px] font-medium text-white">
+            <Lock className="size-3" /> Connexion requise
           </span>
         </div>
         <div className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-0.5 text-[11px] font-semibold text-navy">
@@ -125,7 +139,7 @@ export function DocumentCard({ doc }: { doc: Document }) {
         {doc.source && (
           <div className="mt-3 -mx-5 -mb-5 flex items-center gap-1.5 border-t border-border bg-green-soft px-5 py-2.5 text-[11px] font-medium text-green">
             <BadgeCheck className="size-3.5 shrink-0" />
-            <span className="truncate">Ressource libre · {doc.source.nom}</span>
+            <span className="truncate">Source · {doc.source.nom}</span>
           </div>
         )}
       </div>

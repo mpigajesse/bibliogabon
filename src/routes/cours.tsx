@@ -35,6 +35,7 @@ function CoursPage() {
       <PageHeader
         Icon={GraduationCap}
         accent="navy"
+        image="/heroes/hero-cours.jpg"
         eyebrow="Catalogue"
         title="Cours & travaux dirigés."
         description="Supports de cours, TD et TP produits par les enseignants des universités gabonaises."

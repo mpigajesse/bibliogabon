@@ -38,6 +38,7 @@ function Cgu() {
       <PageHeader
         Icon={FileText}
         accent="navy"
+        image="/heroes/hero-legal.jpg"
         eyebrow="Légal"
         title="Conditions générales d'utilisation."
         description="Dernière mise à jour : janvier 2026."

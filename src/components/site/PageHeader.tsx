@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { ChevronRight, BookOpen, type LucideIcon } from "lucide-react";
 
 export interface Crumb {
@@ -16,6 +17,7 @@ export function PageHeader({
   tone = "default",
   Icon = BookOpen,
   accent = "navy",
+  image,
 }: {
   eyebrow?: string;
   title: string;
@@ -27,14 +29,19 @@ export function PageHeader({
   Icon?: LucideIcon;
   /** Couleur d'accent du visuel de couverture. */
   accent?: "navy" | "green" | "gold";
+  /** Image de couverture du hero (repli sur l'icône si absente). */
+  image?: string;
 }) {
   const accentText =
     accent === "green" ? "text-green" : accent === "gold" ? "text-gold" : "text-navy";
+  const [imgOk, setImgOk] = useState(Boolean(image));
 
   return (
     <section
       className={`relative overflow-hidden ${
-        tone === "muted" ? "bg-muted/60 border-b border-border" : "bg-background border-b border-border"
+        tone === "muted"
+          ? "bg-muted/60 border-b border-border"
+          : "bg-background border-b border-border"
       }`}
     >
       <div className="absolute inset-0 section-halo pointer-events-none" aria-hidden />
@@ -82,15 +89,35 @@ export function PageHeader({
           {children && <div className="mt-6">{children}</div>}
         </div>
 
-        <div className="hidden lg:block relative h-48 w-72 shrink-0" aria-hidden>
-          <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-navy/5 via-transparent to-gold/10 blur-2xl" />
+        <div className="hidden lg:block relative h-48 w-72 shrink-0">
+          <div
+            className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-navy/5 via-transparent to-gold/10 blur-2xl"
+            aria-hidden
+          />
           <div className="relative h-full w-full overflow-hidden rounded-2xl border border-border bg-white/70 backdrop-blur shadow-editorial-lg hero-gradient">
-            <div className="absolute inset-0 pixel-grid-bg opacity-60" />
-            <span className="absolute top-0 inset-x-0 h-1 gabon-stripe" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Icon className={`size-24 ${accentText} opacity-80`} strokeWidth={1.1} />
-            </div>
-            <span className="absolute bottom-3 right-4 font-display text-xs font-semibold text-navy/40">
+            {image && imgOk ? (
+              <>
+                <img
+                  src={image}
+                  alt=""
+                  onError={() => setImgOk(false)}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                />
+                <div
+                  className="absolute inset-0 bg-gradient-to-t from-navy/40 via-transparent to-transparent"
+                  aria-hidden
+                />
+              </>
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center" aria-hidden>
+                <div className="absolute inset-0 pixel-grid-bg opacity-60" />
+                <Icon className={`size-24 ${accentText} opacity-80`} strokeWidth={1.1} />
+              </div>
+            )}
+            <span className="absolute top-0 inset-x-0 h-1 gabon-stripe" aria-hidden />
+            <span className="absolute bottom-3 right-4 font-display text-xs font-semibold text-navy/50">
               BiblioGabon
             </span>
           </div>

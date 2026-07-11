@@ -54,6 +54,7 @@ function Contact() {
       <PageHeader
         Icon={Mail}
         accent="gold"
+        image="/heroes/hero-contact.jpg"
         eyebrow="Contact"
         title="Parlons-en."
         description="Écrivez-nous pour toute question, partenariat ou proposition de contribution."
