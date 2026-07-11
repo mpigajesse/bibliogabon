@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DomainesIndexRouteImport } from './routes/domaines.index'
+import { Route as DomainesSlugRouteImport } from './routes/domaines.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DomainesIndexRoute = DomainesIndexRouteImport.update({
+  id: '/domaines/',
+  path: '/domaines/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DomainesSlugRoute = DomainesSlugRouteImport.update({
+  id: '/domaines/$slug',
+  path: '/domaines/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/domaines/$slug': typeof DomainesSlugRoute
+  '/domaines/': typeof DomainesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/domaines/$slug': typeof DomainesSlugRoute
+  '/domaines': typeof DomainesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/domaines/$slug': typeof DomainesSlugRoute
+  '/domaines/': typeof DomainesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/domaines/$slug' | '/domaines/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/domaines/$slug' | '/domaines'
+  id: '__root__' | '/' | '/domaines/$slug' | '/domaines/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DomainesSlugRoute: typeof DomainesSlugRoute
+  DomainesIndexRoute: typeof DomainesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/domaines/': {
+      id: '/domaines/'
+      path: '/domaines'
+      fullPath: '/domaines/'
+      preLoaderRoute: typeof DomainesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/domaines/$slug': {
+      id: '/domaines/$slug'
+      path: '/domaines/$slug'
+      fullPath: '/domaines/$slug'
+      preLoaderRoute: typeof DomainesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DomainesSlugRoute: DomainesSlugRoute,
+  DomainesIndexRoute: DomainesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
