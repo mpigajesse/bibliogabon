@@ -58,6 +58,15 @@ export const CONTRIBUTEURS: Contributeur[] = [
     bio: "Chercheur en épidémiologie vétérinaire, expert des zoonoses tropicales et de la santé unique (One Health) en Afrique centrale.",
     docs: 6, telechargements: 27, vues: 14, types: ["Thèse", "Article"], initiales: "SS",
   },
+  {
+    id: "patrimoine-africain",
+    nom: "Fonds patrimonial africain",
+    titre: "Collection ouverte",
+    specialite: "Littérature & patrimoine du domaine public",
+    universite: "BiblioGabon — Fonds patrimonial",
+    bio: "Sélection d'œuvres africaines et afro-descendantes du domaine public, numérisées et librement téléchargeables : récits fondateurs, essais panafricains et grands classiques littéraires. Sources : Project Gutenberg, African Storybook, AJOL.",
+    docs: 9, telechargements: 0, vues: 2508, types: ["Livre", "Article"], initiales: "FP",
+  },
 ];
 
 export const contributeurById = (id: string) => CONTRIBUTEURS.find((c) => c.id === id);

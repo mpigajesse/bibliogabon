@@ -1,8 +1,8 @@
 export const STATS_ACCUEIL = [
-  { valeur: 34, label: "Documents", suffixe: "" },
-  { valeur: 5, label: "Contributeurs", suffixe: "" },
+  { valeur: 43, label: "Documents", suffixe: "" },
+  { valeur: 6, label: "Contributeurs", suffixe: "" },
   { valeur: 17, label: "Domaines", suffixe: "" },
-  { valeur: 8, label: "Sources libres", suffixe: "" },
+  { valeur: 11, label: "Sources libres", suffixe: "" },
 ];
 
 export const STATS_VISION = [

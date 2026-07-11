@@ -151,29 +151,53 @@ function DocumentDetail() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
-                <Link to="/connexion">
-                  <Lock className="size-4 mr-1.5" aria-hidden /> Lire — Connexion requise
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-navy/20">
-                <Link to="/connexion">
-                  <Download className="size-4 mr-1.5" aria-hidden /> Télécharger
-                </Link>
-              </Button>
+              {doc.fichier ? (
+                <>
+                  <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
+                    <a href={doc.fichier} target="_blank" rel="noopener noreferrer">
+                      <Eye className="size-4 mr-1.5" aria-hidden /> Lire en ligne
+                    </a>
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="border-navy/20">
+                    <a href={doc.fichier} download>
+                      <Download className="size-4 mr-1.5" aria-hidden /> Télécharger le fichier
+                    </a>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
+                    <Link to="/connexion">
+                      <Lock className="size-4 mr-1.5" aria-hidden /> Lire — Connexion requise
+                    </Link>
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="border-navy/20">
+                    <Link to="/connexion">
+                      <Download className="size-4 mr-1.5" aria-hidden /> Télécharger
+                    </Link>
+                  </Button>
+                </>
+              )}
             </div>
 
-            <div className="mt-6 rounded-xl border border-gold/30 bg-[oklch(0.98_0.05_88)] p-4 text-sm text-[oklch(0.35_0.12_60)]">
-              <span aria-hidden>🔒</span> L'accès au fichier complet est réservé aux étudiants et
-              enseignants inscrits.{" "}
-              <Link
-                to="/inscription"
-                className="font-semibold underline hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm"
-              >
-                Créer un compte gratuit
-              </Link>
-              .
-            </div>
+            {doc.fichier ? (
+              <div className="mt-6 rounded-xl border border-green/30 bg-green-soft/60 p-4 text-sm text-green">
+                <span aria-hidden>📖</span> Œuvre du domaine public — lecture et téléchargement
+                libres, sans inscription. Fichier EPUB fourni par la source indiquée.
+              </div>
+            ) : (
+              <div className="mt-6 rounded-xl border border-gold/30 bg-[oklch(0.98_0.05_88)] p-4 text-sm text-[oklch(0.35_0.12_60)]">
+                <span aria-hidden>🔒</span> L'accès au fichier complet est réservé aux étudiants et
+                enseignants inscrits.{" "}
+                <Link
+                  to="/inscription"
+                  className="font-semibold underline hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm"
+                >
+                  Créer un compte gratuit
+                </Link>
+                .
+              </div>
+            )}
 
             {doc.source && (
               <div className="mt-6 max-w-3xl rounded-2xl border border-green/20 bg-green-soft/60 p-5">

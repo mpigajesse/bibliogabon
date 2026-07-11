@@ -1,9 +1,12 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Mail, Lock } from "lucide-react";
+import { ArrowLeft, Mail, Lock, AlertCircle, UserRound, GraduationCap } from "lucide-react";
+import { connecter } from "@/lib/auth";
+import { COMPTES } from "@/data/comptes";
 
 export const Route = createFileRoute("/connexion")({
   head: () => ({
@@ -21,6 +24,28 @@ export const Route = createFileRoute("/connexion")({
 });
 
 function Connexion() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [motDePasse, setMotDePasse] = useState("");
+  const [erreur, setErreur] = useState<string | null>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const compte = connecter(email, motDePasse);
+    if (compte) {
+      setErreur(null);
+      navigate({ to: "/tableau-de-bord" });
+    } else {
+      setErreur("E-mail ou mot de passe incorrect. Essayez un compte de démonstration ci-dessous.");
+    }
+  };
+
+  const remplirDemo = (demoEmail: string, demoPwd: string) => {
+    setEmail(demoEmail);
+    setMotDePasse(demoPwd);
+    setErreur(null);
+  };
+
   return (
     <div className="min-h-screen grid lg:grid-cols-2 bg-background">
       <div className="hidden lg:flex relative overflow-hidden bg-navy text-white pixel-grid-bg">
@@ -60,7 +85,16 @@ function Connexion() {
               Accédez à votre bibliothèque personnelle.
             </p>
           </div>
-          <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {erreur && (
+              <div
+                role="alert"
+                className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2.5 text-sm text-destructive"
+              >
+                <AlertCircle className="size-4 mt-0.5 shrink-0" />
+                <span>{erreur}</span>
+              </div>
+            )}
             <div className="space-y-1.5">
               <Label htmlFor="email">Adresse e-mail</Label>
               <div className="relative">
@@ -68,6 +102,9 @@ function Connexion() {
                 <Input
                   id="email"
                   type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="prenom.nom@univ-ln.ac.ga"
                   className="pl-9 h-11"
                 />
@@ -82,7 +119,15 @@ function Connexion() {
               </div>
               <div className="relative">
                 <Lock className="absolute left-3 top-3 size-4 text-muted-foreground" />
-                <Input id="password" type="password" placeholder="••••••••" className="pl-9 h-11" />
+                <Input
+                  id="password"
+                  type="password"
+                  autoComplete="current-password"
+                  value={motDePasse}
+                  onChange={(e) => setMotDePasse(e.target.value)}
+                  placeholder="••••••••"
+                  className="pl-9 h-11"
+                />
               </div>
             </div>
             <Button type="submit" className="w-full h-11 bg-navy text-white hover:bg-navy-deep">
@@ -95,6 +140,45 @@ function Connexion() {
               </Link>
             </p>
           </form>
+
+          <div className="mt-8 rounded-xl border border-border bg-surface-alt p-4">
+            <p className="text-xs font-semibold text-navy uppercase tracking-wide">
+              Comptes de démonstration
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Cliquez pour remplir automatiquement (mot de passe&nbsp;: <code>demo1234</code>).
+            </p>
+            <div className="mt-3 space-y-2">
+              {COMPTES.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => remplirDemo(c.email, c.motDePasse)}
+                  className="flex w-full items-center gap-3 rounded-lg border border-border bg-card px-3 py-2 text-left transition hover:border-gold hover:shadow-editorial"
+                >
+                  <span
+                    className={`grid size-8 shrink-0 place-items-center rounded-full text-xs font-semibold ${
+                      c.role === "enseignant"
+                        ? "bg-green-soft text-green"
+                        : "bg-navy-soft text-navy"
+                    }`}
+                  >
+                    {c.role === "enseignant" ? (
+                      <GraduationCap className="size-4" />
+                    ) : (
+                      <UserRound className="size-4" />
+                    )}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-medium text-foreground">
+                      {c.nom}
+                    </span>
+                    <span className="block truncate text-xs text-muted-foreground">{c.email}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

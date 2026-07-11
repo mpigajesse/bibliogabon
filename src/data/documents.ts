@@ -27,6 +27,8 @@ export interface Document {
   langue?: "fr" | "en";
   /** Ressource pédagogique ouverte associée (données mockées, sources réelles). */
   source?: DocumentSource;
+  /** Fichier réellement téléchargeable, hébergé dans /public/docs (domaine public). */
+  fichier?: string;
 }
 
 export const DOCUMENTS: Document[] = [
@@ -680,6 +682,98 @@ export const DOCUMENTS: Document[] = [
       licence: "CC BY-SA 4.0",
     },
   },
+
+  // ── Fonds patrimonial africain — livres du domaine public (fichiers réels) ──
+  {
+    id: "doc-101",
+    titre: "The Interesting Narrative of the Life of Olaudah Equiano",
+    type: "livre", domaineSlug: "lettres-langues-shs", annee: 1789,
+    auteurId: "patrimoine-africain", auteur: "Olaudah Equiano", vues: 341, pages: 294,
+    niveau: "Tous niveaux", langue: "en",
+    resume: "Récit autobiographique d'un Africain de l'actuel Nigéria, réduit en esclavage puis affranchi — texte fondateur de la littérature afro-descendante et du mouvement abolitionniste.",
+    source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/15399", licence: "Domaine public" },
+    fichier: "/docs/equiano-interesting-narrative.epub",
+  },
+  {
+    id: "doc-102",
+    titre: "Travels in West Africa",
+    type: "livre", domaineSlug: "lettres-langues-shs", annee: 1897,
+    auteurId: "patrimoine-africain", auteur: "Mary H. Kingsley", vues: 187, pages: 372,
+    niveau: "Tous niveaux", langue: "en",
+    resume: "Exploration ethnographique de l'Afrique de l'Ouest (Gabon, Congo, Cameroun) : peuples, fleuves et forêts équatoriales décrits à la fin du XIXᵉ siècle.",
+    source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/5891", licence: "Domaine public" },
+    fichier: "/docs/kingsley-travels-west-africa.epub",
+  },
+  {
+    id: "doc-103",
+    titre: "The Negro",
+    type: "livre", domaineSlug: "lettres-langues-shs", annee: 1915,
+    auteurId: "patrimoine-africain", auteur: "W. E. B. Du Bois", vues: 264, pages: 156,
+    niveau: "Tous niveaux", langue: "en",
+    resume: "Histoire des civilisations africaines — empires du Ghana, Mali et Songhaï — et de la diaspora, par l'un des grands intellectuels panafricanistes.",
+    source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/15359", licence: "Domaine public" },
+    fichier: "/docs/dubois-the-negro.epub",
+  },
+  {
+    id: "doc-104",
+    titre: "The Souls of Black Folk",
+    type: "livre", domaineSlug: "lettres-langues-shs", annee: 1903,
+    auteurId: "patrimoine-africain", auteur: "W. E. B. Du Bois", vues: 231, pages: 265,
+    niveau: "Tous niveaux", langue: "en",
+    resume: "Essai majeur sur la condition afro-américaine et le concept de « double conscience » — classique des sciences humaines et sociales.",
+    source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/408", licence: "Domaine public" },
+    fichier: "/docs/dubois-souls-of-black-folk.epub",
+  },
+  {
+    id: "doc-105",
+    titre: "Up from Slavery",
+    type: "livre", domaineSlug: "lettres-langues-shs", annee: 1901,
+    auteurId: "patrimoine-africain", auteur: "Booker T. Washington", vues: 198, pages: 330,
+    niveau: "Tous niveaux", langue: "en",
+    resume: "Autobiographie d'un éducateur né esclave, fondateur du Tuskegee Institute — réflexion sur l'émancipation par l'éducation.",
+    source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/2376", licence: "Domaine public" },
+    fichier: "/docs/washington-up-from-slavery.epub",
+  },
+  {
+    id: "doc-106",
+    titre: "The Story of an African Farm",
+    type: "livre", domaineSlug: "lettres-langues-shs", annee: 1883,
+    auteurId: "patrimoine-africain", auteur: "Olive Schreiner", vues: 176, pages: 300,
+    niveau: "Tous niveaux", langue: "en",
+    resume: "Roman sud-africain pionnier situé dans le Karoo — l'un des premiers grands romans du continent, entre réalisme colonial et quête existentielle.",
+    source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/1441", licence: "Domaine public" },
+    fichier: "/docs/schreiner-story-of-an-african-farm.epub",
+  },
+  {
+    id: "doc-107",
+    titre: "Aesop's Fables — Recueil illustré",
+    type: "livre", domaineSlug: "lettres-langues-shs", annee: 1912,
+    auteurId: "patrimoine-africain", auteur: "Ésope (trad. V. S. Vernon Jones)", vues: 412, pages: 314,
+    niveau: "Tous niveaux", langue: "en",
+    resume: "Fables classiques attribuées à Ésope — patrimoine littéraire universel, ressource pédagogique pour l'apprentissage des langues et de la morale.",
+    source: { nom: "Project Gutenberg", url: "https://www.gutenberg.org/ebooks/11339", licence: "Domaine public" },
+    fichier: "/docs/aesop-fables.epub",
+  },
+
+  // ── Ressources africaines en libre accès (références externes) ──────────────
+  {
+    id: "doc-108",
+    titre: "African Storybook — Contes africains pour la jeunesse",
+    type: "livre", domaineSlug: "lettres-langues-shs", annee: 2024,
+    auteurId: "patrimoine-africain", auteur: "African Storybook Initiative", vues: 156, pages: 24,
+    niveau: "Tous niveaux", langue: "fr",
+    resume: "Collection ouverte de contes africains en langues multiples, librement téléchargeables et réutilisables pour l'alphabétisation.",
+    source: { nom: "African Storybook", url: "https://www.africanstorybook.org/", licence: "CC BY 4.0" },
+  },
+  {
+    id: "doc-109",
+    titre: "African Journals Online — Recherche africaine en libre accès",
+    type: "article", domaineSlug: "revues-articles", annee: 2025,
+    auteurId: "patrimoine-africain", auteur: "AJOL — African Journals Online", vues: 143, pages: 12,
+    niveau: "Doctorat", langue: "en",
+    resume: "Portail de revues scientifiques africaines à comité de lecture, majoritairement en libre accès — la plus grande collection de recherche publiée en Afrique.",
+    source: { nom: "AJOL", url: "https://www.ajol.info/", licence: "Libre accès" },
+  },
 ];
 
 /** Plateformes de ressources éducatives libres référencées (données mockées). */
@@ -700,6 +794,9 @@ export const SOURCES_LIBRES = [
   },
   { nom: "HAL", url: "https://hal.science/", desc: "Archives ouvertes de la recherche" },
   { nom: "FAO e-learning", url: "https://elearning.fao.org/", desc: "Agriculture & environnement" },
+  { nom: "Project Gutenberg", url: "https://www.gutenberg.org/", desc: "70 000+ livres du domaine public" },
+  { nom: "African Storybook", url: "https://www.africanstorybook.org/", desc: "Contes africains ouverts" },
+  { nom: "AJOL", url: "https://www.ajol.info/", desc: "Revues scientifiques africaines" },
 ];
 
 export const documentsByType = (type: DocumentType) => DOCUMENTS.filter((d) => d.type === type);
