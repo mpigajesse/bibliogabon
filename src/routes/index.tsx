@@ -124,18 +124,38 @@ function Home() {
 }
 
 function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    v.loop = true;
+    v.defaultMuted = true;
+    const lancer = () => v.play().catch(() => {});
+    lancer();
+    v.addEventListener("canplay", lancer);
+    return () => v.removeEventListener("canplay", lancer);
+  }, []);
+
   return (
     <section className="relative bg-navy border-b border-border">
       <span className="absolute top-0 inset-x-0 z-10 h-1.5 gabon-stripe" aria-hidden />
       <video
+        ref={videoRef}
         className="block h-[56vh] md:h-[70vh] w-full object-cover"
         autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
         poster="/heroes/hero-accueil.png"
         aria-label="Les universités et étudiants du Gabon"
+        onEnded={(e) => {
+          const v = e.currentTarget;
+          v.currentTime = 0;
+          v.play().catch(() => {});
+        }}
       >
         <source src="/vidoes/videohome.mp4" type="video/mp4" />
       </video>
