@@ -3,11 +3,37 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 import { DocumentCard } from "@/components/site/DocumentCard";
 import { DomainBadge } from "@/components/site/DomainBadge";
+import { EmptyState } from "@/components/site/EmptyState";
 import { Button } from "@/components/ui/button";
-import { DOCUMENTS, documentById } from "@/data/documents";
+import { documentById, documentsSimilaires, type DocumentType } from "@/data/documents";
 import { domaineBySlug } from "@/data/domaines";
 import { contributeurById } from "@/data/contributeurs";
-import { Lock, Download, Eye, Calendar, FileText, User } from "lucide-react";
+import {
+  Lock,
+  Download,
+  Eye,
+  Calendar,
+  FileText,
+  User,
+  BookOpen,
+  GraduationCap,
+  ScrollText,
+  FlaskConical,
+  ClipboardList,
+  ExternalLink,
+  ShieldCheck,
+  Languages,
+  Layers,
+} from "lucide-react";
+
+const TYPE_META: Record<DocumentType, { label: string; Icon: typeof BookOpen }> = {
+  article: { label: "Article", Icon: FlaskConical },
+  cours: { label: "Cours", Icon: GraduationCap },
+  livre: { label: "Livre", Icon: BookOpen },
+  examen: { label: "Examen", Icon: ClipboardList },
+  these: { label: "Thèse", Icon: ScrollText },
+  "td-tp": { label: "TD / TP", Icon: FileText },
+};
 
 export const Route = createFileRoute("/document/$id")({
   loader: ({ params }) => {
@@ -24,10 +50,32 @@ export const Route = createFileRoute("/document/$id")({
     ],
   }),
   notFoundComponent: () => (
-    <SiteLayout><PageHeader title="Document introuvable" description="Cette référence n'existe pas dans notre catalogue." /></SiteLayout>
+    <SiteLayout>
+      <PageHeader
+        eyebrow="Catalogue"
+        title="Document introuvable"
+        description="Cette référence n'existe pas — ou plus — dans notre catalogue."
+        crumbs={[{ label: "Accueil", to: "/" }, { label: "Document" }]}
+      />
+      <section>
+        <div className="container-editorial py-12">
+          <EmptyState
+            title="Aucun document à cette adresse"
+            description="Le document que vous cherchez a peut-être été déplacé ou retiré du catalogue."
+          />
+          <div className="mt-6">
+            <Button asChild variant="outline" className="border-navy/20">
+              <Link to="/">← Retour à l'accueil</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+    </SiteLayout>
   ),
   errorComponent: ({ error }) => (
-    <SiteLayout><PageHeader title="Erreur de chargement" description={error.message} /></SiteLayout>
+    <SiteLayout>
+      <PageHeader title="Erreur de chargement" description={error.message} />
+    </SiteLayout>
   ),
   component: DocumentDetail,
 });
@@ -36,64 +84,170 @@ function DocumentDetail() {
   const { doc } = Route.useLoaderData();
   const dom = domaineBySlug(doc.domaineSlug);
   const auteur = contributeurById(doc.auteurId);
-  const similaires = DOCUMENTS.filter((d) => d.domaineSlug === doc.domaineSlug && d.id !== doc.id).slice(0, 3);
+  const similaires = documentsSimilaires(doc, 3);
+  const meta = TYPE_META[doc.type];
+  const TypeIcon = meta.Icon;
 
   return (
     <SiteLayout>
-      <section className="border-b border-border bg-muted/50">
-        <div className="container-editorial py-12 grid lg:grid-cols-[1fr_1.5fr] gap-10">
-          <div className="rounded-2xl bg-gradient-to-br from-navy via-navy-deep to-navy pixel-grid-bg aspect-[3/4] shadow-editorial-lg flex items-center justify-center">
-            <FileText className="size-24 text-white/25" strokeWidth={1} />
+      <section className="relative overflow-hidden border-b border-border hero-gradient">
+        <div className="absolute inset-x-0 top-0 gabon-stripe h-1" aria-hidden />
+        <div className="container-editorial py-12 md:py-16 grid lg:grid-cols-[minmax(0,320px)_1fr] gap-10 lg:gap-14">
+          <div className="mx-auto w-full max-w-[320px] lg:mx-0">
+            <div className="relative aspect-[3/4] rounded-2xl bg-gradient-to-br from-navy via-navy-deep to-navy pixel-grid-bg shadow-editorial-lg flex items-center justify-center">
+              <TypeIcon className="size-20 text-white/25" strokeWidth={1} aria-hidden />
+              <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-navy">
+                <TypeIcon className="size-3.5" aria-hidden /> {meta.label}
+              </span>
+              <span className="absolute bottom-4 inset-x-4 flex items-center justify-center gap-1.5 rounded-full bg-black/40 backdrop-blur px-3 py-1.5 text-[11px] font-medium text-white">
+                <Lock className="size-3.5" aria-hidden /> Accès réservé
+              </span>
+            </div>
           </div>
-          <div>
+
+          <div className="min-w-0">
             {dom && <DomainBadge domaine={dom} size="md" />}
-            <h1 className="mt-4 font-display text-3xl md:text-5xl font-bold text-navy tracking-tight leading-tight">{doc.titre}</h1>
-            <div className="mt-5 flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
-              <Link to="/enseignant/$id" params={{ id: doc.auteurId }} className="inline-flex items-center gap-1.5 hover:text-navy transition">
-                <User className="size-4" /> {doc.auteur}
+            <h1 className="mt-4 font-display text-3xl md:text-5xl font-bold text-navy tracking-tight leading-[1.1]">
+              {doc.titre}
+            </h1>
+
+            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
+              <Link
+                to="/enseignant/$id"
+                params={{ id: doc.auteurId }}
+                className="inline-flex items-center gap-1.5 font-medium text-navy hover:text-green transition-colors underline-offset-4 hover:underline"
+              >
+                <User className="size-4" aria-hidden /> {doc.auteur}
               </Link>
-              <span className="inline-flex items-center gap-1.5"><Calendar className="size-4" /> {doc.annee}</span>
-              <span className="inline-flex items-center gap-1.5"><Eye className="size-4" /> {doc.vues} vues</span>
-              {doc.pages && <span className="inline-flex items-center gap-1.5"><FileText className="size-4" /> {doc.pages} pages</span>}
+              <span className="inline-flex items-center gap-1.5">
+                <Calendar className="size-4" aria-hidden /> {doc.annee}
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Eye className="size-4" aria-hidden /> {doc.vues} vues
+              </span>
+              {doc.pages && (
+                <span className="inline-flex items-center gap-1.5">
+                  <FileText className="size-4" aria-hidden /> {doc.pages} pages
+                </span>
+              )}
             </div>
-            <p className="mt-6 text-lg text-foreground/85 leading-relaxed">{doc.resume}</p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {doc.niveau && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-green/25 bg-green-soft px-3 py-1 text-xs font-medium text-green">
+                  <Layers className="size-3.5" aria-hidden /> {doc.niveau}
+                </span>
+              )}
+              {doc.langue && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-navy/15 bg-navy-soft px-3 py-1 text-xs font-medium text-navy">
+                  <Languages className="size-3.5" aria-hidden />{" "}
+                  {doc.langue === "fr" ? "Français" : "Anglais"}
+                </span>
+              )}
+            </div>
+
+            <p className="mt-6 text-lg text-foreground/85 leading-relaxed max-w-3xl">
+              {doc.resume}
+            </p>
+
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button size="lg" className="bg-navy text-white hover:bg-navy-deep"><Lock className="size-4 mr-1.5" /> Lire — Connexion requise</Button>
-              <Button size="lg" variant="outline" className="border-navy/15"><Download className="size-4 mr-1.5" /> Télécharger</Button>
+              <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
+                <Link to="/connexion">
+                  <Lock className="size-4 mr-1.5" aria-hidden /> Lire — Connexion requise
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-navy/20">
+                <Link to="/connexion">
+                  <Download className="size-4 mr-1.5" aria-hidden /> Télécharger
+                </Link>
+              </Button>
             </div>
+
             <div className="mt-6 rounded-xl border border-gold/30 bg-[oklch(0.98_0.05_88)] p-4 text-sm text-[oklch(0.35_0.12_60)]">
-              🔒 L'accès au fichier complet est réservé aux étudiants et enseignants inscrits.{" "}
-              <Link to="/inscription" className="font-semibold underline hover:text-navy">Créer un compte gratuit</Link>.
+              <span aria-hidden>🔒</span> L'accès au fichier complet est réservé aux étudiants et
+              enseignants inscrits.{" "}
+              <Link
+                to="/inscription"
+                className="font-semibold underline hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm"
+              >
+                Créer un compte gratuit
+              </Link>
+              .
             </div>
+
+            {doc.source && (
+              <div className="mt-6 max-w-3xl rounded-2xl border border-green/20 bg-green-soft/60 p-5">
+                <div className="flex items-start gap-3">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-green text-white">
+                    <ShieldCheck className="size-4.5" aria-hidden />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-green">
+                      Ressource libre
+                    </p>
+                    <p className="mt-1 font-display font-semibold text-navy">{doc.source.nom}</p>
+                    {doc.source.licence && (
+                      <p className="mt-0.5 text-sm text-muted-foreground">
+                        Licence : {doc.source.licence}
+                      </p>
+                    )}
+                    <a
+                      href={doc.source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-green hover:text-navy transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green rounded-sm"
+                    >
+                      Consulter la source <ExternalLink className="size-3.5" aria-hidden />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
 
       {auteur && (
         <section>
-          <div className="container-editorial py-12">
+          <div className="container-editorial py-12 md:py-14">
             <h2 className="font-display text-2xl font-semibold text-navy">À propos de l'auteur</h2>
-            <div className="mt-5 rounded-2xl border border-border p-6 flex items-start gap-4 max-w-3xl">
-              <div className="size-14 rounded-xl flex items-center justify-center font-display font-bold text-white" style={{ background: "linear-gradient(135deg, var(--navy), var(--green))" }}>
+            <Link
+              to="/enseignant/$id"
+              params={{ id: auteur.id }}
+              className="mt-5 flex items-start gap-4 max-w-3xl rounded-2xl border border-border p-6 shadow-editorial hover:shadow-editorial-lg hover:-translate-y-0.5 transition-all"
+            >
+              <div
+                className="size-14 shrink-0 rounded-xl flex items-center justify-center font-display font-bold text-white"
+                style={{ background: "linear-gradient(135deg, var(--navy), var(--green))" }}
+                aria-hidden
+              >
                 {auteur.initiales}
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="font-display font-semibold text-navy">{auteur.nom}</p>
-                <p className="text-sm text-green">{auteur.titre} · {auteur.specialite}</p>
+                <p className="text-sm text-green">
+                  {auteur.titre} · {auteur.specialite}
+                </p>
                 <p className="mt-2 text-sm text-muted-foreground">{auteur.bio}</p>
-                <Link to="/enseignant/$id" params={{ id: auteur.id }} className="mt-3 inline-block text-sm font-medium text-navy hover:text-gold">Voir son profil →</Link>
+                <span className="mt-3 inline-block text-sm font-medium text-navy">
+                  Voir son profil →
+                </span>
               </div>
-            </div>
+            </Link>
           </div>
         </section>
       )}
 
       {similaires.length > 0 && (
-        <section className="bg-muted/40 border-t border-border">
-          <div className="container-editorial py-12">
-            <h2 className="font-display text-2xl font-semibold text-navy mb-6">Documents similaires</h2>
+        <section className="border-t border-border section-halo">
+          <div className="container-editorial py-12 md:py-14">
+            <h2 className="font-display text-2xl font-semibold text-navy mb-6">
+              Documents similaires
+            </h2>
             <div className="grid gap-6 md:grid-cols-3">
-              {similaires.map((d) => <DocumentCard key={d.id} doc={d} />)}
+              {similaires.map((d) => (
+                <DocumentCard key={d.id} doc={d} />
+              ))}
             </div>
           </div>
         </section>

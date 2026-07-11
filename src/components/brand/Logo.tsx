@@ -1,4 +1,4 @@
-import logoAsset from "@/assets/bibliogabon-logo.png.asset.json";
+import logoUrl from "@/assets/bibliogabon-logo.png";
 import { Link } from "@tanstack/react-router";
 
 interface LogoProps {
@@ -9,10 +9,16 @@ interface LogoProps {
   asLink?: boolean;
 }
 
-export function Logo({ className, size = 40, withWordmark = false, variant = "default", asLink = true }: LogoProps) {
+export function Logo({
+  className,
+  size = 40,
+  withWordmark = false,
+  variant = "default",
+  asLink = true,
+}: LogoProps) {
   const img = (
     <img
-      src={logoAsset.url}
+      src={logoUrl}
       alt="BiblioGabon — Bibliothèque numérique des universités du Gabon"
       width={size}
       height={size}
@@ -39,7 +45,11 @@ export function Logo({ className, size = 40, withWordmark = false, variant = "de
 
   if (!asLink) return content;
   return (
-    <Link to="/" aria-label="BiblioGabon — Accueil" className="inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-md">
+    <Link
+      to="/"
+      aria-label="BiblioGabon — Accueil"
+      className="inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-md"
+    >
       {content}
     </Link>
   );

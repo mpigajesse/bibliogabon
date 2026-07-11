@@ -156,6 +156,36 @@
 @utility grain-overlay {
   position: relative;
 }
+
+/* Bande drapeau gabonais (vert–jaune–bleu) — souveraineté */
+@utility gabon-stripe {
+  background: linear-gradient(
+    90deg,
+    var(--green) 0 33.33%,
+    var(--gold) 33.33% 66.66%,
+    var(--navy) 66.66% 100%
+  );
+}
+
+/* Filet décoratif fin drapeau, pour bordures de section */
+@utility gabon-rule {
+  height: 3px;
+  background: linear-gradient(90deg, var(--green), var(--gold), var(--navy));
+  border-radius: 999px;
+}
+
+/* Fond de section institutionnel avec halo doux */
+@utility section-halo {
+  background:
+    radial-gradient(800px 400px at 100% 0%, oklch(0.5 0.13 152 / 0.06), transparent 60%),
+    radial-gradient(700px 380px at 0% 100%, oklch(0.78 0.15 82 / 0.07), transparent 55%);
+}
+
+/* Carte vitrée pour surfaces premium sur fond coloré */
+@utility glass-surface {
+  background: color-mix(in oklch, var(--card) 80%, transparent);
+  backdrop-filter: blur(12px) saturate(140%);
+}
 @utility hero-gradient {
   background:
     radial-gradient(1200px 600px at 85% -10%, oklch(0.78 0.15 82 / 0.14), transparent 60%),

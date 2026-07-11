@@ -1,23 +1,40 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Search, ArrowRight, Sparkles, Quote, GraduationCap, BookMarked, ChevronRight } from "lucide-react";
+import {
+  Search,
+  ArrowRight,
+  Sparkles,
+  Quote,
+  GraduationCap,
+  BookMarked,
+  ChevronRight,
+  Globe2,
+  ExternalLink,
+} from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { DocumentCard } from "@/components/site/DocumentCard";
 import { ContributorCard } from "@/components/site/ContributorCard";
 import { Button } from "@/components/ui/button";
 import { CONTRIBUTEURS } from "@/data/contributeurs";
-import { DOCUMENTS, documentsByType } from "@/data/documents";
+import { DOCUMENTS, documentsByType, SOURCES_LIBRES } from "@/data/documents";
 import { STATS_ACCUEIL, STATS_VISION } from "@/data/stats";
 import { DOMAINES } from "@/data/domaines";
-import logoAsset from "@/assets/bibliogabon-logo.png.asset.json";
+import logoUrl from "@/assets/bibliogabon-logo.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "BiblioGabon — La Grande Source documentaire du Gabon" },
-      { name: "description", content: "Bibliothèque numérique des universités gabonaises : livres, cours, thèses et articles scientifiques en accès libre." },
+      {
+        name: "description",
+        content:
+          "Bibliothèque numérique des universités gabonaises : livres, cours, thèses et articles scientifiques en accès libre.",
+      },
       { property: "og:title", content: "BiblioGabon — La Grande Source documentaire du Gabon" },
-      { property: "og:description", content: "La bibliothèque numérique nationale des universités du Gabon." },
+      {
+        property: "og:description",
+        content: "La bibliothèque numérique nationale des universités du Gabon.",
+      },
     ],
   }),
   component: Home,
@@ -27,16 +44,41 @@ const HERO_FILTRES = ["Tout", "Livres", "Cours", "Articles", "Examens", "TD/TP",
 
 function Home() {
   const articles = documentsByType("article").slice(0, 4);
-  const coursSciences = DOCUMENTS.filter((d) => d.type === "cours" && (d.domaineSlug === "sciences-technologies" || d.domaineSlug === "informatique-numerique" || d.domaineSlug === "medecine-sante")).slice(0, 4);
-  const coursEco = DOCUMENTS.filter((d) => d.type === "cours" && d.domaineSlug === "sciences-economiques-gestion").slice(0, 4);
+  const coursSciences = DOCUMENTS.filter(
+    (d) =>
+      d.type === "cours" &&
+      (d.domaineSlug === "sciences-technologies" ||
+        d.domaineSlug === "informatique-numerique" ||
+        d.domaineSlug === "medecine-sante"),
+  ).slice(0, 4);
+  const coursEco = DOCUMENTS.filter(
+    (d) => d.type === "cours" && d.domaineSlug === "sciences-economiques-gestion",
+  ).slice(0, 4);
 
   return (
     <SiteLayout>
       <Hero />
       <StatsBand />
-      <FeaturedSection eyebrow="À la une" title="Articles scientifiques" viewAll="/articles" docs={articles} />
-      <FeaturedSection eyebrow="Cours" title="Sciences & Technologies" viewAll="/cours" docs={coursSciences} tone="muted" />
-      <FeaturedSection eyebrow="Cours" title="Économie & Gestion" viewAll="/cours" docs={coursEco} />
+      <FeaturedSection
+        eyebrow="À la une"
+        title="Articles scientifiques"
+        viewAll="/articles"
+        docs={articles}
+      />
+      <FeaturedSection
+        eyebrow="Cours"
+        title="Sciences & Technologies"
+        viewAll="/cours"
+        docs={coursSciences}
+        tone="muted"
+      />
+      <FeaturedSection
+        eyebrow="Cours"
+        title="Économie & Gestion"
+        viewAll="/cours"
+        docs={coursEco}
+      />
+      <SourcesLibres />
       <Contributors />
       <VisionTeaser />
       <JoinCTA />
@@ -55,13 +97,17 @@ function Hero() {
             <span className="size-1.5 rounded-full bg-green animate-pulse" />
             République Gabonaise · Accès 100 % Libre 🇬🇦
           </div>
-          <h1 className="mt-6 font-display font-bold text-navy leading-[1.02] tracking-tighter" style={{ fontSize: "clamp(2.75rem, 5.4vw, 5.25rem)" }}>
+          <h1
+            className="mt-6 font-display font-bold text-navy leading-[1.02] tracking-tighter"
+            style={{ fontSize: "clamp(2.75rem, 5.4vw, 5.25rem)" }}
+          >
             La Grande Source
             <br />
             <span className="italic text-green">documentaire</span> du Gabon.
           </h1>
           <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
-            Des milliers de livres, cours, thèses et articles scientifiques pour les étudiants et enseignants des universités gabonaises.
+            Des milliers de livres, cours, thèses et articles scientifiques pour les étudiants et
+            enseignants des universités gabonaises.
           </p>
 
           <div className="mt-8 max-w-2xl">
@@ -90,7 +136,11 @@ function Hero() {
                 placeholder={`Chercher dans ${filter.toLowerCase()}…`}
                 className="flex-1 h-full bg-transparent outline-none text-[15px] placeholder:text-muted-foreground"
               />
-              <Button type="submit" size="lg" className="bg-navy text-white hover:bg-navy-deep rounded-full h-10 px-5">
+              <Button
+                type="submit"
+                size="lg"
+                className="bg-navy text-white hover:bg-navy-deep rounded-full h-10 px-5"
+              >
                 Chercher
               </Button>
             </form>
@@ -98,9 +148,16 @@ function Hero() {
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
-              <Link to="/domaines">Explorer le catalogue <ArrowRight className="size-4 ml-1" /></Link>
+              <Link to="/domaines">
+                Explorer le catalogue <ArrowRight className="size-4 ml-1" />
+              </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-navy/20 hover:border-gold hover:text-navy hover:bg-gold/5">
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-navy/20 hover:border-gold hover:text-navy hover:bg-gold/5"
+            >
               <Link to="/inscription">Créer un compte gratuit</Link>
             </Button>
           </div>
@@ -119,7 +176,11 @@ function HeroArtwork() {
       <div className="relative aspect-square rounded-[2rem] border border-border bg-white/70 backdrop-blur shadow-editorial-lg overflow-hidden">
         <div className="absolute inset-0 pixel-grid-bg opacity-60" />
         <div className="absolute inset-0 flex items-center justify-center p-10">
-          <img src={logoAsset.url} alt="Logo BiblioGabon" className="w-full max-w-sm object-contain drop-shadow-xl" />
+          <img
+            src={logoUrl}
+            alt="Logo BiblioGabon"
+            className="w-full max-w-sm object-contain drop-shadow-xl"
+          />
         </div>
         <div className="absolute top-5 left-5 rounded-xl bg-white/95 backdrop-blur px-3 py-2 shadow-editorial text-[11px]">
           <p className="font-display font-semibold text-navy text-sm">17</p>
@@ -163,7 +224,9 @@ function StatsBand() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && setVisible(true), { threshold: 0.3 });
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && setVisible(true), {
+      threshold: 0.3,
+    });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -172,10 +235,15 @@ function StatsBand() {
       <div className="container-editorial py-14">
         <div className="grid gap-8 md:grid-cols-[1.2fr_2fr] items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green">Chiffres clés</p>
-            <h2 className="mt-3 font-display text-3xl font-semibold text-navy leading-tight">La bibliothèque en un regard.</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green">
+              Chiffres clés
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-semibold text-navy leading-tight">
+              La bibliothèque en un regard.
+            </h2>
             <p className="mt-3 text-sm text-muted-foreground max-w-sm">
-              Mode visiteur — parcourez librement. Pour lire et télécharger, connectez-vous ou inscrivez-vous gratuitement.
+              Mode visiteur — parcourez librement. Pour lire et télécharger, connectez-vous ou
+              inscrivez-vous gratuitement.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -183,9 +251,14 @@ function StatsBand() {
               <div
                 key={s.label}
                 className="rounded-2xl border border-border bg-card p-6 shadow-editorial"
-                style={{ animation: visible ? `count-in 0.6s ease-out ${i * 0.08}s both` : undefined }}
+                style={{
+                  animation: visible ? `count-in 0.6s ease-out ${i * 0.08}s both` : undefined,
+                }}
               >
-                <p className="font-display text-4xl font-bold text-navy">{s.valeur}{s.suffixe}</p>
+                <p className="font-display text-4xl font-bold text-navy">
+                  {s.valeur}
+                  {s.suffixe}
+                </p>
                 <p className="mt-1 text-sm text-muted-foreground">{s.label}</p>
               </div>
             ))}
@@ -214,15 +287,66 @@ function FeaturedSection({
       <div className="container-editorial py-16 md:py-20">
         <div className="flex items-end justify-between gap-6 mb-8">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green">{eyebrow}</p>
-            <h2 className="mt-2 font-display text-3xl md:text-4xl font-semibold text-navy tracking-tight">{title}</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green">
+              {eyebrow}
+            </p>
+            <h2 className="mt-2 font-display text-3xl md:text-4xl font-semibold text-navy tracking-tight">
+              {title}
+            </h2>
           </div>
-          <Link to={viewAll} className="group inline-flex items-center gap-1 text-sm font-medium text-navy hover:text-gold transition">
+          <Link
+            to={viewAll}
+            className="group inline-flex items-center gap-1 text-sm font-medium text-navy hover:text-gold transition"
+          >
             Voir tout <ChevronRight className="size-4 group-hover:translate-x-0.5 transition" />
           </Link>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {docs.map((d) => <DocumentCard key={d.id} doc={d} />)}
+          {docs.map((d) => (
+            <DocumentCard key={d.id} doc={d} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SourcesLibres() {
+  return (
+    <section className="border-t border-border bg-surface-alt">
+      <div className="container-editorial py-14 md:py-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          <div className="max-w-xl">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-green">
+              <Globe2 className="size-3.5" /> Ressources ouvertes
+            </p>
+            <h2 className="mt-2 font-display text-2xl md:text-3xl font-semibold text-navy tracking-tight">
+              Nos ressources s'appuient sur les grandes plateformes ouvertes.
+            </h2>
+          </div>
+          <p className="text-sm text-muted-foreground max-w-sm">
+            Chaque document référencé indique sa source libre d'origine — MOOC, archives ouvertes ou
+            manuels sous licence Creative Commons.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {SOURCES_LIBRES.map((s) => (
+            <a
+              key={s.nom}
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col gap-1 rounded-xl border border-border bg-card p-4 shadow-editorial hover:border-gold hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-all"
+            >
+              <span className="inline-flex items-center justify-between gap-1">
+                <span className="font-display text-sm font-semibold text-navy group-hover:text-green transition-colors">
+                  {s.nom}
+                </span>
+                <ExternalLink className="size-3.5 text-muted-foreground/60 group-hover:text-gold transition-colors shrink-0" />
+              </span>
+              <span className="text-xs text-muted-foreground leading-snug">{s.desc}</span>
+            </a>
+          ))}
         </div>
       </div>
     </section>
@@ -235,22 +359,32 @@ function Contributors() {
       <div className="container-editorial py-16 md:py-20">
         <div className="grid md:grid-cols-[1fr_2fr] gap-10 mb-10">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green">Nos contributeurs</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green">
+              Nos contributeurs
+            </p>
             <h2 className="mt-2 font-display text-3xl md:text-4xl font-semibold text-navy tracking-tight">
               Les enseignants qui enrichissent la bibliothèque.
             </h2>
           </div>
           <p className="text-lg text-muted-foreground leading-relaxed self-end max-w-xl">
-            Des professeurs, ingénieurs, docteurs, maîtres-assistants et maîtres de conférences des universités
-            gabonaises qui partagent leurs ressources pédagogiques librement.
+            Des professeurs, ingénieurs, docteurs, maîtres-assistants et maîtres de conférences des
+            universités gabonaises qui partagent leurs ressources pédagogiques librement.
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {CONTRIBUTEURS.slice(0, 3).map((c) => <ContributorCard key={c.id} c={c} />)}
+          {CONTRIBUTEURS.slice(0, 3).map((c) => (
+            <ContributorCard key={c.id} c={c} />
+          ))}
         </div>
         <div className="mt-8">
-          <Button asChild variant="outline" className="border-navy/15 hover:border-gold hover:text-navy hover:bg-gold/5">
-            <Link to="/enseignants">Tous les enseignants <ArrowRight className="size-4 ml-1" /></Link>
+          <Button
+            asChild
+            variant="outline"
+            className="border-navy/15 hover:border-gold hover:text-navy hover:bg-gold/5"
+          >
+            <Link to="/enseignants">
+              Tous les enseignants <ArrowRight className="size-4 ml-1" />
+            </Link>
           </Button>
         </div>
       </div>
@@ -265,26 +399,35 @@ function VisionTeaser() {
       <div className="container-editorial py-20 relative">
         <div className="grid lg:grid-cols-[1.2fr_1fr] gap-14">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">Vision & Impact</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+              Vision & Impact
+            </p>
             <h2 className="mt-3 font-display text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05]">
               Un pays qui <span className="italic text-gold">produit</span>,{" "}
-              <span className="italic text-gold">publie</span> et <span className="italic text-gold">maîtrise</span> son savoir.
+              <span className="italic text-gold">publie</span> et{" "}
+              <span className="italic text-gold">maîtrise</span> son savoir.
             </h2>
             <figure className="mt-8 max-w-xl">
               <Quote className="size-6 text-gold mb-3" />
               <blockquote className="font-display text-xl italic text-white/90 leading-relaxed">
-                « L'accès au savoir n'est pas un luxe : c'est un droit. BiblioGabon en fait une réalité concrète. »
+                « L'accès au savoir n'est pas un luxe : c'est un droit. BiblioGabon en fait une
+                réalité concrète. »
               </blockquote>
             </figure>
             <div className="mt-8">
               <Button asChild size="lg" className="bg-gold text-navy hover:bg-gold/90">
-                <Link to="/vision">Découvrir notre vision <ArrowRight className="size-4 ml-1" /></Link>
+                <Link to="/vision">
+                  Découvrir notre vision <ArrowRight className="size-4 ml-1" />
+                </Link>
               </Button>
             </div>
           </div>
           <div className="space-y-4">
             {STATS_VISION.map((s) => (
-              <div key={s.label} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6">
+              <div
+                key={s.label}
+                className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6"
+              >
                 <p className="font-display text-5xl font-bold text-gold leading-none">{s.valeur}</p>
                 <p className="mt-3 text-sm text-white/85 leading-relaxed">{s.label}</p>
                 <p className="mt-1 text-[11px] uppercase tracking-wider text-white/40">{s.note}</p>
@@ -306,21 +449,35 @@ function JoinCTA() {
           Rejoignez la bibliothèque nationale.
         </h2>
         <p className="mt-4 max-w-xl mx-auto text-lg text-muted-foreground">
-          Étudiants et enseignants des universités gabonaises — accès 100 % gratuit à toutes les ressources académiques.
+          Étudiants et enseignants des universités gabonaises — accès 100 % gratuit à toutes les
+          ressources académiques.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button asChild size="lg" className="bg-navy text-white hover:bg-navy-deep">
-            <Link to="/inscription"><GraduationCap className="size-4 mr-1.5" /> Je suis étudiant</Link>
+            <Link to="/inscription">
+              <GraduationCap className="size-4 mr-1.5" /> Je suis étudiant
+            </Link>
           </Button>
           <Button asChild size="lg" className="bg-green text-white hover:bg-green/90">
-            <Link to="/inscription"><BookMarked className="size-4 mr-1.5" /> Je suis enseignant</Link>
+            <Link to="/inscription">
+              <BookMarked className="size-4 mr-1.5" /> Je suis enseignant
+            </Link>
           </Button>
         </div>
         <div className="mt-14 grid sm:grid-cols-3 gap-4 text-left max-w-4xl mx-auto">
           {DOMAINES.slice(0, 3).map((d) => (
-            <Link key={d.slug} to="/domaines/$slug" params={{ slug: d.slug }} className="group rounded-xl border border-border p-5 hover:border-gold hover:shadow-editorial transition">
-              <p className="text-xs uppercase tracking-wider text-green font-semibold">{d.documents} documents</p>
-              <p className="mt-2 font-display font-semibold text-navy group-hover:text-gold transition">{d.nom}</p>
+            <Link
+              key={d.slug}
+              to="/domaines/$slug"
+              params={{ slug: d.slug }}
+              className="group rounded-xl border border-border p-5 hover:border-gold hover:shadow-editorial transition"
+            >
+              <p className="text-xs uppercase tracking-wider text-green font-semibold">
+                {d.documents} documents
+              </p>
+              <p className="mt-2 font-display font-semibold text-navy group-hover:text-gold transition">
+                {d.nom}
+              </p>
             </Link>
           ))}
         </div>

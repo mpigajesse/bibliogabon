@@ -38,7 +38,12 @@ export function CatalogueBrowser({
   const years = Array.from(new Set(documents.map((d) => d.annee))).sort((a, b) => b - a);
 
   let list = documents.filter((d) => {
-    if (q && !d.titre.toLowerCase().includes(q.toLowerCase()) && !d.auteur.toLowerCase().includes(q.toLowerCase())) return false;
+    if (
+      q &&
+      !d.titre.toLowerCase().includes(q.toLowerCase()) &&
+      !d.auteur.toLowerCase().includes(q.toLowerCase())
+    )
+      return false;
     if (type !== "all" && d.type !== type) return false;
     if (dom !== "all" && d.domaineSlug !== dom) return false;
     if (annee !== "all" && d.annee !== Number(annee)) return false;
@@ -50,7 +55,8 @@ export function CatalogueBrowser({
 
   return (
     <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
-      <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
+      <aside className="space-y-6 rounded-2xl border border-border bg-card p-5 shadow-editorial lg:sticky lg:top-24 lg:self-start">
+        <div className="h-[3px] w-10 rounded-full gabon-stripe" aria-hidden />
         <FacetGroup label="Recherche">
           <input
             value={q}
@@ -62,7 +68,14 @@ export function CatalogueBrowser({
         {!lockedType && (
           <FacetGroup label="Type de document">
             {TYPES.map((t) => (
-              <FacetRadio key={t.value} name="type" value={t.value} label={t.label} checked={type === t.value} onChange={() => setType(t.value)} />
+              <FacetRadio
+                key={t.value}
+                name="type"
+                value={t.value}
+                label={t.label}
+                checked={type === t.value}
+                onChange={() => setType(t.value)}
+              />
             ))}
           </FacetGroup>
         )}
@@ -75,34 +88,62 @@ export function CatalogueBrowser({
             >
               <option value="all">Tous les domaines</option>
               {DOMAINES.map((d) => (
-                <option key={d.slug} value={d.slug}>{d.nom}</option>
+                <option key={d.slug} value={d.slug}>
+                  {d.nom}
+                </option>
               ))}
             </select>
           </FacetGroup>
         )}
         <FacetGroup label="Année">
-          <FacetRadio name="annee" value="all" label="Toutes" checked={annee === "all"} onChange={() => setAnnee("all")} />
+          <FacetRadio
+            name="annee"
+            value="all"
+            label="Toutes"
+            checked={annee === "all"}
+            onChange={() => setAnnee("all")}
+          />
           {years.map((y) => (
-            <FacetRadio key={y} name="annee" value={String(y)} label={String(y)} checked={annee === String(y)} onChange={() => setAnnee(String(y))} />
+            <FacetRadio
+              key={y}
+              name="annee"
+              value={String(y)}
+              label={String(y)}
+              checked={annee === String(y)}
+              onChange={() => setAnnee(String(y))}
+            />
           ))}
         </FacetGroup>
         <FacetGroup label="Trier">
           {TRIS.map((t) => (
-            <FacetRadio key={t.value} name="tri" value={t.value} label={t.label} checked={tri === t.value} onChange={() => setTri(t.value)} />
+            <FacetRadio
+              key={t.value}
+              name="tri"
+              value={t.value}
+              label={t.label}
+              checked={tri === t.value}
+              onChange={() => setTri(t.value)}
+            />
           ))}
         </FacetGroup>
       </aside>
       <div>
-        <div className="mb-6 flex items-baseline justify-between">
+        <div className="mb-6 flex items-baseline justify-between border-b border-border pb-4">
           <p className="text-sm text-muted-foreground">
-            <span className="font-semibold text-navy">{list.length}</span> résultat{list.length > 1 ? "s" : ""}
+            <span className="font-display font-semibold text-navy text-base">{list.length}</span>{" "}
+            résultat{list.length > 1 ? "s" : ""} trouvé{list.length > 1 ? "s" : ""}
           </p>
         </div>
         {list.length === 0 ? (
-          <EmptyState title="Aucun document ne correspond" description="Ajustez vos filtres ou explorez d'autres domaines." />
+          <EmptyState
+            title="Aucun document ne correspond"
+            description="Ajustez vos filtres ou explorez d'autres domaines."
+          />
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {list.map((d) => <DocumentCard key={d.id} doc={d} />)}
+            {list.map((d) => (
+              <DocumentCard key={d.id} doc={d} />
+            ))}
           </div>
         )}
       </div>
@@ -113,17 +154,44 @@ export function CatalogueBrowser({
 function FacetGroup({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <h4 className="font-display text-xs font-semibold uppercase tracking-wider text-navy mb-3">{label}</h4>
+      <h4 className="font-display text-xs font-semibold uppercase tracking-wider text-navy mb-3">
+        {label}
+      </h4>
       <div className="space-y-1.5">{children}</div>
     </div>
   );
 }
 
-function FacetRadio({ name, value, label, checked, onChange }: { name: string; value: string; label: string; checked: boolean; onChange: () => void }) {
+function FacetRadio({
+  name,
+  value,
+  label,
+  checked,
+  onChange,
+}: {
+  name: string;
+  value: string;
+  label: string;
+  checked: boolean;
+  onChange: () => void;
+}) {
   return (
     <label className="flex items-center gap-2 text-sm cursor-pointer group">
-      <input type="radio" name={name} value={value} checked={checked} onChange={onChange} className="accent-[var(--navy)]" />
-      <span className={checked ? "text-navy font-medium" : "text-muted-foreground group-hover:text-foreground"}>{label}</span>
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={onChange}
+        className="accent-[var(--navy)]"
+      />
+      <span
+        className={
+          checked ? "text-navy font-medium" : "text-muted-foreground group-hover:text-foreground"
+        }
+      >
+        {label}
+      </span>
     </label>
   );
 }

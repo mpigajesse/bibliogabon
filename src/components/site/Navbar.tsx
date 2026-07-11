@@ -28,10 +28,11 @@ export function Navbar() {
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-200 ${
         scrolled
-          ? "backdrop-blur-md bg-background/85 border-b border-border shadow-[0_1px_0_rgba(6,39,81,0.04)]"
+          ? "glass-surface border-b border-border shadow-[0_1px_0_rgba(6,39,81,0.04)]"
           : "bg-background/70 backdrop-blur-sm"
       }`}
     >
+      <span className="block h-[3px] w-full gabon-stripe" aria-hidden />
       <div className="container-editorial flex h-16 items-center gap-6">
         <Logo size={36} withWordmark />
         <nav className="hidden lg:flex items-center gap-1 text-sm">
@@ -51,8 +52,15 @@ export function Navbar() {
                 className="absolute left-0 top-full mt-2 w-[720px] rounded-2xl border border-border bg-popover shadow-editorial-lg p-5 grid grid-cols-2 gap-x-6 gap-y-1 text-left"
               >
                 <div className="col-span-2 flex items-center justify-between pb-3 mb-1 border-b border-border">
-                  <span className="font-display text-sm font-semibold text-navy">17 domaines académiques</span>
-                  <Link to="/domaines" className="text-xs font-medium text-green hover:text-gold transition">Tout parcourir →</Link>
+                  <span className="font-display text-sm font-semibold text-navy">
+                    17 domaines académiques
+                  </span>
+                  <Link
+                    to="/domaines"
+                    className="text-xs font-medium text-green hover:text-gold transition"
+                  >
+                    Tout parcourir →
+                  </Link>
                 </div>
                 {DOMAINES.map((d) => (
                   <Link
@@ -64,7 +72,14 @@ export function Navbar() {
                   >
                     <span
                       className="mt-1.5 size-1.5 rounded-full shrink-0"
-                      style={{ background: d.couleur === "navy" ? "var(--navy)" : d.couleur === "green" ? "var(--green)" : "var(--gold)" }}
+                      style={{
+                        background:
+                          d.couleur === "navy"
+                            ? "var(--navy)"
+                            : d.couleur === "green"
+                              ? "var(--green)"
+                              : "var(--gold)",
+                      }}
                     />
                     <span className="text-foreground/90 group-hover:text-navy">{d.nom}</span>
                   </Link>
@@ -73,7 +88,9 @@ export function Navbar() {
             )}
           </button>
           {NAV_CATALOG.map((n) => (
-            <NavItem key={n.to} to={n.to}>{n.label}</NavItem>
+            <NavItem key={n.to} to={n.to}>
+              {n.label}
+            </NavItem>
           ))}
         </nav>
 
@@ -104,21 +121,39 @@ export function Navbar() {
           <div className="container-editorial py-4 space-y-1">
             <SearchInline />
             <div className="pt-2">
-              <MobLink to="/" onClick={() => setOpenMob(false)}>Accueil</MobLink>
-              <MobLink to="/domaines" onClick={() => setOpenMob(false)}>Domaines</MobLink>
+              <MobLink to="/" onClick={() => setOpenMob(false)}>
+                Accueil
+              </MobLink>
+              <MobLink to="/domaines" onClick={() => setOpenMob(false)}>
+                Domaines
+              </MobLink>
               {NAV_CATALOG.map((n) => (
-                <MobLink key={n.to} to={n.to} onClick={() => setOpenMob(false)}>{n.label}</MobLink>
+                <MobLink key={n.to} to={n.to} onClick={() => setOpenMob(false)}>
+                  {n.label}
+                </MobLink>
               ))}
-              <MobLink to="/theses" onClick={() => setOpenMob(false)}>Thèses</MobLink>
-              <MobLink to="/enseignants" onClick={() => setOpenMob(false)}>Enseignants</MobLink>
-              <MobLink to="/vision" onClick={() => setOpenMob(false)}>Vision</MobLink>
+              <MobLink to="/theses" onClick={() => setOpenMob(false)}>
+                Thèses
+              </MobLink>
+              <MobLink to="/enseignants" onClick={() => setOpenMob(false)}>
+                Enseignants
+              </MobLink>
+              <MobLink to="/vision" onClick={() => setOpenMob(false)}>
+                Vision
+              </MobLink>
             </div>
             <div className="grid grid-cols-2 gap-2 pt-3">
               <Button asChild variant="outline" size="sm">
-                <Link to="/connexion" onClick={() => setOpenMob(false)}><BookOpen className="size-4 mr-1"/>Connexion</Link>
+                <Link to="/connexion" onClick={() => setOpenMob(false)}>
+                  <BookOpen className="size-4 mr-1" />
+                  Connexion
+                </Link>
               </Button>
               <Button asChild size="sm" className="bg-navy text-white">
-                <Link to="/inscription" onClick={() => setOpenMob(false)}><GraduationCap className="size-4 mr-1"/>S'inscrire</Link>
+                <Link to="/inscription" onClick={() => setOpenMob(false)}>
+                  <GraduationCap className="size-4 mr-1" />
+                  S'inscrire
+                </Link>
               </Button>
             </div>
           </div>
@@ -140,7 +175,15 @@ function NavItem({ to, children }: { to: string; children: React.ReactNode }) {
   );
 }
 
-function MobLink({ to, onClick, children }: { to: string; onClick?: () => void; children: React.ReactNode }) {
+function MobLink({
+  to,
+  onClick,
+  children,
+}: {
+  to: string;
+  onClick?: () => void;
+  children: React.ReactNode;
+}) {
   return (
     <Link
       to={to}
