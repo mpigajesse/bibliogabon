@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
-  Sparkles,
   Quote,
   GraduationCap,
   BookMarked,
@@ -134,7 +133,7 @@ function Hero() {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-green/25 bg-green-soft px-3 py-1 text-xs font-semibold text-green">
             <span className="size-1.5 rounded-full bg-green animate-pulse" />
-            République Gabonaise · Accès 100 % Libre 🇬🇦
+            République Gabonaise · Accès 100 % Libre
           </div>
           <h1
             className="mt-6 font-display font-bold text-navy leading-[1.02] tracking-tighter"
@@ -193,8 +192,6 @@ function HeroArtwork() {
         <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/80 via-navy/10 to-navy/20" />
         <span className="absolute top-0 inset-x-0 h-1.5 gabon-stripe" aria-hidden />
 
-        <PixelDance />
-
         <div className="absolute top-5 left-5 glass-surface rounded-xl px-3.5 py-2.5 shadow-editorial">
           <p className="font-display text-lg font-bold text-navy leading-none">17</p>
           <p className="text-[11px] text-muted-foreground">domaines académiques</p>
@@ -224,23 +221,6 @@ function HeroArtwork() {
   );
 }
 
-function PixelDance() {
-  const cells = Array.from({ length: 18 });
-  return (
-    <div className="absolute top-6 right-6 grid grid-cols-6 gap-1" aria-hidden>
-      {cells.map((_, i) => {
-        const c = i % 3 === 0 ? "var(--gold)" : i % 3 === 1 ? "var(--green)" : "#ffffff";
-        return (
-          <span
-            key={i}
-            className="block size-2 rounded-[2px] animate-pixel-drift"
-            style={{ background: c, animationDelay: `${(i % 6) * 0.15}s`, opacity: 0.85 }}
-          />
-        );
-      })}
-    </div>
-  );
-}
 
 function TrustStrip() {
   return (
@@ -372,7 +352,9 @@ function DomainesBento() {
                   {d.nom}
                 </p>
                 {i === 0 && (
-                  <p className="mt-2 text-sm text-white/80 max-w-sm line-clamp-2">{d.description}</p>
+                  <p className="mt-2 text-sm text-white/80 max-w-sm line-clamp-2">
+                    {d.description}
+                  </p>
                 )}
                 <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-white/90 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all">
                   Explorer <ArrowRight className="size-3.5" />
@@ -412,9 +394,7 @@ function FeaturedSection({
             <h2 className="mt-2 font-display text-3xl md:text-4xl font-semibold text-navy tracking-tight">
               {title}
             </h2>
-            {description && (
-              <p className="mt-2 text-muted-foreground max-w-xl">{description}</p>
-            )}
+            {description && <p className="mt-2 text-muted-foreground max-w-xl">{description}</p>}
           </div>
           <Link
             to={viewAll}
@@ -569,7 +549,6 @@ function JoinCTA() {
   return (
     <section className="border-t border-border">
       <div className="container-editorial py-20 md:py-24 text-center">
-        <Sparkles className="mx-auto size-6 text-gold mb-4" />
         <h2 className="font-display text-4xl md:text-5xl font-semibold text-navy tracking-tight max-w-3xl mx-auto leading-[1.05]">
           Rejoignez la bibliothèque nationale.
         </h2>

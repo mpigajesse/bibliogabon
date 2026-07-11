@@ -140,7 +140,7 @@ function Contact() {
             </form>
           )}
           <div className="space-y-5">
-            <InfoBlock Icon={MapPin} title="Adresse" text="Libreville, République Gabonaise 🇬🇦" />
+            <InfoBlock Icon={MapPin} title="Adresse" text="Libreville, République Gabonaise" />
             <InfoBlock
               Icon={Mail}
               title="E-mail"

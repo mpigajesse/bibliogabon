@@ -1,6 +1,6 @@
 /**
  * Comptes simulés (données mockées) pour la démonstration du site.
- * ⚠️ Mots de passe factices en clair : usage démo uniquement, jamais en production.
+ * Mots de passe factices en clair : usage démo uniquement, jamais en production.
  */
 export type RoleCompte = "etudiant" | "enseignant";
 

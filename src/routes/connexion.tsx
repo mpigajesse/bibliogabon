@@ -63,7 +63,7 @@ function Connexion() {
           </Link>
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">
-              République Gabonaise 🇬🇦
+              République Gabonaise
             </p>
             <h2 className="font-display text-4xl font-semibold leading-tight tracking-tight max-w-md">
               La Grande Source documentaire du Gabon.

@@ -281,7 +281,7 @@ function AccesDocument({ doc }: { doc: Document }) {
           </Button>
         </div>
         <div className="mt-6 rounded-xl border border-gold/30 bg-[oklch(0.98_0.05_88)] p-4 text-sm text-[oklch(0.35_0.12_60)]">
-          <span aria-hidden>🔒</span> La lecture et le téléchargement sont réservés aux étudiants et
+          La lecture et le téléchargement sont réservés aux étudiants et
           enseignants inscrits.{" "}
           <Link
             to="/inscription"
@@ -308,7 +308,7 @@ function AccesDocument({ doc }: { doc: Document }) {
         </Button>
       </div>
       <div className="mt-6 rounded-xl border border-green/25 bg-green-soft/60 p-4 text-sm text-green">
-        <span aria-hidden>✅</span> Connecté en tant que{" "}
+        Connecté en tant que{" "}
         <span className="font-semibold">{compte.nom}</span> — lecture et téléchargement débloqués.
       </div>
     </>

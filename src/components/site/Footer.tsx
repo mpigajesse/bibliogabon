@@ -54,7 +54,7 @@ export function Footer() {
         <FooterCol title="Contact">
           <li className="flex items-start gap-2">
             <MapPin className="size-4 mt-0.5 text-gold shrink-0" />
-            <span>Libreville, République Gabonaise 🇬🇦</span>
+            <span>Libreville, République Gabonaise</span>
           </li>
           <li className="flex items-start gap-2">
             <Mail className="size-4 mt-0.5 text-gold shrink-0" />
@@ -71,7 +71,7 @@ export function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-editorial py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/60">
-          <p>© 2026 BiblioGabon · République Gabonaise 🇬🇦 · v2.0.0</p>
+          <p>© 2026 BiblioGabon · République Gabonaise · v2.0.0</p>
           <div className="flex items-center gap-5">
             <Link to="/confidentialite" className="hover:text-gold">
               Confidentialité
