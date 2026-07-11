@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VisionRouteImport } from './routes/vision'
 import { Route as ThesesRouteImport } from './routes/theses'
 import { Route as TableauDeBordRouteImport } from './routes/tableau-de-bord'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LivresRouteImport } from './routes/livres'
 import { Route as InscriptionRouteImport } from './routes/inscription'
 import { Route as ExamensRouteImport } from './routes/examens'
@@ -42,6 +43,11 @@ const ThesesRoute = ThesesRouteImport.update({
 const TableauDeBordRoute = TableauDeBordRouteImport.update({
   id: '/tableau-de-bord',
   path: '/tableau-de-bord',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LivresRoute = LivresRouteImport.update({
@@ -138,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/examens': typeof ExamensRoute
   '/inscription': typeof InscriptionRoute
   '/livres': typeof LivresRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tableau-de-bord': typeof TableauDeBordRoute
   '/theses': typeof ThesesRoute
   '/vision': typeof VisionRoute
@@ -159,6 +166,7 @@ export interface FileRoutesByTo {
   '/examens': typeof ExamensRoute
   '/inscription': typeof InscriptionRoute
   '/livres': typeof LivresRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tableau-de-bord': typeof TableauDeBordRoute
   '/theses': typeof ThesesRoute
   '/vision': typeof VisionRoute
@@ -181,6 +189,7 @@ export interface FileRoutesById {
   '/examens': typeof ExamensRoute
   '/inscription': typeof InscriptionRoute
   '/livres': typeof LivresRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tableau-de-bord': typeof TableauDeBordRoute
   '/theses': typeof ThesesRoute
   '/vision': typeof VisionRoute
@@ -204,6 +213,7 @@ export interface FileRouteTypes {
     | '/examens'
     | '/inscription'
     | '/livres'
+    | '/sitemap.xml'
     | '/tableau-de-bord'
     | '/theses'
     | '/vision'
@@ -225,6 +235,7 @@ export interface FileRouteTypes {
     | '/examens'
     | '/inscription'
     | '/livres'
+    | '/sitemap.xml'
     | '/tableau-de-bord'
     | '/theses'
     | '/vision'
@@ -246,6 +257,7 @@ export interface FileRouteTypes {
     | '/examens'
     | '/inscription'
     | '/livres'
+    | '/sitemap.xml'
     | '/tableau-de-bord'
     | '/theses'
     | '/vision'
@@ -268,6 +280,7 @@ export interface RootRouteChildren {
   ExamensRoute: typeof ExamensRoute
   InscriptionRoute: typeof InscriptionRoute
   LivresRoute: typeof LivresRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TableauDeBordRoute: typeof TableauDeBordRoute
   ThesesRoute: typeof ThesesRoute
   VisionRoute: typeof VisionRoute
@@ -298,6 +311,13 @@ declare module '@tanstack/react-router' {
       path: '/tableau-de-bord'
       fullPath: '/tableau-de-bord'
       preLoaderRoute: typeof TableauDeBordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/livres': {
@@ -428,6 +448,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExamensRoute: ExamensRoute,
   InscriptionRoute: InscriptionRoute,
   LivresRoute: LivresRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TableauDeBordRoute: TableauDeBordRoute,
   ThesesRoute: ThesesRoute,
   VisionRoute: VisionRoute,
