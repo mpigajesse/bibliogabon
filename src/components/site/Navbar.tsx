@@ -84,39 +84,39 @@ export function Navbar() {
               <div className="absolute left-0 top-full z-50 pt-2">
                 <div className="w-[720px] rounded-2xl border border-border bg-popover shadow-editorial-lg p-5 grid grid-cols-2 gap-x-6 gap-y-1 text-left">
                   <div className="col-span-2 flex items-center justify-between pb-3 mb-1 border-b border-border">
-                  <span className="font-display text-sm font-semibold text-navy">
-                    17 domaines académiques
-                  </span>
-                  <Link
-                    to="/domaines"
-                    className="text-xs font-medium text-green hover:text-gold transition"
-                    onClick={() => setOpenDom(false)}
-                  >
-                    Tout parcourir →
-                  </Link>
-                </div>
-                {DOMAINES.map((d) => (
-                  <Link
-                    key={d.slug}
-                    to="/domaines/$slug"
-                    params={{ slug: d.slug }}
-                    className="group flex items-start gap-2 py-1.5 px-2 rounded-md hover:bg-muted transition text-sm"
-                    onClick={() => setOpenDom(false)}
-                  >
-                    <span
-                      className="mt-1.5 size-1.5 rounded-full shrink-0"
-                      style={{
-                        background:
-                          d.couleur === "navy"
-                            ? "var(--navy)"
-                            : d.couleur === "green"
-                              ? "var(--green)"
-                              : "var(--gold)",
-                      }}
-                    />
-                    <span className="text-foreground/90 group-hover:text-navy">{d.nom}</span>
-                  </Link>
-                ))}
+                    <span className="font-display text-sm font-semibold text-navy">
+                      17 domaines académiques
+                    </span>
+                    <Link
+                      to="/domaines"
+                      className="text-xs font-medium text-green hover:text-gold transition"
+                      onClick={() => setOpenDom(false)}
+                    >
+                      Tout parcourir →
+                    </Link>
+                  </div>
+                  {DOMAINES.map((d) => (
+                    <Link
+                      key={d.slug}
+                      to="/domaines/$slug"
+                      params={{ slug: d.slug }}
+                      className="group flex items-start gap-2 py-1.5 px-2 rounded-md hover:bg-muted transition text-sm"
+                      onClick={() => setOpenDom(false)}
+                    >
+                      <span
+                        className="mt-1.5 size-1.5 rounded-full shrink-0"
+                        style={{
+                          background:
+                            d.couleur === "navy"
+                              ? "var(--navy)"
+                              : d.couleur === "green"
+                                ? "var(--green)"
+                                : "var(--gold)",
+                        }}
+                      />
+                      <span className="text-foreground/90 group-hover:text-navy">{d.nom}</span>
+                    </Link>
+                  ))}
                 </div>
               </div>
             )}
