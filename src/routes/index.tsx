@@ -143,13 +143,12 @@ function Hero() {
       <span className="absolute top-0 inset-x-0 z-10 h-1.5 gabon-stripe" aria-hidden />
       <video
         ref={videoRef}
-        className="block h-[56vh] md:h-[70vh] w-full object-cover"
+        className="block h-[56vh] md:h-[70vh] w-full object-cover bg-navy"
         autoPlay
         muted
         loop
         playsInline
         preload="auto"
-        poster="/heroes/hero-accueil.png"
         aria-label="Les universités et étudiants du Gabon"
         onEnded={(e) => {
           const v = e.currentTarget;
