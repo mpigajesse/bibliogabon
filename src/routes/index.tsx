@@ -149,13 +149,13 @@ function Hero() {
   const CADRE = "block h-[52vh] min-h-[320px] md:h-[70vh] w-full object-cover bg-navy";
 
   return (
-    <section className="relative bg-navy border-b border-border">
+    <section className="relative overflow-hidden bg-navy border-b border-border">
       <span className="absolute top-0 inset-x-0 z-10 h-1.5 gabon-stripe" aria-hidden />
       {echec ? (
         <img
           src="/vidoes/videohome.png"
           alt="Les universités et étudiants du Gabon"
-          className={CADRE}
+          className={`${CADRE} animate-ken-burns animate-fade-in`}
           loading="eager"
           decoding="async"
         />
