@@ -9,7 +9,11 @@ import {
   BookMarked,
   ChevronRight,
   Globe2,
-  ExternalLink,
+  BookOpen,
+  Users,
+  Layers,
+  Library,
+  MapPin,
 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { DocumentCard } from "@/components/site/DocumentCard";
@@ -42,6 +46,41 @@ export const Route = createFileRoute("/")({
 
 const HERO_FILTRES = ["Tout", "Livres", "Cours", "Articles", "Examens", "TD/TP", "Thèses"] as const;
 
+const UNIVERSITES = [
+  "Université Omar Bongo",
+  "Université des Sciences et Techniques de Masuku",
+  "Université de Libreville",
+  "INPTIC",
+  "EMIG",
+];
+
+const DOMAINES_VEDETTE = [
+  "informatique-numerique",
+  "medecine-sante",
+  "sciences-technologies",
+  "droit-sciences-politiques",
+  "sciences-economiques-gestion",
+  "agriculture-environnement",
+  "lettres-langues-shs",
+];
+
+/** Image de couverture avec repli d'extension (.png → .jpg) puis dégradé. */
+function CoverImg({ slug, alt }: { slug: string; alt: string }) {
+  const [i, setI] = useState(0);
+  const cands = [`/covers/domaines/${slug}.png`, `/covers/domaines/${slug}.jpg`];
+  if (i >= cands.length) return null;
+  return (
+    <img
+      src={cands[i]}
+      alt={alt}
+      onError={() => setI((v) => v + 1)}
+      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+      loading="lazy"
+      decoding="async"
+    />
+  );
+}
+
 function Home() {
   const articles = documentsByType("article").slice(0, 4);
   const coursSciences = DOCUMENTS.filter(
@@ -51,32 +90,35 @@ function Home() {
         d.domaineSlug === "informatique-numerique" ||
         d.domaineSlug === "medecine-sante"),
   ).slice(0, 4);
-  const coursEco = DOCUMENTS.filter(
-    (d) => d.type === "cours" && d.domaineSlug === "sciences-economiques-gestion",
-  ).slice(0, 4);
+  const livres = documentsByType("livre").slice(0, 4);
 
   return (
     <SiteLayout>
       <Hero />
+      <TrustStrip />
       <StatsBand />
+      <DomainesBento />
       <FeaturedSection
         eyebrow="À la une"
         title="Articles scientifiques"
+        description="Les publications récentes des chercheurs gabonais et africains."
         viewAll="/articles"
         docs={articles}
       />
       <FeaturedSection
         eyebrow="Cours"
-        title="Sciences & Technologies"
+        title="Sciences, technologies & santé"
+        description="Supports pédagogiques des enseignants des universités du Gabon."
         viewAll="/cours"
         docs={coursSciences}
         tone="muted"
       />
       <FeaturedSection
-        eyebrow="Cours"
-        title="Économie & Gestion"
-        viewAll="/cours"
-        docs={coursEco}
+        eyebrow="Patrimoine"
+        title="Livres & grands classiques"
+        description="Ouvrages de référence et patrimoine littéraire africain."
+        viewAll="/livres"
+        docs={livres}
       />
       <SourcesLibres />
       <Contributors />
@@ -91,7 +133,8 @@ function Hero() {
   return (
     <section className="relative overflow-hidden hero-gradient border-b border-border">
       <div className="absolute inset-0 pixel-grid-bg opacity-40 pointer-events-none" />
-      <div className="container-editorial relative py-16 md:py-24 lg:py-28 grid lg:grid-cols-[1.15fr_1fr] gap-14 items-center">
+      <div className="absolute inset-0 section-halo pointer-events-none" />
+      <div className="container-editorial relative py-16 md:py-24 lg:py-28 grid lg:grid-cols-[1.1fr_1fr] gap-14 items-center">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-green/25 bg-green-soft px-3 py-1 text-xs font-semibold text-green">
             <span className="size-1.5 rounded-full bg-green animate-pulse" />
@@ -105,6 +148,7 @@ function Hero() {
             <br />
             <span className="italic text-green">documentaire</span> du Gabon.
           </h1>
+          <div className="mt-5 h-1 w-24 gabon-rule" aria-hidden />
           <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
             Des milliers de livres, cours, thèses et articles scientifiques pour les étudiants et
             enseignants des universités gabonaises.
@@ -170,31 +214,52 @@ function Hero() {
 }
 
 function HeroArtwork() {
+  const [imgOk, setImgOk] = useState(true);
   return (
     <div className="relative hidden lg:block">
-      <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-navy/5 via-transparent to-gold/10 blur-2xl" />
-      <div className="relative aspect-square rounded-[2rem] border border-border bg-white/70 backdrop-blur shadow-editorial-lg overflow-hidden">
-        <div className="absolute inset-0 pixel-grid-bg opacity-60" />
-        <div className="absolute inset-0 flex items-center justify-center p-10">
+      <div className="absolute -inset-6 rounded-[2.2rem] bg-gradient-to-br from-navy/10 via-transparent to-gold/15 blur-2xl" />
+      <div className="relative aspect-[4/5] rounded-[2rem] border border-border bg-navy shadow-editorial-lg overflow-hidden">
+        {imgOk ? (
           <img
-            src={logoUrl}
-            alt="Logo BiblioGabon"
-            className="w-full max-w-sm object-contain drop-shadow-xl"
+            src="/heroes/hero-accueil.png"
+            alt="Étudiants des universités gabonaises"
+            onError={() => setImgOk(false)}
+            className="absolute inset-0 h-full w-full object-cover"
           />
-        </div>
-        <div className="absolute top-5 left-5 rounded-xl bg-white/95 backdrop-blur px-3 py-2 shadow-editorial text-[11px]">
-          <p className="font-display font-semibold text-navy text-sm">17</p>
-          <p className="text-muted-foreground">domaines académiques</p>
-        </div>
-        <div className="absolute bottom-5 right-5 rounded-xl bg-navy text-white px-3 py-2 shadow-editorial-lg text-[11px]">
-          <p className="font-display font-semibold text-gold text-sm">📚 Libre</p>
-          <p className="text-white/80">accès étudiant</p>
-        </div>
-        <div className="absolute bottom-5 left-5 rounded-xl bg-green text-white px-3 py-2 shadow-editorial text-[11px]">
-          <p className="font-display font-semibold text-sm">🇬🇦 MESRI</p>
-          <p className="text-white/80">2023</p>
-        </div>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy via-navy-deep to-navy pixel-grid-bg p-12">
+            <img src={logoUrl} alt="BiblioGabon" className="w-full max-w-xs object-contain" />
+          </div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/80 via-navy/10 to-navy/20" />
+        <span className="absolute top-0 inset-x-0 h-1.5 gabon-stripe" aria-hidden />
+
         <PixelDance />
+
+        <div className="absolute top-5 left-5 glass-surface rounded-xl px-3.5 py-2.5 shadow-editorial">
+          <p className="font-display text-lg font-bold text-navy leading-none">17</p>
+          <p className="text-[11px] text-muted-foreground">domaines académiques</p>
+        </div>
+        <div className="absolute bottom-24 right-5 glass-surface rounded-xl px-3.5 py-2.5 shadow-editorial-lg">
+          <p className="font-display text-sm font-semibold text-green leading-none">Accès libre</p>
+          <p className="text-[11px] text-muted-foreground">pour chaque étudiant</p>
+        </div>
+
+        <div className="absolute inset-x-5 bottom-5 rounded-2xl bg-white/95 backdrop-blur p-4 shadow-editorial-lg">
+          <div className="flex items-center gap-3">
+            <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-navy text-white">
+              <GraduationCap className="size-5" />
+            </span>
+            <div>
+              <p className="font-display text-sm font-semibold text-navy leading-tight">
+                +100 000 étudiants au Gabon
+              </p>
+              <p className="text-[11px] text-muted-foreground">
+                enfin réunis autour d'une bibliothèque nationale
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -203,20 +268,42 @@ function HeroArtwork() {
 function PixelDance() {
   const cells = Array.from({ length: 18 });
   return (
-    <div className="absolute top-8 right-8 grid grid-cols-6 gap-1" aria-hidden>
+    <div className="absolute top-6 right-6 grid grid-cols-6 gap-1" aria-hidden>
       {cells.map((_, i) => {
-        const c = i % 3 === 0 ? "var(--gold)" : i % 3 === 1 ? "var(--green)" : "var(--navy)";
+        const c = i % 3 === 0 ? "var(--gold)" : i % 3 === 1 ? "var(--green)" : "#ffffff";
         return (
           <span
             key={i}
             className="block size-2 rounded-[2px] animate-pixel-drift"
-            style={{ background: c, animationDelay: `${(i % 6) * 0.15}s` }}
+            style={{ background: c, animationDelay: `${(i % 6) * 0.15}s`, opacity: 0.85 }}
           />
         );
       })}
     </div>
   );
 }
+
+function TrustStrip() {
+  return (
+    <section className="border-b border-border bg-navy text-white">
+      <div className="container-editorial py-5 flex flex-wrap items-center gap-x-8 gap-y-3">
+        <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+          <MapPin className="size-3.5" /> Au service des universités gabonaises
+        </span>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/75">
+          {UNIVERSITES.map((u) => (
+            <span key={u} className="inline-flex items-center gap-2">
+              <span className="size-1.5 rounded-full bg-green" />
+              {u}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const STAT_ICONS = [BookOpen, Users, Layers, Globe2];
 
 function StatsBand() {
   const [visible, setVisible] = useState(false);
@@ -232,13 +319,13 @@ function StatsBand() {
   }, []);
   return (
     <section ref={ref} className="border-b border-border bg-background">
-      <div className="container-editorial py-14">
+      <div className="container-editorial py-14 md:py-16">
         <div className="grid gap-8 md:grid-cols-[1.2fr_2fr] items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green">
-              Chiffres clés
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-green">
+              <span className="h-3 w-6 rounded-full gabon-stripe" /> Chiffres clés
             </p>
-            <h2 className="mt-3 font-display text-3xl font-semibold text-navy leading-tight">
+            <h2 className="mt-3 font-display text-3xl md:text-4xl font-semibold text-navy leading-tight tracking-tight">
               La bibliothèque en un regard.
             </h2>
             <p className="mt-3 text-sm text-muted-foreground max-w-sm">
@@ -247,22 +334,93 @@ function StatsBand() {
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {STATS_ACCUEIL.map((s, i) => (
-              <div
-                key={s.label}
-                className="rounded-2xl border border-border bg-card p-6 shadow-editorial"
-                style={{
-                  animation: visible ? `count-in 0.6s ease-out ${i * 0.08}s both` : undefined,
-                }}
-              >
-                <p className="font-display text-4xl font-bold text-navy">
-                  {s.valeur}
-                  {s.suffixe}
-                </p>
-                <p className="mt-1 text-sm text-muted-foreground">{s.label}</p>
-              </div>
-            ))}
+            {STATS_ACCUEIL.map((s, i) => {
+              const Icon = STAT_ICONS[i % STAT_ICONS.length];
+              return (
+                <div
+                  key={s.label}
+                  className="group rounded-2xl border border-border bg-card p-6 shadow-editorial hover:shadow-editorial-lg hover:-translate-y-0.5 transition-all"
+                  style={{
+                    animation: visible ? `count-in 0.6s ease-out ${i * 0.08}s both` : undefined,
+                  }}
+                >
+                  <span className="inline-grid size-9 place-items-center rounded-lg bg-navy-soft text-navy group-hover:bg-navy group-hover:text-white transition-colors">
+                    <Icon className="size-4" />
+                  </span>
+                  <p className="mt-4 font-display text-4xl font-bold text-navy">
+                    {s.valeur}
+                    {s.suffixe}
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">{s.label}</p>
+                </div>
+              );
+            })}
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DomainesBento() {
+  const vedettes = DOMAINES_VEDETTE.map((slug) => DOMAINES.find((d) => d.slug === slug)).filter(
+    (d): d is (typeof DOMAINES)[number] => Boolean(d),
+  );
+  return (
+    <section className="relative border-b border-border bg-surface-alt">
+      <div className="absolute inset-0 section-halo pointer-events-none" aria-hidden />
+      <div className="container-editorial relative py-16 md:py-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div className="max-w-2xl">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-green">
+              <Library className="size-3.5" /> Le savoir gabonais par domaine
+            </p>
+            <h2 className="mt-3 font-display text-3xl md:text-5xl font-semibold text-navy tracking-tight leading-[1.05]">
+              Toutes les disciplines des universités du Gabon.
+            </h2>
+          </div>
+          <Link
+            to="/domaines"
+            className="group inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-gold transition shrink-0"
+          >
+            Voir les 17 domaines
+            <ChevronRight className="size-4 group-hover:translate-x-0.5 transition" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 auto-rows-[160px] gap-4">
+          {vedettes.map((d, i) => (
+            <Link
+              key={d.slug}
+              to="/domaines/$slug"
+              params={{ slug: d.slug }}
+              className={`group relative overflow-hidden rounded-2xl border border-border bg-navy shadow-editorial hover:shadow-editorial-lg transition-all ${
+                i === 0 ? "col-span-2 row-span-2" : ""
+              }`}
+            >
+              <CoverImg slug={d.slug} alt={d.nom} />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy/30 to-navy/10 group-hover:from-navy-deep/80 transition-colors" />
+              <span className="absolute top-0 inset-x-0 h-1 gabon-stripe opacity-90" aria-hidden />
+              <div className="absolute inset-0 flex flex-col justify-end p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-gold">
+                  {d.documents} documents
+                </p>
+                <p
+                  className={`mt-1 font-display font-semibold text-white leading-tight ${
+                    i === 0 ? "text-2xl" : "text-base"
+                  }`}
+                >
+                  {d.nom}
+                </p>
+                {i === 0 && (
+                  <p className="mt-2 text-sm text-white/80 max-w-sm line-clamp-2">{d.description}</p>
+                )}
+                <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-white/90 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all">
+                  Explorer <ArrowRight className="size-3.5" />
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>
@@ -272,12 +430,14 @@ function StatsBand() {
 function FeaturedSection({
   eyebrow,
   title,
+  description,
   viewAll,
   docs,
   tone,
 }: {
   eyebrow: string;
   title: string;
+  description?: string;
   viewAll: string;
   docs: typeof DOCUMENTS;
   tone?: "muted";
@@ -286,17 +446,20 @@ function FeaturedSection({
     <section className={tone === "muted" ? "bg-muted/50 border-y border-border" : ""}>
       <div className="container-editorial py-16 md:py-20">
         <div className="flex items-end justify-between gap-6 mb-8">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green">
-              {eyebrow}
+          <div className="max-w-2xl">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-green">
+              <span className="h-3 w-6 rounded-full gabon-stripe" /> {eyebrow}
             </p>
             <h2 className="mt-2 font-display text-3xl md:text-4xl font-semibold text-navy tracking-tight">
               {title}
             </h2>
+            {description && (
+              <p className="mt-2 text-muted-foreground max-w-xl">{description}</p>
+            )}
           </div>
           <Link
             to={viewAll}
-            className="group inline-flex items-center gap-1 text-sm font-medium text-navy hover:text-gold transition"
+            className="group hidden sm:inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-sm font-medium text-navy hover:border-gold hover:text-gold transition shrink-0"
           >
             Voir tout <ChevronRight className="size-4 group-hover:translate-x-0.5 transition" />
           </Link>
@@ -321,31 +484,23 @@ function SourcesLibres() {
               <Globe2 className="size-3.5" /> Ressources ouvertes
             </p>
             <h2 className="mt-2 font-display text-2xl md:text-3xl font-semibold text-navy tracking-tight">
-              Nos ressources s'appuient sur les grandes plateformes ouvertes.
+              Adossé aux grandes plateformes du savoir ouvert.
             </h2>
           </div>
           <p className="text-sm text-muted-foreground max-w-sm">
-            Chaque document référencé indique sa source libre d'origine — MOOC, archives ouvertes ou
-            manuels sous licence Creative Commons.
+            Chaque document indique, à titre informatif, la source ouverte dont il s'inspire — MOOC,
+            archives ouvertes ou manuels sous licence Creative Commons.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {SOURCES_LIBRES.map((s) => (
-            <a
+            <div
               key={s.nom}
-              href={s.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col gap-1 rounded-xl border border-border bg-card p-4 shadow-editorial hover:border-gold hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold transition-all"
+              className="flex flex-col gap-1 rounded-xl border border-border bg-card p-4 shadow-editorial"
             >
-              <span className="inline-flex items-center justify-between gap-1">
-                <span className="font-display text-sm font-semibold text-navy group-hover:text-green transition-colors">
-                  {s.nom}
-                </span>
-                <ExternalLink className="size-3.5 text-muted-foreground/60 group-hover:text-gold transition-colors shrink-0" />
-              </span>
+              <span className="font-display text-sm font-semibold text-navy">{s.nom}</span>
               <span className="text-xs text-muted-foreground leading-snug">{s.desc}</span>
-            </a>
+            </div>
           ))}
         </div>
       </div>
@@ -359,8 +514,8 @@ function Contributors() {
       <div className="container-editorial py-16 md:py-20">
         <div className="grid md:grid-cols-[1fr_2fr] gap-10 mb-10">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green">
-              Nos contributeurs
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-green">
+              <span className="h-3 w-6 rounded-full gabon-stripe" /> Nos contributeurs
             </p>
             <h2 className="mt-2 font-display text-3xl md:text-4xl font-semibold text-navy tracking-tight">
               Les enseignants qui enrichissent la bibliothèque.
@@ -393,14 +548,25 @@ function Contributors() {
 }
 
 function VisionTeaser() {
+  const [imgOk, setImgOk] = useState(true);
   return (
     <section className="relative overflow-hidden bg-navy text-white">
-      <div className="absolute inset-0 pixel-grid-bg opacity-20 pointer-events-none" />
-      <div className="container-editorial py-20 relative">
+      {imgOk && (
+        <img
+          src="/heroes/hero-vision.png"
+          alt=""
+          onError={() => setImgOk(false)}
+          className="absolute inset-0 h-full w-full object-cover opacity-20"
+          aria-hidden
+        />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy/95 to-navy/70" />
+      <div className="absolute inset-0 pixel-grid-bg opacity-15 pointer-events-none" />
+      <div className="container-editorial py-20 md:py-24 relative">
         <div className="grid lg:grid-cols-[1.2fr_1fr] gap-14">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
-              Vision & Impact
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+              <span className="h-3 w-6 rounded-full gabon-stripe" /> Vision & Impact
             </p>
             <h2 className="mt-3 font-display text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05]">
               Un pays qui <span className="italic text-gold">produit</span>,{" "}
@@ -409,7 +575,7 @@ function VisionTeaser() {
             </h2>
             <figure className="mt-8 max-w-xl">
               <Quote className="size-6 text-gold mb-3" />
-              <blockquote className="font-display text-xl italic text-white/90 leading-relaxed">
+              <blockquote className="font-display text-xl md:text-2xl italic text-white/90 leading-relaxed">
                 « L'accès au savoir n'est pas un luxe : c'est un droit. BiblioGabon en fait une
                 réalité concrète. »
               </blockquote>
@@ -426,7 +592,7 @@ function VisionTeaser() {
             {STATS_VISION.map((s) => (
               <div
                 key={s.label}
-                className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6"
+                className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6 hover:bg-white/10 transition-colors"
               >
                 <p className="font-display text-5xl font-bold text-gold leading-none">{s.valeur}</p>
                 <p className="mt-3 text-sm text-white/85 leading-relaxed">{s.label}</p>
@@ -443,12 +609,13 @@ function VisionTeaser() {
 function JoinCTA() {
   return (
     <section className="border-t border-border">
-      <div className="container-editorial py-20 text-center">
+      <div className="container-editorial py-20 md:py-24 text-center">
         <Sparkles className="mx-auto size-6 text-gold mb-4" />
-        <h2 className="font-display text-4xl md:text-5xl font-semibold text-navy tracking-tight max-w-3xl mx-auto">
+        <h2 className="font-display text-4xl md:text-5xl font-semibold text-navy tracking-tight max-w-3xl mx-auto leading-[1.05]">
           Rejoignez la bibliothèque nationale.
         </h2>
-        <p className="mt-4 max-w-xl mx-auto text-lg text-muted-foreground">
+        <div className="mx-auto mt-5 h-1 w-20 gabon-rule" aria-hidden />
+        <p className="mt-5 max-w-xl mx-auto text-lg text-muted-foreground">
           Étudiants et enseignants des universités gabonaises — accès 100 % gratuit à toutes les
           ressources académiques.
         </p>
