@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
+import { Reveal } from "@/components/site/Reveal";
 import { SOURCES_LIBRES } from "@/data/documents";
 import { BookOpen, ShieldCheck, HandHeart, Sparkles, ExternalLink, Landmark } from "lucide-react";
 
@@ -120,7 +121,7 @@ function Apropos() {
             BiblioGabon s'engage à archiver durablement les productions académiques des trois
             grandes universités du pays, en partenariat avec leurs enseignants-chercheurs.
           </p>
-          <div className="mt-10 grid sm:grid-cols-3 gap-5">
+          <Reveal className="mt-10 grid sm:grid-cols-3 gap-5">
             {UNIVERSITES.map((u) => (
               <div
                 key={u.sigle}
@@ -133,7 +134,7 @@ function Apropos() {
                 </p>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -146,7 +147,7 @@ function Apropos() {
           <h2 className="font-display text-3xl md:text-4xl font-semibold text-navy tracking-tight mb-10 max-w-2xl">
             Les principes qui guident chaque décision.
           </h2>
-          <div className="grid sm:grid-cols-2 gap-5">
+          <Reveal className="grid sm:grid-cols-2 gap-5">
             {VALEURS.map((v) => (
               <div
                 key={v.titre}
@@ -159,7 +160,7 @@ function Apropos() {
                 <p className="mt-2 text-muted-foreground leading-relaxed">{v.texte}</p>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -176,7 +177,7 @@ function Apropos() {
             En complément des productions locales, BiblioGabon référence des ressources pédagogiques
             ouvertes issues d'institutions reconnues à l'international.
           </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Reveal className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {SOURCES_LIBRES.map((s) => (
               <a
                 key={s.nom}
@@ -192,7 +193,7 @@ function Apropos() {
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
               </a>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
     </SiteLayout>

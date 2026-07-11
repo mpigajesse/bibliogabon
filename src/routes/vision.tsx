@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
+import { Reveal } from "@/components/site/Reveal";
 import { STATS_VISION } from "@/data/stats";
 import { Award, Users, Cpu, Landmark, Quote, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -67,7 +68,7 @@ function Vision() {
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green mb-4">
             Contexte MESRI 2023
           </p>
-          <div className="grid md:grid-cols-3 gap-6">
+          <Reveal className="grid md:grid-cols-3 gap-6">
             {STATS_VISION.map((s) => (
               <div
                 key={s.label}
@@ -81,7 +82,7 @@ function Vision() {
                 </p>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -110,7 +111,7 @@ function Vision() {
           <h2 className="font-display text-3xl md:text-4xl font-semibold text-navy tracking-tight mb-10">
             Nos piliers d'impact.
           </h2>
-          <div className="grid md:grid-cols-2 gap-5">
+          <Reveal className="grid md:grid-cols-2 gap-5">
             {PILIERS.map((p) => (
               <div
                 key={p.titre}
@@ -123,7 +124,7 @@ function Vision() {
                 <p className="mt-2 text-muted-foreground leading-relaxed">{p.texte}</p>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 

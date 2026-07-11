@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
+import { Reveal } from "@/components/site/Reveal";
 import { DOMAINES, type Domaine } from "@/data/domaines";
 import { ArrowUpRight, LayoutGrid, FileStack } from "lucide-react";
 
@@ -58,11 +59,11 @@ function DomainesIndex() {
       </PageHeader>
       <section className="">
         <div className="container-editorial py-14">
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <Reveal className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {DOMAINES.map((d, i) => (
               <DomaineCard key={d.slug} domaine={d} index={i} />
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
     </SiteLayout>

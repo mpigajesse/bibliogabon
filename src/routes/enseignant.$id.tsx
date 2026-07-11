@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 import { DocumentCard } from "@/components/site/DocumentCard";
+import { Reveal } from "@/components/site/Reveal";
 import { EmptyState } from "@/components/site/EmptyState";
 import { Button } from "@/components/ui/button";
 import { contributeurById } from "@/data/contributeurs";
@@ -112,11 +113,11 @@ function EnseignantProfil() {
               description="Cet enseignant n'a pas encore partagé de ressource dans le catalogue."
             />
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <Reveal className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {docs.map((d) => (
                 <DocumentCard key={d.id} doc={d} />
               ))}
-            </div>
+            </Reveal>
           )}
         </div>
       </section>

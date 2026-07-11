@@ -3,6 +3,7 @@ import { DOMAINES } from "@/data/domaines";
 import type { Document, DocumentType } from "@/data/documents";
 import { DocumentCard } from "./DocumentCard";
 import { EmptyState } from "./EmptyState";
+import { Reveal } from "./Reveal";
 
 const TYPES: { value: DocumentType | "all"; label: string }[] = [
   { value: "all", label: "Tous types" },
@@ -140,11 +141,11 @@ export function CatalogueBrowser({
             description="Ajustez vos filtres ou explorez d'autres domaines."
           />
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <Reveal className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {list.map((d) => (
               <DocumentCard key={d.id} doc={d} />
             ))}
-          </div>
+          </Reveal>
         )}
       </div>
     </div>

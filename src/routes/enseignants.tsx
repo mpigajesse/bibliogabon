@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
+import { Reveal } from "@/components/site/Reveal";
 import { ContributorCard } from "@/components/site/ContributorCard";
 import { EmptyState } from "@/components/site/EmptyState";
 import { CONTRIBUTEURS } from "@/data/contributeurs";
@@ -89,11 +90,11 @@ function EnseignantsAnnuaire() {
               description="Essayez un autre nom, une autre spécialité ou une autre université."
             />
           ) : (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <Reveal className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {resultats.map((c) => (
                 <ContributorCard key={c.id} c={c} />
               ))}
-            </div>
+            </Reveal>
           )}
         </div>
       </section>

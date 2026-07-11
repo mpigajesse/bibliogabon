@@ -3,6 +3,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 import { DocumentCard } from "@/components/site/DocumentCard";
 import { DocumentCover } from "@/components/site/DocumentCover";
+import { Reveal } from "@/components/site/Reveal";
 import { DomainBadge } from "@/components/site/DomainBadge";
 import { EmptyState } from "@/components/site/EmptyState";
 import { Button } from "@/components/ui/button";
@@ -227,11 +228,11 @@ function DocumentDetail() {
             <h2 className="font-display text-2xl font-semibold text-navy mb-6">
               Documents similaires
             </h2>
-            <div className="grid gap-6 md:grid-cols-3">
+            <Reveal className="grid gap-6 md:grid-cols-3">
               {similaires.map((d) => (
                 <DocumentCard key={d.id} doc={d} />
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
       )}

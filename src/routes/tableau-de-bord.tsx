@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 import { DocumentCard } from "@/components/site/DocumentCard";
+import { Reveal } from "@/components/site/Reveal";
 import { DOCUMENTS, documentById, type Document } from "@/data/documents";
 import { Heart, Download, Clock, BookOpen, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -134,11 +135,11 @@ function Section({
             {viewAll} →
           </a>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
+        <Reveal className="grid gap-6 md:grid-cols-3">
           {docs.map((d) => (
             <DocumentCard key={d.id} doc={d} />
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );
