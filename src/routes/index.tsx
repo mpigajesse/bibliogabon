@@ -131,12 +131,8 @@ function Hero() {
       <div className="absolute inset-0 section-halo pointer-events-none" />
       <div className="container-editorial relative py-16 md:py-24 lg:py-28 grid lg:grid-cols-[1.1fr_1fr] gap-14 items-center">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-green/25 bg-green-soft px-3 py-1 text-xs font-semibold text-green">
-            <span className="size-1.5 rounded-full bg-green animate-pulse" />
-            République Gabonaise · Accès 100 % Libre
-          </div>
           <h1
-            className="mt-6 font-display font-bold text-navy leading-[1.02] tracking-tighter"
+            className="font-display font-bold text-navy leading-[1.02] tracking-tighter"
             style={{ fontSize: "clamp(2.75rem, 5.4vw, 5.25rem)" }}
           >
             La Grande Source

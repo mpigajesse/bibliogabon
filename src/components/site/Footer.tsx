@@ -73,6 +73,9 @@ export function Footer() {
         <div className="container-editorial py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/60">
           <p>© 2026 BiblioGabon · République Gabonaise · v2.0.0</p>
           <div className="flex items-center gap-5">
+            <Link to="/apropos" className="hover:text-gold">
+              À propos
+            </Link>
             <Link to="/confidentialite" className="hover:text-gold">
               Confidentialité
             </Link>
