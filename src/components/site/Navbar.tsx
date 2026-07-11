@@ -52,7 +52,7 @@ export function Navbar() {
     >
       <span className="block h-[3px] w-full gabon-stripe" aria-hidden />
       <div className="container-editorial flex h-16 items-center gap-6">
-        <Logo size={36} withWordmark />
+        <Logo size={36} withWordmark animateWordmark />
         <nav className="hidden lg:flex items-center gap-1 text-sm">
           <NavItem to="/">Accueil</NavItem>
           <div
