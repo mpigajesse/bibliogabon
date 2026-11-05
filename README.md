@@ -11,7 +11,7 @@ Le catalogue, les contributeurs et les comptes sont fictifs. Les comptes de dém
 
 - **Parcourir le catalogue** par type de document — cours, livres, articles, examens, thèses — ou par domaine, parmi 17 (droit, médecine, informatique, sciences de la Terre, économie, rapports de master…).
 - **Rechercher** un document, un auteur ou un sujet depuis la barre de navigation.
-- **Lire en ligne** un document dans une liseuse, ou le télécharger.
+- **Lire en ligne** un document dans une liseuse, ou le télécharger — réservé aux étudiants et enseignants connectés.
 - **Consulter les enseignants** contributeurs, leurs spécialités et leurs publications.
 - **Retrouver ses documents** une fois connecté : favoris, récemment consultés, téléchargements.
 
@@ -25,7 +25,7 @@ Le catalogue, les contributeurs et les comptes sont fictifs. Les comptes de dém
 | Outillage | Vite, TypeScript, ESLint, Bun |
 | Déploiement | Vercel (preset Nitro) |
 
-Au build, `scripts/couvertures.mjs` dresse la liste des couvertures réellement présentes dans `public/` : une carte ne demande jamais une image absente, et les documents sans couverture reçoivent une vignette générée.
+Au build, `scripts/couvertures.mjs` dresse la liste des couvertures réellement présentes dans `public/` : une carte ne demande jamais une image absente.
 
 ## Lancer le projet
 
