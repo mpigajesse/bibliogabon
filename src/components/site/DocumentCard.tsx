@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { Document, DocumentType, Niveau } from "@/data/documents";
 import { domaineBySlug } from "@/data/domaines";
+import { couverturesExistantes } from "@/lib/couvertures";
 import { DomainBadge } from "./DomainBadge";
 
 const TYPE_META: Record<DocumentType, { label: string; Icon: typeof BookOpen }> = {
@@ -47,13 +48,13 @@ export function DocumentCard({ doc }: { doc: Document }) {
 
   // Chaîne de couvertures, de la plus spécifique à la plus générique :
   // couverture explicite (livres) -> image propre au document -> image du domaine -> visuel généré.
-  const candidats = [
+  const candidats = couverturesExistantes([
     doc.cover,
     `/covers/docs/${doc.id}.png`,
     `/covers/docs/${doc.id}.jpg`,
     `/covers/domaines/${doc.domaineSlug}.png`,
     `/covers/domaines/${doc.domaineSlug}.jpg`,
-  ].filter((c): c is string => Boolean(c));
+  ]);
 
   const [idx, setIdx] = useState(0);
   const imgOk = idx < candidats.length;

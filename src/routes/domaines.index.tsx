@@ -39,7 +39,7 @@ function DomainesIndex() {
       <PageHeader
         Icon={LayoutGrid}
         accent="green"
-        image="/heroes/hero-domaines.png"
+        image="/heroes/hero-domaines.jpg"
         eyebrow="Catalogue"
         title="17 domaines académiques."
         description="De l'agriculture à la logistique : toutes les disciplines couvertes par les universités et grandes écoles gabonaises."

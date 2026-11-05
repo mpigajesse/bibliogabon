@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Twitter, Linkedin, Youtube, MapPin, Mail, Phone } from "lucide-react";
+import { MapPin, Mail, Phone } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { DOMAINES } from "@/data/domaines";
 
@@ -15,23 +15,6 @@ export function Footer() {
           <p className="text-sm leading-relaxed text-white/70 max-w-xs">
             La bibliothèque numérique des universités et grandes écoles de la République Gabonaise.
           </p>
-          <div className="flex items-center gap-2 pt-2">
-            {[
-              { Icon: Facebook, label: "Facebook" },
-              { Icon: Twitter, label: "X" },
-              { Icon: Linkedin, label: "LinkedIn" },
-              { Icon: Youtube, label: "YouTube" },
-            ].map(({ Icon, label }) => (
-              <a
-                key={label}
-                href="#"
-                aria-label={label}
-                className="inline-flex size-9 items-center justify-center rounded-full border border-white/15 hover:border-gold hover:text-gold transition"
-              >
-                <Icon className="size-4" />
-              </a>
-            ))}
-          </div>
         </div>
 
         <FooterCol title="Catalogue">
