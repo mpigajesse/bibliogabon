@@ -7,6 +7,7 @@
     "dev": "vite dev",
     "build": "node scripts/couvertures.mjs && vite build",
     "build:dev": "vite build --mode development",
+    "build:statique": "NITRO_PRESET=node-server bun run build && node scripts/export-statique.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
