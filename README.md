@@ -3,7 +3,7 @@
 Bibliothèque numérique de l'enseignement supérieur gabonais : cours, livres, articles, sujets d'examen et thèses produits par les universités du pays, réunis en un seul catalogue consultable en ligne.
 
 **Démo en ligne : [bibliogabon.eu.cc](https://bibliogabon.eu.cc)**
-Le catalogue, les contributeurs et les comptes sont fictifs. Les comptes de démonstration (étudiant, étudiante, enseignant) sont affichés sur la page de connexion. La démo met environ 50 secondes à se réveiller au premier accès.
+Le catalogue, les contributeurs et les comptes sont fictifs. Les comptes de démonstration (étudiant, étudiante, enseignant) sont affichés sur la page de connexion.
 
 ---
 
