@@ -37,7 +37,7 @@ function ThesesPage() {
       <PageHeader
         Icon={ScrollText}
         accent="navy"
-        image="/heroes/hero-theses.png"
+        image="/heroes/hero-theses.jpg"
         eyebrow="Catalogue"
         title="Thèses doctorales."
         description="Archives des thèses soutenues dans les écoles doctorales des universités gabonaises."

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { couverturesExistantes } from "@/lib/couvertures";
 import {
   ArrowRight,
   Quote,
@@ -63,7 +64,10 @@ const DOMAINES_VEDETTE = [
 /** Image de couverture avec repli d'extension (.png → .jpg) puis dégradé. */
 function CoverImg({ slug, alt }: { slug: string; alt: string }) {
   const [i, setI] = useState(0);
-  const cands = [`/covers/domaines/${slug}.png`, `/covers/domaines/${slug}.jpg`];
+  const cands = couverturesExistantes([
+    `/covers/domaines/${slug}.png`,
+    `/covers/domaines/${slug}.jpg`,
+  ]);
   if (i >= cands.length) return null;
   return (
     <img

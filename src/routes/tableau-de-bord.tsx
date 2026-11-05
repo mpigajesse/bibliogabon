@@ -81,14 +81,9 @@ function Dashboard() {
           </Button>
         </div>
       </PageHeader>
-      <Section title="Mes favoris" viewAll="Tous mes favoris" docs={favoris} />
-      <Section
-        title="Récemment consultés"
-        viewAll="Voir l'historique"
-        docs={historique}
-        tone="muted"
-      />
-      <Section title="Mes téléchargements" viewAll="Tous mes téléchargements" docs={telecharges} />
+      <Section title="Mes favoris" docs={favoris} />
+      <Section title="Récemment consultés" docs={historique} tone="muted" />
+      <Section title="Mes téléchargements" docs={telecharges} />
       <section className="border-t border-border">
         <div className="container-editorial py-14 text-center">
           <p className="text-muted-foreground">Envie de découvrir de nouveaux documents ?</p>
@@ -115,25 +110,15 @@ function StatCard({ Icon, value, label }: { Icon: typeof Heart; value: number; l
   );
 }
 
-function Section({
-  title,
-  viewAll,
-  docs,
-  tone,
-}: {
-  title: string;
-  viewAll: string;
-  docs: typeof DOCUMENTS;
-  tone?: "muted";
-}) {
+function Section({ title, docs, tone }: { title: string; docs: typeof DOCUMENTS; tone?: "muted" }) {
   return (
     <section className={tone === "muted" ? "bg-muted/40 border-y border-border" : ""}>
       <div className="container-editorial py-12">
         <div className="mb-6 flex items-end justify-between">
           <h2 className="font-display text-2xl font-semibold text-navy">{title}</h2>
-          <a href="#" className="text-sm text-navy hover:text-gold">
-            {viewAll} →
-          </a>
+          <span className="text-sm text-muted-foreground">
+            {docs.length} document{docs.length > 1 ? "s" : ""}
+          </span>
         </div>
         <Reveal className="grid gap-6 md:grid-cols-3">
           {docs.map((d) => (

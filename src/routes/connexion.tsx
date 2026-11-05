@@ -116,9 +116,9 @@ function Connexion() {
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Mot de passe</Label>
-                <a href="#" className="text-xs text-green hover:text-gold">
+                <Link to="/contact" className="text-xs text-green hover:text-gold">
                   Oublié ?
-                </a>
+                </Link>
               </div>
               <div className="relative">
                 <Lock className="absolute left-3 top-3 size-4 text-muted-foreground" />

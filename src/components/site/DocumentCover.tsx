@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import type { Document, DocumentType } from "@/data/documents";
 import { domaineBySlug } from "@/data/domaines";
+import { couverturesExistantes } from "@/lib/couvertures";
 
 const TYPE_ICON: Record<DocumentType, typeof BookOpen> = {
   article: FlaskConical,
@@ -42,13 +43,13 @@ export function DocumentCover({
   const Icon = TYPE_ICON[doc.type];
   const bg = COVER_BG[dom?.couleur ?? "navy"];
 
-  const candidats = [
+  const candidats = couverturesExistantes([
     doc.cover,
     `/covers/docs/${doc.id}.png`,
     `/covers/docs/${doc.id}.jpg`,
     `/covers/domaines/${doc.domaineSlug}.png`,
     `/covers/domaines/${doc.domaineSlug}.jpg`,
-  ].filter((c): c is string => Boolean(c));
+  ]);
 
   const [idx, setIdx] = useState(0);
   const imgOk = idx < candidats.length;
